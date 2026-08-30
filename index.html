@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>EasyMine - Earn Daily Rewards</title>
+
+    <!-- Search Engine Description -->
+    <meta name="description"
+          content="EasyMine lets you earn daily rewards by mining, completing tasks, and inviting friends. Start growing your earnings today with a fast and user-friendly platform..">
+
+    <!-- Open Graph (Facebook, WhatsApp, Telegram, etc.) -->
+    <meta property="og:title"
+          content="EasyMine - Earn Daily Rewards">
+
+    <meta property="og:description"
+          content="Earn daily rewards by mining, completing tasks, and inviting friends with EasyMine.">
+
+    <meta property="og:image"
+          content="https://easymine-platform.onrender.com/logo.png">
+
+    <meta property="og:url"
+          content="https://easymine-platform.onrender.com">
+
+    <meta property="og:type"
+          content="website">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card"
+          content="summary_large_image">
+
+    <meta name="twitter:title"
+          content="EasyMine - Earn Daily Rewards">
+
+    <meta name="twitter:description"
+          content="Earn daily rewards through mining, tasks, and referrals.">
+
+    <meta name="twitter:image"
+          content="https://easymine-platform.onrender.com/logo.png">
+
+    <!-- Website Favicon -->
+    <link rel="icon"
+          type="image/png"
+          href="https://easymine-platform.onrender.com/logo.png">
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+        
+</head>
+<style>
+  *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  position:relative;
+}
+
+/* =========================
+   PREMIUM BACKGROUND
+========================= */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+
+  background:
+  radial-gradient(circle at top left,
+  rgba(255,215,0,.10),
+  transparent 30%),
+
+  radial-gradient(circle at bottom right,
+  rgba(255,180,0,.08),
+  transparent 35%),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+/* =========================
+   GOLD PARTICLES
+========================= */
+
+.particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.particles span{
+  position:absolute;
+  bottom:-100px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle at 30% 30%,
+    rgba(255,255,255,.9),
+    rgba(255,215,0,.18)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.15);
+
+  box-shadow:
+  0 0 15px rgba(255,215,0,.15);
+
+  animation:
+  floatBubble linear infinite;
+
+  opacity:.45;
+}
+
+@keyframes floatBubble{
+
+  0%{
+    transform:
+    translateY(0)
+    scale(1);
+
+    opacity:0;
+  }
+
+  10%{
+    opacity:.5;
+  }
+
+  100%{
+    transform:
+    translateY(-120vh)
+    scale(1.5);
+
+    opacity:0;
+  }
+}
+
+/* =========================
+   MAIN SCREEN
+========================= */
+
+.screen{
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  padding:30px 14px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  margin-bottom:26px;
+}
+
+.logo{
+  width:85px;
+  height:85px;
+  object-fit:contain;
+
+  margin-bottom:14px;
+
+  filter:
+  drop-shadow(
+    0 0 18px rgba(255,215,0,.35)
+  );
+}
+
+.logo-wrap h2{
+  font-size:34px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  margin-bottom:6px;
+}
+
+.logo-wrap p{
+  color:rgba(255,255,255,.55);
+  font-size:14px;
+}
+
+/* =========================
+   AUTH SWITCH
+========================= */
+
+.auth-switch{
+  width:100%;
+  max-width:430px;
+
+  display:flex;
+  gap:6px;
+
+  padding:6px;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  backdrop-filter:blur(16px);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  margin-bottom:22px;
+}
+
+.switch-btn{
+  flex:1;
+  height:50px;
+
+  border:none;
+  border-radius:14px;
+
+  background:transparent;
+
+  color:rgba(255,255,255,.45);
+
+  font-size:15px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.switch-btn.active{
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  box-shadow:
+  0 0 18px rgba(255,215,0,.25);
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  width:100%;
+  max-width:430px;
+
+  padding:30px 24px;
+
+  border-radius:30px;
+
+  background:
+  rgba(12,12,12,.88);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 40px rgba(255,215,0,.06),
+  inset 0 0 20px rgba(255,255,255,.02);
+}
+
+h1{
+  font-size:32px;
+  font-weight:800;
+
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:rgba(255,255,255,.5);
+
+  font-size:14px;
+
+  margin-bottom:28px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field{
+  margin-bottom:18px;
+  position:relative;
+}
+
+.field label{
+  display:block;
+
+  margin-bottom:8px;
+
+  font-size:13px;
+  font-weight:600;
+
+  color:rgba(255,255,255,.82);
+}
+
+.field input,
+.field select{
+  width:100%;
+  height:56px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.06);
+
+  padding:0 18px;
+
+  color:white;
+
+  font-size:14px;
+
+  transition:.3s ease;
+}
+
+.field input:focus,
+.field select:focus{
+
+  border-color:#FFD700;
+
+  box-shadow:
+  0 0 0 4px rgba(255,215,0,.10);
+}
+
+.field input::placeholder{
+  color:rgba(255,255,255,.28);
+}
+
+.field small{
+  display:block;
+
+  margin-top:8px;
+
+  color:rgba(255,255,255,.35);
+
+  font-size:11px;
+}
+
+/* =========================
+   PASSWORD ICON
+========================= */
+
+.eye{
+  position:absolute;
+
+  right:16px;
+  top:40px;
+
+  background:none;
+  border:none;
+
+  color:rgba(255,215,0,.7);
+
+  cursor:pointer;
+}
+
+/* =========================
+   TERMS
+========================= */
+
+.terms{
+  font-size:12px;
+  line-height:1.8;
+
+  color:rgba(255,255,255,.45);
+
+  margin-bottom:22px;
+}
+
+.terms a{
+  color:#FFD700;
+  text-decoration:none;
+}
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+
+.create-btn{
+  width:100%;
+  height:56px;
+
+  border:none;
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:16px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 0 25px rgba(255,215,0,.20);
+}
+
+.create-btn:hover{
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.30);
+}
+
+.create-btn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin:24px 0;
+}
+
+.divider span{
+  flex:1;
+  height:1px;
+
+  background:
+  rgba(255,255,255,.08);
+}
+
+.divider p{
+  color:rgba(255,255,255,.35);
+  font-size:12px;
+}
+
+/* =========================
+   GOOGLE BUTTON
+========================= */
+
+.google-btn{
+  width:100%;
+  height:56px;
+
+  border:none;
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:white;
+
+  font-size:14px;
+  font-weight:600;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.google-btn:hover{
+
+  border-color:#FFD700;
+
+  background:
+  rgba(255,215,0,.05);
+}
+
+.google-btn img{
+  width:22px;
+}
+
+/* =========================
+   LOGIN MODAL
+========================= */
+
+.login-modal{
+  position:fixed;
+  inset:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  backdrop-filter:blur(10px);
+
+  opacity:0;
+  visibility:hidden;
+
+  transition:.35s ease;
+
+  z-index:50;
+}
+
+.login-modal.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.login-card{
+  transform:
+  translateY(40px)
+  scale(.96);
+
+  transition:.35s ease;
+}
+
+.login-modal.active .login-card{
+  transform:
+  translateY(0)
+  scale(1);
+}
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
+
+.forgot-wrap{
+  width:100%;
+
+  display:flex;
+  justify-content:flex-end;
+
+  margin-top:-6px;
+  margin-bottom:20px;
+}
+
+.forgot-wrap a{
+  color:#FFD700;
+  text-decoration:none;
+  font-size:13px;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  .screen{
+    padding:22px 10px;
+  }
+
+  .card{
+    padding:26px 18px;
+  }
+
+  .logo{
+    width:72px;
+    height:72px;
+  }
+
+  .logo-wrap h2{
+    font-size:28px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+
+  .row{
+    gap:10px;
+  }
+}
+
+.eye{
+  position:absolute;
+
+  right:16px;
+  top:42px;
+
+  width:38px;
+  height:38px;
+
+  border:none;
+  background:none;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:rgba(255,215,0,.75);
+
+  cursor:pointer;
+}
+
+.password-wrap{
+  position:relative;
+}
+</style>
+<body>
+  
+  <div class="bg"></div>
+  <div class="particles"></div>
+
+  <main class="screen">
+    
+    <div class="logo-wrap">
+   <img src="logo.png" class="logo">
+   <h2>Easy Mine</h2>
+   <p>Secure Digital Mining Platform</p>
+</div>
+
+    <div class="auth-switch">
+  <button class="switch-btn active" id="signupTab">
+    Sign Up
+  </button>
+
+  <button class="switch-btn" id="loginTab">
+    Log In
+  </button>
+</div>
+
+    <section class="card glass" id="signupCard">
+
+      <h1>Create account</h1>
+      <p class="subtitle">Join Easy Mine Wallet today</p>
+
+      <form id="signupForm">
+
+        <div class="row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="John" required />
+          </div>
+
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe" required />
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Email</label>
+          <input type="email" placeholder="john@example.com" required />
+        </div>
+
+        <div class="field full password-wrap">
+          <label>Password</label>
+          <input id="password" type="password" placeholder="Min 8 characters" required />
+
+          <button type="button" class="eye" id="togglePassword">
+
+<svg
+xmlns="http://www.w3.org/2000/svg"
+width="18"
+height="18"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2"
+stroke-linecap="round"
+stroke-linejoin="round">
+
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+
+<circle cx="12" cy="12" r="3"/>
+
+</svg>
+
+</button>
+<small>
+  Must contain letters + numbers (8+ characters)
+</small>
+        </div>
+
+        <div class="field full">
+          <label>Country</label>
+          <select>
+            <option>Nigeria (₦)</option>
+            <option>United States ($)</option>
+            <option>United Kingdom (£)</option>
+          </select>
+          <small>Currency: ₦ (NGN)</small>
+        </div>
+
+        <div class="field full">
+          <label>Referral Code <span>(optional)</span></label>
+          <input id="referralInput" type="text" placeholder="Enter referral code" />
+        </div>
+
+        <p class="terms">
+          By signing up, you agree to our
+          <a href="terms.html">Terms of Service</a>
+          and
+          <a href="terms.html">Privacy Policy</a>
+        </p>
+
+        <button class="create-btn" type="submit">
+          Create Account
+        
+        </button>
+
+        <div class="divider">
+          <span></span>
+          <p>or</p>
+          <span></span>
+        </div>
+
+        <button type="button" class="google-btn" id="googleLogin">
+          <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="google">
+          Continue with Google
+        </button>
+
+      </form>
+
+    </section>
+    
+    
+    <div class="login-modal" id="loginModal">
+
+  <section class="card glass login-card">
+
+    <h1>Welcome back</h1>
+
+    <p class="subtitle">
+      Sign in to access your wallet
+    </p>
+
+    <form id="loginForm">
+
+      <div class="field full">
+        <label>Email</label>
+
+        <input
+        type="email"
+        id="loginEmail"
+        placeholder="john@example.com"
+        required />
+      </div>
+
+      <div class="field full password-wrap">
+
+        <label>Password</label>
+
+        <input
+        id="loginPassword"
+        type="password"
+        placeholder="Enter password"
+        required />
+
+        <button
+        type="button"
+        class="eye"
+        id="toggleLoginPassword">
+
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+
+        <circle cx="12" cy="12" r="3"/>
+
+        </svg>
+
+        </button>
+      </div>
+
+
+<br>
+      <button
+      class="create-btn"
+      type="submit">
+
+        Sign In
+        
+      </button>
+
+      <div class="divider">
+        <span></span>
+        <p>or</p>
+        <span></span>
+      </div>
+      <br>
+<p>Not registered? <bold>  <a href="index.html">Sign up</a></p> </bold> <br><br>
+      <button
+      type="button"
+      class="google-btn"
+      id="googleBtn">
+
+        <img
+        src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+        alt="google">
+
+        Continue with Google
+      </button>
+
+    </form>
+  </section>
+</div>
+
+  </main>
+  
+  
+<script>
+
+let auth0Client;
+
+async function initAuth(){
+
+   auth0Client =
+      await auth0.createAuth0Client({
+
+         domain:
+         "easymine.us.auth0.com",
+
+         clientId:
+         "vNvrvYlk3npdOqmiWNItivDphMUKecMO",
+
+         authorizationParams: {
+
+            redirect_uri:
+            window.location.origin
+
+         }
+
+      });
+
+}
+
+</script>
+<script>
+ Parse.CoreManager.set(
+  "FORCE_REVOCABLE_SESSION",
+  true
+);
+
+if (!window.Parse) {
+  console.error("Parse SDK not loaded!");
+} else {
+  console.log("Parse SDK Loaded");
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL = "https://parseapi.back4app.com/";
+console.log("Parse ready:", typeof Parse);
+}
+</script>
+<script>
+
+window.addEventListener("load", async () => {
+  try {
+
+    // init Auth0
+    await initAuth();
+
+    // enable buttons AFTER init
+    document.getElementById("googleLogin").disabled = false;
+    document.getElementById("googleBtn").disabled = false;
+
+    // handle redirect ONCE
+    if (window.location.search.includes("code=")) {
+      const result = await auth0Client.handleRedirectCallback();
+      const target = result?.appState?.returnTo || "home.html";
+      window.location.replace(target);
+      return;
+    }
+
+    // referral handling (move here)
+    const params = new URLSearchParams(window.location.search);
+    const referralCode = params.get("ref");
+
+    if (referralCode) {
+      const input = signupForm.querySelectorAll("input")[4];
+      if (input) {
+        input.value = referralCode.toUpperCase();
+        input.readOnly = true;
+      }
+    }
+
+  } catch (e) {
+    console.error(e);
+  }
+});</script>
+<script>
+
+function createUniqueReferralCode(email){
+
+  return (
+    email.split("@")[0] +
+    Math.random()
+      .toString(36)
+      .substring(2,6)
+      .toUpperCase()
+  );
+
+}
+
+        
+signupForm.addEventListener(
+  "submit",
+  async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const firstName =
+        signupForm.querySelectorAll("input")[0]
+        .value
+        .trim();
+
+      const lastName =
+        signupForm.querySelectorAll("input")[1]
+        .value
+        .trim();
+
+      const email =
+        signupForm.querySelectorAll("input")[2]
+        .value
+        .trim()
+        .toLowerCase();
+
+      const passwordValue =
+        signupForm.querySelectorAll("input")[3]
+        .value;
+
+      const referral =
+        signupForm.querySelectorAll("input")[4]
+        .value
+        .trim()
+        .toUpperCase();
+
+      const country =
+        document.querySelector("select").value;
+        
+        
+
+      // ==========================
+      // VALIDATION
+      // ==========================
+
+      if (!firstName || !email || !passwordValue) {
+
+        alert("Fill all required fields");
+        return;
+
+      }
+
+     const strongPasswordRegex =
+  /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d@#$!%*?&]{8,}$/;
+
+if (!strongPasswordRegex.test(passwordValue)) {
+  alert(
+    "Password must be at least 8 characters and include letters and numbers"
+  );
+  return;
+}
+const weakPasswords = [
+  "12345678",
+  "password",
+  "password123",
+  "123456789",
+  "qwerty",
+  "admin",
+  "00000000"
+];
+
+if (weakPasswords.includes(passwordValue.toLowerCase())) {
+  alert("Password is too weak. Choose a stronger one.");
+  return;
+}
+      // ==========================
+      // CREATE USER
+      // ==========================
+
+      const user = new Parse.User();
+
+      user.set("username", email);
+      user.set("email", email);
+      user.set("password", passwordValue);
+
+      user.set("firstName", firstName);
+      user.set("lastName", lastName);
+
+      user.set("country", country);
+
+      // referral used
+      // ALWAYS generate user's own referral code
+const referralCode = createUniqueReferralCode(email);
+
+user.set("referralCode", referralCode);
+
+// ONLY store if user used someone else's code
+if (referral) {
+  user.set("usedReferralCode", referral);
+}
+
+      // ==========================
+      // SIGNUP
+      // ==========================
+
+   /*   await user.signUp();
+
+// 🔥 IMPORTANT: ensure session is saved
+Parse.User.logIn(email, passwordValue).then(() => {
+  window.location.href = "/welcome.html";
+});*/
+const createBtn =
+  signupForm.querySelector(".create-btn");
+
+try {
+
+  // ==========================
+  // LOADING STATE
+  // ==========================
+  createBtn.disabled = true;
+  createBtn.innerText = "Creating account...";
+
+  // ==========================
+  // SIGNUP
+  // ==========================
+  
+
+  await user.signUp();
+
+
+
+// FORCE SESSION SAVE
+const currentUser = Parse.User.current();
+
+if (!currentUser) {
+  throw new Error("Signup succeeded but session was not created");
+}
+
+// ==========================
+// SUCCESS STATE
+// ==========================
+createBtn.innerText =
+  "Successful! Redirecting...";
+
+setTimeout(() => {
+
+  window.location.href =
+    "welcome.html";
+
+}, 1200);
+
+} catch (error) {
+
+  console.log(error);
+
+  alert(error.message);
+
+  // RESET BUTTON
+  createBtn.disabled = false;
+  createBtn.innerText = "Create Account";
+
+}
+
+      
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(error.message);
+
+    }
+
+  }
+);
+
+loginForm.addEventListener(
+  "submit",
+  async (e) => {
+
+    e.preventDefault();
+
+    const loginBtn =
+      loginForm.querySelector(
+        ".create-btn"
+      );
+
+    try {
+
+      // ==========================
+      // LOADING STATE
+      // ==========================
+      loginBtn.disabled = true;
+
+      loginBtn.innerText =
+        "Please wait...";
+
+      const email =
+        document.getElementById(
+          "loginEmail"
+        ).value
+        .trim()
+        .toLowerCase();
+
+      const password =
+        document.getElementById(
+          "loginPassword"
+        ).value;
+
+      const loggedUser =
+        await Parse.User.logIn(
+          email,
+          password
+        );
+
+      // ==========================
+      // GOOGLE ACCOUNT BLOCK
+      // ==========================
+
+      if (
+        loggedUser.get(
+          "joinedFrom"
+        ) === "google"
+      ) {
+
+        await Parse.User.logOut();
+
+        throw new Error(
+          "This account uses Google Sign-In"
+        );
+
+      }
+
+      // ==========================
+      // BLOCKED USER CHECK
+      // ==========================
+
+      if (
+        loggedUser.get(
+          "isBlocked"
+        )
+      ) {
+
+        await Parse.User.logOut();
+
+        throw new Error(
+          "For compliance reasons, your have been temporarily disabled while we review your recent transactions. Your account would be restored shortly."
+        );
+
+      }
+
+      // ==========================
+      // SUCCESS STATE
+      // ==========================
+
+      loginBtn.innerText =
+        "Successful, Signing in...";
+
+      setTimeout(() => {
+
+        window.location.href =
+          "home.html";
+
+      }, 1200);
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+      alert(error.message);
+
+      // RESET BUTTON
+      loginBtn.disabled = false;
+
+      loginBtn.innerText =
+        "Sign In";
+
+    }
+
+  }
+);
+
+
+        </script>
+<script>
+
+
+
+</script>
+<script>
+
+const signupTab =
+document.getElementById("signupTab");
+
+const loginTab =
+document.getElementById("loginTab");
+
+const loginModal =
+document.getElementById("loginModal");
+
+
+// OPEN LOGIN
+loginTab.addEventListener(
+  "click",
+  () => {
+
+    loginModal.classList.add("active");
+
+    loginTab.classList.add("active");
+
+    signupTab.classList.remove("active");
+
+  }
+);
+
+
+// CLOSE LOGIN
+signupTab.addEventListener(
+  "click",
+  () => {
+
+    loginModal.classList.remove("active");
+
+    signupTab.classList.add("active");
+
+    loginTab.classList.remove("active");
+
+  }
+);
+
+</script>
+<script>
+
+async function continueWithGoogle(){
+
+   try {
+
+      await auth0Client.loginWithRedirect({
+  authorizationParams: {
+    connection: "google-oauth2",
+    redirect_uri: window.location.origin + "/index.html"
+  },
+  appState: {
+    returnTo: "home.html"
+  }
+});
+
+     
+
+   }
+
+   catch(error){
+  console.error("Google Auth Error:", error);
+  alert(error.message || JSON.stringify(error));
+}
+
+}
+document.getElementById("googleLogin").disabled = true;
+document.getElementById("googleBtn").disabled = true;
+
+window.addEventListener("load", async () => {
+  await initAuth();
+
+  document.getElementById("googleLogin").disabled = false;
+  document.getElementById("googleBtn").disabled = false;
+});
+
+document.getElementById(
+   "googleBtn"
+).onclick =
+continueWithGoogle;
+
+document.getElementById(
+   "googleLogin"
+).onclick =
+continueWithGoogle;
+
+</script>
+<script>
+
+// ======================================
+// AUTO FILL REFERRAL CODE FROM URL
+// ======================================
+
+window.addEventListener(
+  "load",
+  () => {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const referralCode =
+      params.get("ref");
+
+    if (!referralCode) {
+      return;
+    }
+
+    // REFERRAL INPUT
+    const referralInput =
+      signupForm.querySelectorAll(
+        "input"
+      )[4];
+
+    if (referralInput) {
+
+      referralInput.value =
+        referralCode.toUpperCase();
+        
+      referralInput.readOnly = true;
+
+    }
+
+  }
+);
+
+</script>
+<script>
+
+// ======================================
+// TOGGLE SIGNUP PASSWORD
+// ======================================
+
+const passwordInput =
+document.getElementById("password");
+
+const togglePassword =
+document.getElementById("togglePassword");
+
+togglePassword.addEventListener(
+"click",
+() => {
+
+  const isPassword =
+  passwordInput.type === "password";
+
+  passwordInput.type =
+  isPassword
+  ? "text"
+  : "password";
+
+}
+);
+
+
+// ======================================
+// TOGGLE LOGIN PASSWORD
+// ======================================
+
+const loginPasswordInput =
+document.getElementById("loginPassword");
+
+const toggleLoginPassword =
+document.getElementById("toggleLoginPassword");
+
+toggleLoginPassword.addEventListener(
+"click",
+() => {
+
+  const isPassword =
+  loginPasswordInput.type === "password";
+
+  loginPasswordInput.type =
+  isPassword
+  ? "text"
+  : "password";
+
+}
+);
+
+</script>
+</body>
+
+</html>

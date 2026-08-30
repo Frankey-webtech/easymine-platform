@@ -1,0 +1,2807 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <title>Purchase Coupon Code</title>
+        <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<style>
+    /* =========================================
+   FULL PAGE PREMIUM GOLD UI
+   SAME CLASS NAMES
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,215,0,.12),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,180,0,.08),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+
+}
+
+/* =========================================
+   GOLD PARTICLES
+========================================= */
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+
+  background-image:
+  radial-gradient(
+    rgba(255,215,0,.20) 1px,
+    transparent 1px
+  );
+
+  background-size:90px 90px;
+
+  opacity:.15;
+}
+
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.coupon-modal{
+  position:relative;
+
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+
+  padding:40px 16px 80px;
+
+  overflow:hidden;
+
+  opacity:1;
+  pointer-events:auto;
+
+  background:none;
+  backdrop-filter:none;
+}
+
+/* =========================================
+   CONTENT CONTAINER
+========================================= */
+
+.modal-content{
+  position:relative;
+
+  width:100%;
+  max-width:760px;
+
+  margin:auto;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(15,15,15,.96),
+    rgba(8,8,8,.96)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  border-radius:38px;
+
+  padding:42px 34px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 0 0 1px rgba(255,255,255,.02),
+  0 30px 70px rgba(0,0,0,.70),
+  0 0 45px rgba(255,215,0,.06);
+
+  backdrop-filter:blur(18px);
+}
+
+/* =========================================
+   GOLD GLOW
+========================================= */
+
+.modal-content::before{
+  content:"";
+
+  position:absolute;
+
+  width:320px;
+  height:320px;
+
+  top:-120px;
+  right:-120px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.14),
+    transparent 70%
+  );
+
+  pointer-events:none;
+}
+
+.modal-content::after{
+  content:"";
+
+  position:absolute;
+
+  width:260px;
+  height:260px;
+
+  bottom:-100px;
+  left:-100px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,180,0,.08),
+    transparent 70%
+  );
+
+  pointer-events:none;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:34px;
+}
+
+.modal-title{
+  font-size:42px;
+  font-weight:900;
+  line-height:1.2;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  letter-spacing:-1px;
+}
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.close-modal{
+  width:54px;
+  height:54px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.3s ease;
+}
+
+.close-modal:hover{
+
+  transform:
+  rotate(90deg)
+  scale(1.05);
+
+  background:
+  rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.18);
+}
+
+/* =========================================
+   WARNING BOXES
+========================================= */
+
+.warning-box{
+  width:100%;
+
+  display:flex;
+  align-items:flex-start;
+
+  gap:14px;
+
+  padding:22px;
+
+  border-radius:26px;
+
+  margin-bottom:20px;
+
+  border:1px solid rgba(255,215,0,.10);
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.06),
+    rgba(255,255,255,.015)
+  );
+
+  backdrop-filter:blur(12px);
+}
+
+.warning-icon{
+  font-size:22px;
+  color:#FFD700;
+
+  margin-top:2px;
+}
+
+.warning-content h4{
+  font-size:16px;
+  font-weight:800;
+
+  color:#fff;
+
+  margin-bottom:8px;
+}
+
+.warning-content p{
+  font-size:14px;
+  line-height:1.7;
+
+  color:rgba(255,255,255,.68);
+}
+
+/* =========================================
+   DANGER STYLE
+========================================= */
+
+.warning-box.danger{
+  border-color:
+  rgba(255,80,80,.12);
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,80,80,.08),
+    rgba(255,255,255,.01)
+  );
+}
+
+.warning-box.danger .warning-icon,
+.warning-box.danger h4{
+  color:#ff7272;
+}
+
+/* =========================================
+   YELLOW STYLE
+========================================= */
+
+.warning-box.yellow{
+  border-color:
+  rgba(255,215,0,.15);
+}
+
+/* =========================================
+   EXACT BOX
+========================================= */
+
+.exact-box{
+  width:100%;
+
+  padding:22px;
+
+  border-radius:24px;
+
+  margin-bottom:28px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.10),
+    rgba(255,184,0,.03)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.14);
+
+  color:#FFD700;
+
+  font-size:17px;
+  font-weight:800;
+
+  box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+/* =========================================
+   PAYMENT TEXT
+========================================= */
+
+.payment-text{
+  font-size:16px;
+  line-height:1.9;
+
+  color:rgba(255,255,255,.70);
+
+  margin-bottom:30px;
+}
+
+/* =========================================
+   ACCOUNT CARD
+========================================= */
+
+.account-card{
+  width:100%;
+
+  padding:30px 26px;
+
+  border-radius:32px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.01)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(16px);
+
+  margin-bottom:34px;
+
+  position:relative;
+
+  box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.03),
+  0 20px 40px rgba(0,0,0,.35);
+}
+
+.account-item{
+  margin-bottom:28px;
+}
+
+.account-item:last-child{
+  margin-bottom:0;
+}
+
+.label{
+  font-size:14px;
+  color: dimgrey;
+
+  margin-bottom:8px;
+
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight: 59px;
+}
+
+.value{
+  font-size:22px;
+  font-weight:800;
+
+  color:#fff;
+
+  word-break:break-word;
+}
+
+/* =========================================
+   COPY BUTTON
+========================================= */
+
+.copy-btn{
+  position:absolute;
+
+  right:24px;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  width:56px;
+  height:56px;
+
+  border:none;
+  outline:none;
+
+  border-radius:20px;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,215,0,.12),
+    rgba(255,184,0,.05)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.copy-btn:hover{
+
+  transform:
+  translateY(-50%)
+  scale(1.05);
+
+  box-shadow:
+  0 0 24px rgba(255,215,0,.18);
+}
+
+/* =========================================
+   RECEIPT TITLE
+========================================= */
+
+.receipt-title{
+  font-size:22px;
+  font-weight:800;
+
+  color:#fff;
+
+  margin-bottom:18px;
+}
+
+/* =========================================
+   UPLOAD BOX
+========================================= */
+
+.upload-box{
+  position:relative;
+
+  width:100%;
+  min-height:120px;
+
+  border-radius:28px;
+
+  border:
+  1.5px dashed rgba(255,215,0,.18);
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.03),
+    rgba(255,255,255,.01)
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  gap:14px;
+
+  padding:24px;
+
+  cursor:pointer;
+
+  overflow:hidden;
+
+  transition:.3s ease;
+
+  margin-bottom:24px;
+}
+
+.upload-box:hover{
+
+  border-color:#FFD700;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.06),
+    rgba(255,255,255,.02)
+  );
+}
+
+.upload-box i{
+  font-size:34px;
+  color:#FFD700;
+}
+
+.upload-box span{
+  font-size:16px;
+  font-weight:600;
+
+  color:rgba(255,255,255,.75);
+
+  text-align:center;
+}
+
+.upload-box input{
+  position:absolute;
+  inset:0;
+
+  opacity:0;
+  cursor:pointer;
+}
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.receipt-preview{
+  width:100%;
+
+  border-radius:24px;
+
+  display:none;
+
+  margin-bottom:24px;
+
+  border:
+  1px solid rgba(255,215,0,.08);
+}
+
+/* =========================================
+   PAYMENT BUTTON
+========================================= */
+
+.payment-btn{
+  width:100%;
+  height:72px;
+
+  border:none;
+  outline:none;
+
+  border-radius:24px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:20px;
+  font-weight:900;
+
+  cursor:pointer;
+
+  position:relative;
+  overflow:hidden;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 20px 35px rgba(255,215,0,.18);
+}
+
+.payment-btn::before{
+  content:"";
+
+  position:absolute;
+  top:0;
+  left:-100%;
+
+  width:100%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+  );
+
+  transition:.7s;
+}
+
+.payment-btn:hover::before{
+  left:100%;
+}
+
+.payment-btn:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 25px 40px rgba(255,215,0,.28);
+}
+
+/* =========================================
+   PROCESSING MODAL
+========================================= */
+
+.processing-modal{
+  position:fixed;
+  inset:0;
+
+  background:
+  rgba(0,0,0,.82);
+
+  backdrop-filter:blur(12px);
+
+  z-index:1200;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.3s ease;
+}
+
+.processing-modal.active{
+  display:flex;
+
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* =========================================
+   PROCESSING CONTENT
+========================================= */
+
+.processing-content{
+  width:100%;
+  max-width:560px;
+
+  padding:40px 28px;
+
+  border-radius:34px;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(15,15,15,.98),
+    rgba(6,6,6,.98)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  box-shadow:
+  0 30px 80px rgba(0,0,0,.75);
+
+  transform:scale(.95);
+
+  transition:.3s ease;
+}
+
+.processing-modal.active .processing-content{
+  transform:scale(1);
+}
+
+/* =========================================
+   LOADER
+========================================= */
+
+.loader-wrapper{
+  display:flex;
+  justify-content:center;
+
+  margin-bottom:30px;
+}
+
+.loader{
+  width:90px;
+  height:90px;
+
+  border-radius:50%;
+
+  border:
+  7px solid rgba(255,215,0,.12);
+
+  border-top-color:#FFD700;
+
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* =========================================
+   PROCESSING TEXT
+========================================= */
+
+.processing-title{
+  text-align:center;
+
+  font-size:22px;
+  font-weight:800;
+
+  color:#fff;
+
+  margin-bottom:40px;
+}
+
+.processing-steps{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:22px;
+}
+
+.processing-step{
+  color:rgba(255,255,255,.35);
+
+  font-size:16px;
+
+  transition:.3s ease;
+}
+
+.processing-step.active{
+  color:#FFD700;
+
+  transform:scale(1.04);
+}
+
+/* =========================================
+   FAILED CONTENT
+========================================= */
+
+.failed-content{
+  text-align:center;
+
+  padding:30px 0;
+}
+
+.failed-title{
+  font-size:34px;
+  font-weight:900;
+
+  color:#fff;
+
+  margin-bottom:18px;
+}
+
+.failed-text{
+  font-size:16px;
+  line-height:1.8;
+
+  color:rgba(255,255,255,.68);
+
+  margin-bottom:34px;
+}
+
+/* =========================================
+   TELEGRAM BUTTON
+========================================= */
+
+.telegram-btn{
+  width:100%;
+  height:68px;
+
+  border:none;
+  outline:none;
+
+  border-radius:24px;
+
+  cursor:pointer;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:18px;
+  font-weight:800;
+
+  margin-bottom:16px;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 20px 35px rgba(255,215,0,.18);
+}
+
+.telegram-btn:hover{
+  transform:translateY(-2px);
+}
+
+/* =========================================
+   CLOSE BTN
+========================================= */
+
+.failed-close-btn{
+  width:100%;
+  height:64px;
+
+  border:none;
+  outline:none;
+
+  border-radius:22px;
+
+  cursor:pointer;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#fff;
+
+  font-size:17px;
+  font-weight:700;
+
+  transition:.3s ease;
+}
+
+.failed-close-btn:hover{
+  border-color:#FFD700;
+}
+
+/* =========================================
+   TOAST
+========================================= */
+
+.toast{
+  position:fixed;
+
+  left:50%;
+  bottom:40px;
+
+  transform:
+  translateX(-50%)
+  translateY(20px);
+
+  background:
+  rgba(15,15,15,.95);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#fff;
+
+  padding:18px 24px;
+
+  border-radius:18px;
+
+  font-size:15px;
+  font-weight:600;
+
+  z-index:9999;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.45);
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:
+  translateX(-50%)
+  translateY(0);
+}
+
+/* =========================================
+   PROCESSING GLOW TEXT
+========================================= */
+
+.processing-text,
+.processing-step{
+  color:rgba(255,255,255,.35);
+
+  font-weight:700;
+
+  margin:0 4px;
+
+  display:inline-block;
+
+  animation:textGlow 1.2s infinite;
+}
+
+/* DELAYS */
+
+.processing-text{
+  animation-delay:0s;
+}
+
+.processing-step:nth-child(2){
+  animation-delay:.2s;
+}
+
+.processing-step:nth-child(3){
+  animation-delay:.4s;
+}
+
+.processing-step:nth-child(4){
+  animation-delay:.6s;
+}
+
+@keyframes textGlow{
+
+  0%{
+    color:rgba(255,255,255,.35);
+    transform:translateY(0);
+  }
+
+  50%{
+    color:#FFD700;
+    transform:translateY(-3px);
+  }
+
+  100%{
+    color:rgba(255,255,255,.35);
+    transform:translateY(0);
+  }
+
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:rgba(255,215,0,.18);
+  border-radius:50px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px){
+
+  .coupon-modal{
+    padding:18px 12px 60px;
+  }
+
+  .modal-content{
+    padding:28px 18px;
+    border-radius:28px;
+  }
+
+  .modal-title{
+    font-size:30px;
+    padding-right:20px;
+  }
+
+  .warning-box{
+    padding:18px;
+    border-radius:22px;
+  }
+
+  .account-card{
+    padding:24px 18px;
+    border-radius:24px;
+  }
+
+  .value{
+    font-size:18px;
+  }
+
+  .upload-box{
+    min-height:100px;
+    border-radius:22px;
+  }
+
+  .payment-btn{
+    height:64px;
+    border-radius:20px;
+    font-size:18px;
+  }
+
+  .failed-title{
+    font-size:26px;
+  }
+
+}
+
+/* =========================================
+   KEEP FAILED / PROCESSING MODALS HIDDEN
+========================================= */
+
+.processing-modal,
+.failed-modal{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  display:flex;
+}
+
+/* SHOW WHEN ACTIVE */
+
+.processing-modal.active,
+.failed-modal.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* =========================================
+   HIDE FAILED MODAL INITIALLY
+========================================= */
+
+#failedModal{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  transition:.3s ease;
+}
+
+/* SHOW WITH JS */
+
+#failedModal.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.easy{
+    font-size: 10px;
+    color: dimgrey;
+}
+</style>
+<style>
+  .toggle-container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .toggle-container input {
+    display: none;
+  }
+
+  .toggle {
+    background: black;
+    color: gold;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gold;
+    user-select: none;
+  }
+
+  input:checked + .toggle {
+    background: gold;
+    color: black;
+    font-weight: bold;
+  }
+
+  input:checked + .toggle::before {
+    content: "✔ ";
+  }
+  
+  .toggle-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.toggle {
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+        <div class="coupon-modal active" id="couponModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Activate your account</h2>
+
+      <button class="close-modal" id="closeCouponModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+
+
+      <!-- WARNING 2 -->
+     <!-- <div class="warning-box yellow">
+        <div class="warning-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div class="warning-content">
+          <h4>⚠️ Important Warning</h4>
+          <p>
+            Purchase your coupon code ONLY from this platform.
+            Do NOT buy from third parties or unofficial sources.
+            Any coupon purchased outside this platform will NOT be valid.
+          </p>
+        </div>
+      </div>-->
+
+
+      <!-- EXACT AMOUNT -->
+      <div class="exact-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Pay the exact amount of ₦3,000 only</span>
+      </div>
+
+
+
+
+      <p class="payment-text">
+        Make payment to the account below and upload your receipt for confirmation.
+      </p>
+
+
+      <!-- ACCOUNT CARD -->
+      <div class="account-card">
+
+        <button class="copy-btn" id="copyAccountBtn">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Amount</span><br>
+<div class="value" id="paymentAmount">
+    ₦0
+
+        </div><br />
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Account Number</span><br>
+<div class="value" id="accountNumber">
+    Loading...
+</div><button class="copy-btn" id="copyBtn">
+
+    <!--<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>-->
+
+  </button></div>
+        </div>
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Bank</span>
+<div class="value" id="paymentBank">
+    Loading...
+</div><br>
+        </div>
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Account Name</span><br>
+<div class="value" id="paymentAccountName">
+    Loading...
+<br>
+<span class="easy">Easy Mine Coupon-code Payment Account</span>
+</div>
+        </div>
+
+      </div>
+            
+
+<br>
+
+
+      <!-- RECEIPT -->
+      <div class="receipt-title">Upload Payment Receipt</div>
+
+      <label class="upload-box">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        <span id="uploadText">Tap to upload receipt</span>
+
+        <input type="file" id="receiptInput" accept="image/*">
+      </label>
+
+      <img class="receipt-preview" id="receiptPreview" alt="Receipt Preview">
+
+
+      <!-- BUTTON -->
+      <button class="payment-btn" id="paymentBtn">
+        I have made my payment
+      </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+PROCESSING MODAL (CLEAN FIXED)
+========================= -->
+
+<div class="processing-modal" id="processingModal">
+
+  <div class="processing-content">
+
+    <!-- HEADER -->
+    <div class="modal-header processing-header">
+
+      <h2 class="modal-title">Buy Coupon Code</h2>
+
+      <button class="close-modal" id="closeProcessingModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <!-- LOADER -->
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+    <!-- TITLE -->
+    <h2 class="processing-title">
+      Processing Payment...
+    </h2>
+
+    <!-- STEPS -->
+<div class="processing-steps">
+
+  <p class="processing-text active">
+    Uploading document...
+  </p>
+
+  <p class="processing-step">
+    Verifying submission...
+  </p>
+
+  <p class="processing-step">
+    Awaiting confirmation...
+  </p>
+
+</div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+FAILED PAYMENT MODAL (CLEAN FIXED)
+========================= -->
+
+<div class="coupon-modal" id="failedModal">
+
+  <div class="modal-content failed-content">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+
+
+      <button class="close-modal" id="closeFailedModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <!-- ICON -->
+    <div class="failed-icon-wrap">
+
+<!-- SVG removed -->
+
+    </div>
+
+    <!-- TITLE -->
+    <div class="failed-title">
+      Payment Receipt is being processed 
+    </div>
+
+    <!-- TEXT -->
+    <div class="failed-text">
+      Your receipt is being processed, for faster approval send your email and a text to support to verify your payment.</div>
+
+    <!-- BUTTON -->
+    <button class="telegram-btn" onclick="openTelegramSupport()">
+      Contact Support
+    </button>
+
+    <!-- CLOSE BUTTON -->
+    <button class="failed-close-btn" id="closeFailedBtn" onclick="window.location='home.html'">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+/* =========================
+APP STATE
+========================= */
+const AppState = {
+    currentUser: null,
+    initialized: false,
+    isLoading: false
+};
+
+/* =========================
+SAFE UTILS
+========================= */
+function showToast(msg) {
+    console.log(msg);
+}
+
+function setText(el, text) {
+    if (el) el.textContent = text;
+}
+
+function setHTML(el, html) {
+    if (el) el.innerHTML = html;
+}
+
+function formatMoney(amount) {
+    return "₦" + Number(amount || 0).toLocaleString();
+}
+
+async function refreshDashboard() {}
+
+
+async function loadPaymentAccountDetails(){
+
+    try{
+
+        const settings =
+        await Parse.Cloud.run(
+            "getAdminSettings"
+        );
+
+
+        if(!settings){
+            return;
+        }
+
+
+        // Amount
+
+        const amount =
+        document.getElementById(
+            "paymentAmount"
+        );
+
+        if(amount){
+
+            amount.innerText =
+            "₦" +
+            Number(
+                settings.amount || 0
+            ).toLocaleString();
+
+        }
+
+
+
+        // Account Number
+
+        const accountNumber =
+        document.getElementById(
+            "accountNumber"
+        );
+
+        if(accountNumber){
+
+            accountNumber.childNodes[0].textContent =
+            settings.accountNumber || "";
+
+        }
+
+
+
+        // Bank
+
+        const bank =
+        document.getElementById(
+            "paymentBank"
+        );
+
+        if(bank){
+
+            bank.innerText =
+            settings.bankName || "";
+
+        }
+
+
+
+        // Account Name
+
+        const name =
+        document.getElementById(
+            "paymentAccountName"
+        );
+
+        if(name){
+
+            name.innerText =
+            settings.accountName || "";
+
+        }
+
+
+    }
+    catch(error){
+
+        console.log(
+            "Payment details error:",
+            error
+        );
+
+    }
+
+}
+/* =========================
+DOM CACHE (IMPORTANT FIX)
+========================= */
+const DOM = {
+    walletBalance: null,
+    userLevel: null,
+    referralCode: null,
+    referralCount: null,
+    transactionBox: null
+};
+
+/* =========================
+MODAL SYSTEM
+========================= */
+function openModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    modal.style.display = "flex";
+    setTimeout(() => modal.classList.add("active"), 10);
+}
+
+function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    modal.classList.remove("active");
+    setTimeout(() => modal.style.display = "none", 300);
+}
+
+function enableBackdropClose(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal(id);
+            window.location.href = "home.html";
+        }
+    });
+}
+
+/* =========================
+MISSING FUNCTION FIX (CRITICAL)
+========================= */
+function initializeCouponSystem() {
+    console.log("Coupon system initialized");
+}
+
+/* =========================
+LOAD DASHBOARD (SAFE)
+========================= */
+async function loadUserDashboard() {
+    try {
+        const user = AppState.currentUser;
+        if (!user) return;
+
+        const walletBalance = Number(user.get("walletBalance") || 0);
+        const referralCode = user.get("myReferralCode") || "------";
+        const referralCount = Number(user.get("referralCount") || 0);
+        const level = Number(user.get("level") || 1);
+
+        setText(DOM.walletBalance, formatMoney(walletBalance));
+        setText(DOM.referralCode, referralCode);
+        setText(DOM.referralCount, `${referralCount} referred`);
+        setHTML(DOM.userLevel, `⚡ Lvl ${level}`);
+
+        await loadTransactionsFromServer(user.id);
+    } catch (e) {
+        console.log("Dashboard Load Error:", e);
+        showToast("Failed to load dashboard");
+    }
+}
+
+/* =========================
+TRANSACTIONS
+========================= */
+async function loadTransactionsFromServer(userId) {
+    try {
+        if (!userId) return;
+
+        const transactions = await Parse.Cloud.run(
+            "getRecentTransactions",
+            { userId }
+        );
+
+        renderTransactions(transactions || []);
+    } catch (e) {
+        console.log("Transaction Error:", e);
+        renderEmptyTransactions();
+    }
+}
+
+function renderEmptyTransactions() {
+    if (!DOM.transactionBox) return;
+
+    DOM.transactionBox.innerHTML = `
+        <div class="empty-transactions">No transactions yet</div>
+    `;
+}
+
+function renderTransactions(transactions = []) {
+    if (!DOM.transactionBox) return;
+
+    if (!Array.isArray(transactions) || transactions.length === 0) {
+        renderEmptyTransactions();
+        return;
+    }
+
+    DOM.transactionBox.innerHTML = "";
+
+    transactions.forEach(tx => {
+        const el = document.createElement("div");
+        el.className = "transaction-item";
+
+        el.innerHTML = `
+            <div class="transaction-left">
+                <div class="transaction-type">${tx.type || "Transaction"}</div>
+                <div class="transaction-status ${tx.status || "success"}">
+                    ${tx.status || "success"}
+                </div>
+            </div>
+            <div class="transaction-amount">
+                ${formatMoney(tx.amount)}
+            </div>
+        `;
+
+        DOM.transactionBox.appendChild(el);
+    });
+}
+
+/* =========================
+INIT (ONLY ONE DOMCONTENTLOADED)
+========================= */
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        /* CACHE DOM ONCE */
+        DOM.walletBalance = document.getElementById("walletBalance");
+        DOM.userLevel = document.getElementById("userLevel");
+        DOM.referralCode = document.getElementById("referralCode");
+        DOM.referralCount = document.getElementById("referralCount");
+        DOM.transactionBox = document.getElementById("transactionBox");
+
+        initializeCouponSystem();
+        loadPaymentAccountDetails();
+
+        AppState.currentUser = Parse.User.current();
+
+        if (!AppState.currentUser) {
+            window.location.href = "index.html";
+            return;
+        }
+
+        enableBackdropClose("couponModal");
+        enableBackdropClose("processingModal");
+        enableBackdropClose("failedModal");
+
+        await loadUserDashboard();
+
+        AppState.initialized = true;
+        console.log("Easy Mine Initialized");
+
+        openModal("couponModal");
+
+    } catch (e) {
+        console.log("Initialization Error:", e);
+    }
+});
+</script>
+<script>
+
+/* =========================================
+LOAD USER DASHBOARD
+========================================= */
+
+let dashboardLoading = false;
+
+
+async function loadUserDashboard() {
+
+    if (dashboardLoading) return;
+
+    dashboardLoading = true;
+
+    try {
+
+        const user = AppState.currentUser;
+
+        if (!user) {
+            showToast("User not found");
+            return;
+        }
+
+        const dashboardData = {
+
+            walletBalance:
+                Number(user.get("walletBalance") || 0),
+
+            referralCode:
+                user.get("myReferralCode") || "------",
+
+            referralCount:
+                Number(user.get("referralCount") || 0),
+
+            level:
+                Number(user.get("level") || 1)
+
+        };
+
+        renderWalletBalance(
+            dashboardData.walletBalance
+        );
+
+        renderUserLevel(
+            dashboardData.level
+        );
+
+        renderReferralCode(
+            dashboardData.referralCode
+        );
+
+        renderReferralCount(
+            dashboardData.referralCount
+        );
+
+        await loadTransactionsFromServer(
+            user.id
+        );
+await refreshDashboard();
+    }
+
+    catch (error) {
+
+        console.log(
+            "Dashboard Load Error:",
+            error
+        );
+
+        showToast(
+            "Failed to load dashboard"
+        );
+
+    }
+
+    finally {
+
+        dashboardLoading = false;
+
+    }
+
+}
+/* =========================================
+WALLET BALANCE
+========================================= */
+
+function renderWalletBalance(balance = 0) {
+
+    if (!DOM.walletBalance)
+        return;
+
+    setText(
+        DOM.walletBalance,
+        formatMoney(balance)
+    );
+    
+
+}
+
+
+
+/* =========================================
+USER LEVEL
+========================================= */
+
+function renderUserLevel(level = 1) {
+
+    if (!DOM.userLevel)
+        return;
+
+    setHTML(
+        DOM.userLevel,
+        `⚡ Lvl ${level}`
+    );
+
+}
+
+
+
+/* =========================================
+REFERRAL CODE
+========================================= */
+
+function renderReferralCode(
+    code = "------"
+) {
+
+    if (!DOM.referralCode)
+        return;
+
+    setText(
+        DOM.referralCode,
+        code
+    );
+
+}
+
+
+
+/* =========================================
+REFERRAL COUNT
+========================================= */
+
+function renderReferralCount(
+    count = 0
+) {
+
+    if (!DOM.referralCount)
+        return;
+
+    setText(
+        DOM.referralCount,
+        `${count} referred`
+    );
+
+}
+
+
+
+/* =========================================
+LOAD TRANSACTIONS
+========================================= */
+
+async function loadTransactionsFromServer(
+    userId
+) {
+
+    try {
+
+        if (!userId)
+            return;
+
+        const transactions =
+            await Parse.Cloud.run(
+                "getRecentTransactions",
+                {
+                    userId: userId
+                }
+            );
+            if (transactions){
+            await refreshDashboard();
+            }
+
+        renderTransactions(
+            transactions
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Transaction Load Error:",
+            error
+        );
+
+        renderEmptyTransactions();
+
+    }
+
+}
+
+
+
+/* =========================================
+EMPTY TRANSACTION STATE
+========================================= */
+
+function renderEmptyTransactions() {
+
+    if (!DOM.transactionBox)
+        return;
+
+    DOM.transactionBox.innerHTML = `
+
+        <div class="empty-transactions">
+
+            No transactions yet
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================
+RENDER TRANSACTIONS
+========================================= */
+
+async function renderTransactions(
+    transactions = []
+) {
+    
+
+    if (!DOM.transactionBox)
+        return;
+        
+
+    /* =====================================
+       EMPTY STATE
+    ===================================== */
+
+    if (
+        !Array.isArray(
+            transactions
+        ) ||
+        transactions.length === 0
+    ) {
+
+        renderEmptyTransactions();
+        await refreshDashboard();
+        return;
+
+    }
+
+
+    /* =====================================
+       CLEAR EXISTING
+    ===================================== */
+
+    DOM.transactionBox.innerHTML =
+        "";
+
+
+    /* =====================================
+       RENDER EACH ITEM
+    ===================================== */
+
+    transactions.forEach(
+        transaction => {
+
+        const transactionItem =
+            createTransactionItem(
+                transaction
+            );
+
+        DOM.transactionBox.appendChild(
+            transactionItem
+        );
+
+    });
+
+}
+
+
+
+/* =========================================
+CREATE TRANSACTION ITEM
+========================================= */
+
+function createTransactionItem(
+    transaction = {}
+) {
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+    item.className =
+        "transaction-item";
+
+
+    /* =====================================
+       SAFE DATA
+    ===================================== */
+
+    const type =
+        transaction.type ||
+        "Transaction";
+
+    const amount =
+        Number(
+            transaction.amount || 0
+        );
+
+    const status =
+        transaction.status ||
+        "success";
+
+
+    /* =====================================
+       STATUS CLASS
+    ===================================== */
+
+    let statusClass =
+        "success";
+
+    if (
+        status === "pending"
+    ) {
+
+        statusClass =
+            "pending";
+
+    }
+
+    if (
+        status === "failed"
+    ) {
+
+        statusClass =
+            "failed";
+
+    }
+
+
+    /* =====================================
+       TEMPLATE
+    ===================================== */
+
+    item.innerHTML = `
+
+        <div class="transaction-left">
+
+            <div class="transaction-type">
+
+                ${type}
+
+            </div>
+
+            <div class="
+                transaction-status
+                ${statusClass}
+            ">
+
+                ${status}
+
+            </div>
+
+        </div>
+
+        <div class="transaction-amount">
+
+            ${formatMoney(amount)}
+
+        </div>
+
+    `;
+
+    return item;
+
+}
+
+
+
+/* =========================================
+COPY REFERRAL CODE
+========================================= */
+
+async function copyReferralCode() {
+
+    try {
+
+        const code =
+            DOM.referralCode
+            ?.textContent
+            ?.trim();
+
+        if (!code) {
+
+            showToast(
+                "Referral code unavailable"
+            );
+
+            return;
+
+        }
+
+        await navigator.clipboard
+        .writeText(code);
+
+        showToast(
+            "Referral code copied"
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Copy Referral Error:",
+            error
+        );
+
+        showToast(
+            "Failed to copy"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+SHARE REFERRAL
+========================================= */
+
+async function shareReferral() {
+
+    try {
+
+        const code =
+            DOM.referralCode
+            ?.textContent
+            ?.trim();
+
+        if (!code) {
+
+            showToast(
+                "Referral code unavailable"
+            );
+
+            return;
+
+        }
+
+        const message =
+
+`Join Easy Mine using my referral code: ${code}`;
+
+
+        /* =================================
+           NATIVE SHARE
+        ================================= */
+
+        if (navigator.share) {
+
+            await navigator.share({
+
+                title: "Easy Mine",
+
+                text: message
+
+            });
+
+        }
+
+        else {
+
+            await navigator.clipboard
+            .writeText(message);
+
+            showToast(
+                "Referral message copied"
+            );
+
+        }
+
+
+        /* =================================
+           TRACK SHARE
+        ================================= */
+
+        try {
+
+            await Parse.Cloud.run(
+                "trackReferralShare"
+            );
+
+        }
+
+        catch (trackingError) {
+
+            console.log(
+                "Referral Tracking Error:",
+                trackingError
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Share Referral Error:",
+            error
+        );
+
+        showToast(
+            "Sharing cancelled"
+        );
+
+    }
+
+}
+
+
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+
+
+/* =========================================
+EVENT LISTENERS
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+       
+
+      const shareBtn =
+    document.getElementById(
+        "shareReferralBtn"
+    );
+
+if (shareBtn) {
+
+    shareBtn.addEventListener(
+        "click",
+        shareReferral
+    );
+
+}
+
+        /* =============================
+           COPY REFERRAL
+        ============================= */
+
+        const copyBtn =
+            document.getElementById(
+                "copyBtn"
+            );
+
+        if (copyBtn) {
+
+            copyBtn.addEventListener(
+                "click",
+                copyReferralCode
+            );
+
+        }
+
+
+        /* =============================
+           LOGOUT BUTTON
+        ============================= */
+
+        const logoutBtn =
+            document.getElementById(
+                "logoutBtn"
+            );
+
+        if (logoutBtn) {
+
+            logoutBtn.addEventListener(
+                "click",
+                logoutUser
+            );
+
+        }
+
+    }
+);
+console.log("Second Script has loaded");
+</script>
+<script>
+
+/* =========================================
+RECEIPT SYSTEM
+========================================= */
+
+const receiptInput =
+document.getElementById(
+    "receiptInput"
+);
+
+const receiptPreview =
+document.getElementById(
+    "receiptPreview"
+);
+
+const uploadText =
+document.getElementById(
+    "uploadText"
+);
+
+const paymentBtn =
+document.getElementById(
+    "paymentBtn"
+);
+
+const copyAccountBtn =
+document.getElementById(
+    "copyAccountBtn"
+);
+
+const accountNumber =
+document.getElementById(
+    "accountNumber"
+);
+
+
+/* =========================================
+SELECTED FILE
+========================================= */
+
+let selectedReceipt = null;
+
+
+/* =========================================
+COPY ACCOUNT NUMBER
+========================================= */
+
+if (copyAccountBtn) {
+
+    copyAccountBtn.addEventListener(
+        "click",
+        async () => {
+
+        try {
+
+            const number =
+                accountNumber
+                ?.textContent
+                ?.trim();
+
+            if (!number) return;
+
+            await navigator.clipboard
+            .writeText(number);
+
+            showToast(
+                "Account number copied"
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Copy Error:",
+                error
+            );
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
+IMAGE PREVIEW
+========================================= */
+
+if (receiptInput) {
+
+    receiptInput.addEventListener(
+        "change",
+        (event) => {
+
+        const file =
+            event.target.files[0];
+
+        if (!file) return;
+
+
+        /* =====================
+           VALIDATE IMAGE
+        ===================== */
+
+        if (
+            !file.type.startsWith(
+                "image/"
+            )
+        ) {
+
+            showToast(
+                "Select an image"
+            );
+
+            return;
+
+        }
+
+
+        selectedReceipt = file;
+
+        uploadText.textContent =
+            file.name;
+
+
+        /* =====================
+           PREVIEW IMAGE
+        ===================== */
+
+        const reader =
+            new FileReader();
+
+        reader.onload =
+            function(e) {
+
+            receiptPreview.src =
+                e.target.result;
+
+            receiptPreview.style.display =
+                "block";
+
+        };
+
+        reader.readAsDataURL(
+            file
+        );
+
+    });
+
+}
+
+
+/* =========================================
+UPLOAD PAYMENT RECEIPT
+========================================= */
+
+if (paymentBtn) {
+
+    paymentBtn.addEventListener(
+        "click",
+        async () => {
+
+        try {
+
+            /* =====================
+               VALIDATE FILE
+            ===================== */
+
+            if (!selectedReceipt) {
+
+                showToast(
+                    "Upload receipt first"
+                );
+
+                return;
+
+            }
+
+
+            /* =====================
+               USER
+            ===================== */
+
+            const user =
+                Parse.User.current();
+
+            if (!user) {
+
+                showToast(
+                    "User not found"
+                );
+
+                return;
+
+            }
+
+
+            /* =====================
+               OPEN PROCESSING
+            ===================== */
+
+            closeModal(
+                "couponModal"
+            );
+
+            openModal(
+                "processingModal"
+            );
+
+
+            /* =====================
+               UPLOAD FILE
+            ===================== */
+
+            const parseFile =
+                new Parse.File(
+                    selectedReceipt.name,
+                    selectedReceipt
+                );
+
+            await parseFile.save();
+
+
+            /* =====================
+               SAVE PAYMENT
+            ===================== */
+
+            const CouponPayment =
+                Parse.Object.extend(
+                    "Receipt"
+                );
+
+            const payment =
+                new CouponPayment();
+
+            payment.set(
+                "user",
+                user
+            );
+
+            payment.set(
+                "image",
+                parseFile
+            );
+
+            payment.set(
+                "amount",
+                10000
+            );
+
+            /* =====================
+   AUTO APPROVE CHECK
+===================== */
+
+await user.fetch();
+
+const autoApproveCoupons =
+    user.get(
+        "autoApproveCoupons"
+    );
+
+/* =====================
+   AUTO APPROVE ENABLED
+===================== */
+
+if(autoApproveCoupons === true){
+
+    /* =====================
+       GENERATE COUPON
+    ===================== */
+
+    const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let couponCode = "BPC-";
+
+    for(let i = 0; i < 8; i++){
+
+        const random =
+        Math.floor(
+            Math.random() *
+            chars.length
+        );
+
+        couponCode +=
+        chars[random];
+
+    }
+
+    /* =====================
+       AUTO APPROVE
+    ===================== */
+
+    payment.set(
+        "status",
+        "approved"
+    );
+
+    payment.set(
+        "couponCode",
+        couponCode
+    );
+
+    payment.set(
+        "approvedAt",
+        new Date()
+    );
+
+    payment.set(
+        "userId",
+        user.id
+    );
+
+    /* =====================
+       SAVE COUPON TO USER
+    ===================== */
+
+    user.set(
+        "couponCode",
+        couponCode
+    );
+
+    await user.save();
+
+}else{
+
+    payment.set(
+        "status",
+        "pending"
+    );
+
+}
+
+            const settings =
+await Parse.Cloud.run(
+    "getAdminSettings"
+);
+
+
+payment.set(
+    "accountNumber",
+    settings.accountNumber
+);
+
+            await payment.save();
+
+
+            /* =====================
+               SUCCESS
+            ===================== */
+
+            closeModal(
+                "processingModal"
+            );
+
+            openModal(
+                "failedModal"
+            );
+
+            showToast(
+                "Receipt uploaded successfully"
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Receipt Upload Error:",
+                error
+            );
+
+            closeModal(
+                "processingModal"
+            );
+
+            openModal(
+                "couponModal"
+            );
+
+            showToast(
+                error.message ||
+                "Upload failed"
+            );
+
+        }
+
+    });
+
+}
+
+console.log(
+    "Receipt Upload Script Loaded"
+);
+
+</script>
+     <script>
+        const copyBtn = document.getElementById("copyBtn");
+const upgradeAccountNumber = document.getElementById("accountNumber");
+
+copyBtn.addEventListener("click", async () => {
+
+  // Get only the account number text
+  const accountNumber = upgradeAccountNumber.childNodes[0].textContent.trim();
+
+  try {
+
+    await navigator.clipboard.writeText(accountNumber);
+
+    // Change icon temporarily
+    copyBtn.innerHTML = "Copied!";
+
+    setTimeout(() => {
+
+      copyBtn.innerHTML = `
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      `;
+
+    }, 1500);
+
+  } catch (error) {
+
+    alert("Failed to copy account number");
+
+  }
+
+});
+      </script>
+      
+      <script>
+
+function openTelegramSupport(){
+
+    window.open(
+        "http://t.me/easyminewebsite",
+        "_blank"
+    );
+
+}
+
+</script>
+<script>
+const tenThousandToggle = document.getElementById('ten-thousand-toggle');
+const fiveThousandToggle = document.getElementById('five-thousand-toggle');
+
+tenThousandToggle.addEventListener('change', () => {
+  if (tenThousandToggle.checked) {
+    fiveThousandToggle.checked = false;
+  }
+});
+
+fiveThousandToggle.addEventListener('change', () => {
+  if (fiveThousandToggle.checked) {
+    tenThousandToggle.checked = false;
+
+    alert(
+      'If you purchase this ₦6,000 coupon code, you can only withdraw half of your balance.'
+    );
+  }
+});
+</script>
+</body>
+</html>

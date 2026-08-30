@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EasyPay Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#0d3f68 0%,transparent 30%),
+radial-gradient(circle at bottom right,#0f4d73 0%,transparent 30%),
+linear-gradient(180deg,#03111c,#072238);
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+inset:0;
+background-image:
+radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+background-size:40px 40px;
+opacity:.35;
+z-index:-1;
+}
+
+.top-bar{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:20px;
+}
+
+.back-btn{
+width:44px;
+height:44px;
+border-radius:14px;
+border:none;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:22px;
+cursor:pointer;
+}
+
+.admin-number{
+font-size:19px;
+font-weight:700;
+}
+
+.admin-sub{
+font-size:14px;
+opacity:.7;
+margin-top:2px;
+}
+
+.nav-tabs{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:18px;
+}
+
+.tab{
+height:48px;
+border-radius:16px;
+border:none;
+background:#111111;
+color:#c8b27a;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+border:1px solid rgba(255,215,0,.08);
+}
+
+.tab.active{
+background:linear-gradient(90deg,#1dd7a1,#2b72ff);
+color:white;
+}
+
+.cards-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-bottom:20px;
+}
+
+.card{
+background:linear-gradient(145deg,#0f0f0f,#161616);
+border-radius:24px;
+padding:22px;
+border:1px solid rgba(255,215,0,.08);
+box-shadow:0 12px 30px rgba(0,0,0,.35);
+transition:.3s;
+}
+
+.card-icon{
+font-size:28px;
+margin-bottom:14px;
+}
+
+.card-number{
+font-size:42px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.card-title{
+font-size:15px;
+opacity:.75;
+line-height:1.4;
+}
+
+.green{color:#30f59a;}
+.yellow{color:#ffda4d;}
+.red{color:#ff6c6c;}
+.blue{color:#65b3ff;}
+
+.chart-box{
+background:rgba(4,16,26,.9);
+border-radius:24px;
+padding:24px 18px;
+margin-top:8px;
+}
+
+.chart-title{
+font-size:24px;
+font-weight:700;
+margin-bottom:26px;
+}
+
+.chart{
+height:220px;
+display:flex;
+align-items:flex-end;
+gap:12px;
+padding-top:20px;
+}
+
+.bar-wrap{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+.bar{
+width:100%;
+border-radius:14px 14px 0 0;
+background:linear-gradient(180deg,#24e0a2,#2867ff);
+min-height:10px;
+}
+
+.bar-value{
+font-size:12px;
+opacity:.7;
+}
+
+.loading{
+opacity:.6;
+pointer-events:none;
+}
+
+@media(max-width:600px){
+.card-number{
+font-size:36px;
+}
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  margin: 0;
+  color: white;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+/* NAV */
+.nav-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: #1e293b;
+  border: none;
+  color: #cbd5e1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tab i {
+  margin-right: 6px;
+}
+
+.tab:hover {
+  background: #334155;
+  color: white;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#031b34;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  padding:20px;
+  position:relative;
+}
+
+/* =========================
+BACKGROUND EFFECT
+========================= */
+
+.bg-overlay{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0,255,255,.08), transparent 120px),
+    radial-gradient(circle at 80% 20%, rgba(0,255,255,.08), transparent 120px),
+    radial-gradient(circle at 50% 80%, rgba(0,255,255,.08), transparent 120px),
+    linear-gradient(
+      180deg,
+      #03213f,
+      #04284c,
+      #03213f
+    );
+  z-index:-1;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.top-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.header-left{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-center h1{
+  font-size:28px;
+  color:white;
+  margin-bottom:4px;
+}
+
+.header-center span{
+  color:#9cb7d1;
+  font-size:14px;
+}
+
+/* =========================
+NAVIGATION
+========================= */
+
+.nav-btn{
+  height: 48px;
+  border-radius: 16px;
+  border: none;
+  background: #0d2741;
+  color: #b7c9dc;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nav-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.nav-btn{
+  border:none;
+  background:#16385d;
+  color:#cddfff;
+  padding:15px 22px;
+  border-radius:20px;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.nav-btn.active{
+  background:linear-gradient(
+    135deg,
+    #25f0d0,
+    #1ca6ff
+  );
+  color:#001b2e;
+}
+
+/* =========================
+FILTERS
+========================= */
+
+.filter-row{
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+  overflow:auto;
+  padding-bottom:5px;
+}
+
+.filter-row::-webkit-scrollbar{
+  display:none;
+}
+
+.filter-btn,
+.country-btn{
+  border:none;
+  background:#17385d;
+  color:#d6e7ff;
+  padding:13px 20px;
+  border-radius:18px;
+  cursor:pointer;
+  white-space:nowrap;
+  font-weight:bold;
+}
+
+.filter-btn.active,
+.country-btn.active{
+  background:linear-gradient(
+    135deg,
+    #20f0d0,
+    #1dbeff
+  );
+  color:#04213d;
+}
+
+/* =========================
+SEARCH
+========================= */
+
+.search-box{
+  background:#121f28;
+  border-radius:18px;
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.search-box i{
+  color:#8ba8c5;
+}
+
+.search-box input{
+  width:100%;
+  border:none;
+  background:none;
+  outline:none;
+  color:white;
+  font-size:16px;
+}
+
+.search-box input::placeholder{
+  color:#8ba8c5;
+}
+
+/* =========================
+DELETE PENDING
+========================= */
+
+.delete-pending-btn{
+  border:none;
+  background:#d96fd4;
+  color:white;
+  width:100%;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:24px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* =========================
+RECEIPT CARD
+========================= */
+
+.receipt-card{
+  background:#102638;
+  border-radius:28px;
+  padding:20px;
+  margin-bottom:28px;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.25);
+}
+
+/* =========================
+CARD HEADER
+========================= */
+
+.receipt-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.user-info h2{
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.user-info p{
+  color:#9db5cb;
+  margin-bottom:5px;
+  font-size:15px;
+}
+
+.status-badge{
+  padding:12px 18px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:bold;
+  height:fit-content;
+}
+
+.pending{
+  background:#184638;
+  color:#4cff9a;
+}
+
+.approved{
+  background:#0d3d57;
+  color:#44d3ff;
+}
+
+.rejected{
+  background:#4c1616;
+  color:#ff7070;
+}
+
+/* =========================
+COUPON
+========================= */
+
+.coupon-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#173e32;
+  color:#52ffb3;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.coupon-box{
+  background:#1c2b35;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+  position:relative;
+}
+
+.coupon-title{
+  color:#96aec4;
+  margin-bottom:8px;
+}
+
+.coupon-code{
+  font-size:32px;
+  font-weight:bold;
+  letter-spacing:2px;
+  color:white;
+}
+
+.copy-btn{
+  position:absolute;
+  top:18px;
+  right:18px;
+  background:none;
+  border:none;
+  color:#31ffc5;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* =========================
+IMAGE
+========================= */
+
+.image-wrapper{
+  width:100%;
+  height:420px;
+  border-radius:24px;
+  overflow:hidden;
+  background:#0b1720;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.receipt-image{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.action-row{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+
+button{
+  font-weight:bold;
+}
+
+.approve-btn,
+.reject-btn{
+  flex:1;
+  border:none;
+  padding:18px;
+  border-radius:18px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.approve-btn{
+  background:linear-gradient(
+    135deg,
+    #14d65c,
+    #0aa74a
+  );
+}
+
+.reject-btn{
+  background:linear-gradient(
+    135deg,
+    #ff4d4d,
+    #c70000
+  );
+}
+
+.delete-btn{
+  width:100%;
+  border:none;
+  margin-top:16px;
+  background:black;
+  color:#ff4d4d;
+  padding:18px;
+  border-radius:18px;
+  font-size:17px;
+  cursor:pointer;
+}
+
+/* =========================
+EMPTY
+========================= */
+
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+  color:#9db5cb;
+  font-size:18px;
+}
+
+/* =========================
+LOADER
+========================= */
+
+.loader{
+  width:55px;
+  height:55px;
+  border:5px solid rgba(255,255,255,.1);
+  border-top:5px solid #1ef2cf;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:60px auto;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  body{
+    padding:14px;
+  }
+
+  .header-center h1{
+    font-size:24px;
+  }
+
+  .receipt-top{
+    flex-direction:column;
+  }
+
+  .user-info h2{
+    font-size:21px;
+  }
+
+  .coupon-code{
+    font-size:24px;
+  }
+
+  .image-wrapper{
+    height:320px;
+  }
+
+  .action-row{
+    flex-direction:column;
+  }
+
+  .approve-btn,
+  .reject-btn,
+  .delete-btn{
+    width:100%;
+  }
+
+}
+
+.tabs{
+  display:flex;
+  gap:12px;
+  padding:10px;
+  flex-wrap:wrap;
+}
+
+.tab{
+  height:38px;
+  padding:0 20px;
+  border-radius:18px;
+  border:none;
+  background:#0d2741;
+  color:#b7c9dc;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  transition:0.3s;
+}
+
+.tab:hover{
+  background:#12395c;
+}
+
+.tab.active {
+  background: #ffd700;
+  color: white;
+}
+
+/* GRID */
+.cards-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 18px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: 0.25s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #243043;
+}
+
+/* ICON CIRCLE */
+.card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+}
+
+/* COLORS */
+.blue { background:#ffd700; }
+.green { background:#ffd700; }
+.red { background: #ffd700; }
+.orange { background:#ffd700; }
+.purple { background: #ffd700; }
+.teal { background: #ffd700; }
+.darkblue { background: #ffd700; }
+
+/* TEXT */
+.card-number {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-title {
+  font-size: 13px;
+  color: #94a3b8;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+<button class="back-btn" onclick="history.back()">←</button>
+
+<div>
+
+</div>
+</div>
+
+<div class="dashboard">
+
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="tab active" onclick="window.location='admin.html'"><i class="fas fa-chart-line"></i> Dashboard</button>
+    <button class="tab" onclick="window.location='admin2.html'"><i class="fas fa-receipt"></i> Receipts</button>
+    <button class="tab" onclick="window.location='admin4.html'"><i class="fas fa-users"></i> Users</button>
+    <button class="tab" onclick="window.location='admin5.html'"><i class="fas fa-comments"></i> Chat</button>
+    <button class="tab" onclick="window.location='admin6.html'"><i class="fas fa-bell"></i> Notify</button>
+    <button class="tab" onclick="window.location='admin7.html'"><i class="fas fa-image"></i> image</button>
+    <button class="tab" onclick="window.location='admin8.html'"><i class="fas fa-gear"></i> settings</button>
+    <button class="tab" onclick="window.location='home.html'"><i class="fas fa-house"></i> home</button>
+    <button class="tab" onclick="window.location='transactions.html'"><i class="fas fa-receipt"></i> Opay</button>
+        <button class="tab active" onclick="window.location='accessreceipt 1.html'"><i class="fas fa-chart-line"></i> Dashboard</button>
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-icon blue"><i class="fas fa-users"></i></div>
+      <div>
+        <div class="card-number" id="totalUsers">0</div>
+        <div class="card-title">Total Users</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon purple"><i class="fas fa-bolt"></i></div>
+      <div>
+        <div class="card-number" id="activeToday">0</div>
+        <div class="card-title">Active Today</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon green"><i class="fas fa-circle-check"></i></div>
+      <div>
+        <div class="card-number" id="approvedReceipts">0</div>
+        <div class="card-title">Approved</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon orange"><i class="fas fa-clock"></i></div>
+      <div>
+        <div class="card-number" id="pendingReceipts">0</div>
+        <div class="card-title">Pending</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon red"><i class="fas fa-xmark-circle"></i></div>
+      <div>
+        <div class="card-number" id="rejectedReceipts">0</div>
+        <div class="card-title">Rejected</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon teal"><i class="fas fa-bolt-lightning"></i></div>
+      <div>
+        <div class="card-number" id="activeMiners">0</div>
+        <div class="card-title">Active Miners</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon darkblue"><i class="fas fa-bell"></i></div>
+      <div>
+        <div class="card-number" id="pushSubscribers">0</div>
+        <div class="card-title">Subscribers</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="chart-box">
+<div class="chart-title">Signups (Last 14 Days)</div>
+
+<div class="chart" id="chartContainer"></div>
+</div>
+
+<script>
+// =============================
+// PARSE CONFIG
+// =============================
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+
+// =============================
+// AUTH CHECK
+// =============================
+
+async function verifyAdmin(){
+
+const user = Parse.User.current();
+
+if(!user){
+alert('Login required');
+window.location.href = 'login.html';
+return;
+}
+
+const isAdmin = user.get('isAdmin');
+
+if(!isAdmin){
+alert('Unauthorized');
+window.location.href = 'index.html';
+return;
+}
+
+loadDashboard();
+
+}
+
+
+// =============================
+// LOAD DASHBOARD
+// =============================
+
+async function loadDashboard(){
+
+try{
+
+document.body.classList.add('loading');
+
+const data =
+await Parse.Cloud.run(
+'getAdminDashboardStats'
+);
+
+// =========================
+// UPDATE UI
+// =========================
+
+document.getElementById(
+'totalUsers'
+).innerText = data.totalUsers;
+
+
+document.getElementById(
+'activeToday'
+).innerText = data.activeToday;
+
+
+document.getElementById(
+'approvedReceipts'
+).innerText = data.approvedReceipts;
+
+
+document.getElementById(
+'pendingReceipts'
+).innerText = data.pendingReceipts;
+
+
+document.getElementById(
+'rejectedReceipts'
+).innerText = data.rejectedReceipts;
+
+
+document.getElementById(
+'activeMiners'
+).innerText = data.activeMiners;
+
+
+document.getElementById(
+'pushSubscribers'
+).innerText = data.pushSubscribers;
+
+
+renderChart(data.signups);
+
+}catch(error){
+
+console.log(error);
+alert(error.message || error);
+
+}
+
+finally{
+
+document.body.classList.remove('loading');
+
+}
+
+}
+
+
+// =============================
+// CHART
+// =============================
+
+function renderChart(signups){
+
+const chart =
+document.getElementById(
+'chartContainer'
+);
+
+chart.innerHTML = '';
+
+const max = Math.max(...signups, 10);
+
+signups.forEach((value,index)=>{
+
+const wrap =
+document.createElement('div');
+
+wrap.className = 'bar-wrap';
+
+const bar =
+document.createElement('div');
+
+bar.className = 'bar';
+
+const height =
+(value / max) * 170;
+
+bar.style.height =
+height + 'px';
+
+const text =
+document.createElement('div');
+
+text.className = 'bar-value';
+
+text.innerText = value;
+
+const date =
+document.createElement('div');
+
+const d = new Date();
+
+d.setDate(
+d.getDate() - (13 - index)
+);
+
+const label =
+String(d.getDate())
+.padStart(2,'0');
+
+
+date.className = 'bar-value';
+
+date.innerText = label;
+
+wrap.appendChild(bar);
+wrap.appendChild(text);
+wrap.appendChild(date);
+
+chart.appendChild(wrap);
+
+});
+
+}
+
+
+verifyAdmin();
+</script>
+
+</body>
+</html>

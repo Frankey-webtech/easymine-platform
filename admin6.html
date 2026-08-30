@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
+
+<title>Notify Users</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#031b34;
+color:white;
+padding:20px;
+min-height:100vh;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#0d3f68 0%,transparent 30%),
+radial-gradient(circle at bottom right,#0f4d73 0%,transparent 30%),
+linear-gradient(180deg,#03111c,#072238);
+z-index:-2;
+}
+
+.top-bar{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:24px;
+}
+
+.back-btn{
+width:44px;
+height:44px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:20px;
+cursor:pointer;
+}
+
+.admin-number{
+font-size:19px;
+font-weight:700;
+}
+
+.admin-sub{
+font-size:14px;
+opacity:.7;
+}
+
+.nav-tabs{
+display:flex;
+gap:10px;
+overflow:auto;
+margin-bottom:24px;
+}
+
+.nav-tabs::-webkit-scrollbar{
+display:none;
+}
+
+.tab{
+border:none;
+padding:14px 20px;
+border-radius:18px;
+background:#123252;
+color:#cfe5ff;
+font-weight:700;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.tab.active{
+background:
+linear-gradient(
+135deg,
+#20f0d0,
+#1c9eff
+);
+color:#001b2f;
+}
+
+.section{
+background:#081826;
+border-radius:28px;
+padding:22px;
+margin-bottom:24px;
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+}
+
+.section-title{
+font-size:24px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.section-sub{
+color:#8ca7c3;
+font-size:14px;
+margin-bottom:22px;
+line-height:1.5;
+}
+
+.switch-row{
+display:flex;
+gap:12px;
+margin-bottom:20px;
+}
+
+.switch-btn{
+flex:1;
+height:50px;
+border:none;
+border-radius:18px;
+background:#123252;
+color:#cfe5ff;
+font-weight:bold;
+cursor:pointer;
+}
+
+.switch-btn.active{
+background:
+linear-gradient(
+135deg,
+#20f0d0,
+#1dbeff
+);
+color:#03233d;
+}
+
+.input-box{
+margin-bottom:18px;
+}
+
+.input-box label{
+display:block;
+margin-bottom:10px;
+font-size:14px;
+color:#9cb7d1;
+}
+
+.input-box input,
+.input-box textarea{
+width:100%;
+background:#121f28;
+border:none;
+border-radius:18px;
+padding:18px;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.input-box textarea{
+height:140px;
+resize:none;
+}
+
+.search-results{
+background:#102638;
+border-radius:18px;
+overflow:hidden;
+margin-top:10px;
+display:none;
+}
+
+.user-item{
+padding:15px;
+border-bottom:1px solid rgba(255,255,255,.05);
+cursor:pointer;
+}
+
+.user-item:hover{
+background:#173850;
+}
+
+.selected-user{
+background:#173850;
+padding:14px;
+border-radius:16px;
+margin-bottom:16px;
+display:none;
+}
+
+.send-btn{
+width:100%;
+border:none;
+height:58px;
+border-radius:18px;
+background:
+linear-gradient(
+135deg,
+#1ee59f,
+#1d8fff
+);
+color:white;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+}
+
+@media(max-width:768px){
+
+.section{
+padding:18px;
+}
+
+.section-title{
+font-size:21px;
+}
+
+}
+
+.nav-tabs{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:18px;
+}
+
+.tab{
+height:48px;
+border-radius:16px;
+border:none;
+background:#0d2741;
+color:#b7c9dc;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+}
+
+.tab.active{
+background:linear-gradient(90deg,#1dd7a1,#2b72ff);
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+
+<button class="back-btn"
+onclick="history.back()">
+←
+</button>
+
+<div>
+<div class="admin-number">
++234 706 843 4943 
+</div>
+
+<div class="admin-sub">
+EasyPay Admin Panel
+</div>
+</div>
+
+</div>
+
+  <div class="nav-tabs">
+    <button class="tab" onclick="window.location='admin.html'"><i class="fas fa-chart-line"></i> Dashboard</button>
+    <button class="tab" onclick="window.location='admin2.html'"><i class="fas fa-receipt"></i> Receipts</button>
+    <button class="tab" onclick="window.location='admin4.html'"><i class="fas fa-users"></i> Users</button>
+    <button class="tab" onclick="window.location='admin5.html'"><i class="fas fa-comments"></i> Chat</button>
+    <button class="tab active" onclick="window.location='admin6.html'"><i class="fas fa-bell"></i> Notify</button>
+    <button class="tab" onclick="window.location='admin7.html'"><i class="fas fa-image"></i> image</button>
+    <button class="tab" onclick="window.location='admin8.html'"><i class="fas fa-gear"></i> settings</button>
+    <button class="tab" onclick="window.location='home.html'"><i class="fas fa-house"></i> home</button>
+  </div>
+
+<!-- NOTIFICATION SECTION -->
+
+<div class="section">
+
+<div class="section-title">
+🔔 Send Notifications
+</div>
+
+<div class="section-sub">
+Send notification messages
+to all users or one user.
+</div>
+
+<div class="switch-row">
+
+<button
+class="switch-btn active"
+id="notifyAllBtn">
+📢 All Users
+</button>
+
+<button
+class="switch-btn"
+id="notifySingleBtn">
+👤 Single User
+</button>
+
+</div>
+
+<div id="notifySearchWrap"
+class="hidden">
+
+<div class="input-box">
+
+<label>
+Search User
+</label>
+
+<input
+type="text"
+id="notifySearch"
+placeholder=
+"Search by name, email or phone">
+
+<div
+class="search-results"
+id="notifyResults">
+</div>
+
+</div>
+
+<div
+class="selected-user"
+id="notifySelectedUser">
+</div>
+
+</div>
+
+<div class="input-box">
+
+<label>Title</label>
+
+<input
+type="text"
+id="notifyTitle"
+placeholder="🎉 New Feature!">
+
+</div>
+
+<div class="input-box">
+
+<label>Message</label>
+
+<textarea
+id="notifyMessage"
+placeholder=
+"Enter notification message..."></textarea>
+
+</div>
+
+<button
+class="send-btn"
+onclick="sendMessage('notification')">
+
+📨 Send Notification
+
+</button>
+
+</div>
+
+<!-- FULLSCREEN SECTION -->
+
+<div class="section">
+
+<div class="section-title">
+📢 Send Fullscreen Message
+</div>
+
+<div class="section-sub">
+This message covers the
+entire user screen until
+they close it.
+</div>
+
+<div class="switch-row">
+
+<button
+class="switch-btn active"
+id="fullAllBtn">
+📢 All Users
+</button>
+
+<button
+class="switch-btn"
+id="fullSingleBtn">
+👤 Single User
+</button>
+
+</div>
+
+<div id="fullSearchWrap"
+class="hidden">
+
+<div class="input-box">
+
+<label>
+Search User
+</label>
+
+<input
+type="text"
+id="fullSearch"
+placeholder=
+"Search by name, email or phone">
+
+<div
+class="search-results"
+id="fullResults">
+</div>
+
+</div>
+
+<div
+class="selected-user"
+id="fullSelectedUser">
+</div>
+
+</div>
+
+<div class="input-box">
+
+<label>Title</label>
+
+<input
+type="text"
+id="fullTitle"
+placeholder=
+"🎉 Special Promotion">
+
+</div>
+
+<div class="input-box">
+
+<label>Message</label>
+
+<textarea
+id="fullMessage"
+placeholder=
+"Enter fullscreen message..."></textarea>
+
+</div>
+
+<button
+class="send-btn"
+onclick="sendMessage('fullscreen')">
+
+🚀 Send Fullscreen Message
+
+</button>
+
+</div>
+
+<script>
+
+// ==========================
+// PARSE
+// ==========================
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+Parse.liveQueryServerURL =
+'wss://parseapi.back4app.com/';
+
+// ==========================
+// STATE
+// ==========================
+
+let notifyTarget = "all";
+let fullTarget = "all";
+
+let notifyUser = null;
+let fullUser = null;
+
+let allUsers = [];
+
+// ==========================
+// VERIFY ADMIN
+// ==========================
+
+async function verifyAdmin(){
+
+const user =
+Parse.User.current();
+
+if(!user){
+location.href =
+'login.html';
+return;
+}
+
+if(!user.get('isAdmin')){
+alert('Unauthorized');
+location.href =
+'index.html';
+return;
+}
+
+loadUsers();
+
+}
+
+verifyAdmin();
+
+// ==========================
+// LOAD USERS
+// ==========================
+
+async function loadUsers(){
+
+try{
+
+allUsers =
+await Parse.Cloud.run(
+'getAllUsers'
+);
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+// ==========================
+// TOGGLE
+// ==========================
+
+const notifyAllBtn =
+document.getElementById(
+'notifyAllBtn'
+);
+
+const notifySingleBtn =
+document.getElementById(
+'notifySingleBtn'
+);
+
+notifyAllBtn.onclick = ()=>{
+
+notifyTarget = "all";
+
+notifyAllBtn.classList.add(
+'active'
+);
+
+notifySingleBtn.classList.remove(
+'active'
+);
+
+document.getElementById(
+'notifySearchWrap'
+).classList.add('hidden');
+
+};
+
+notifySingleBtn.onclick = ()=>{
+
+notifyTarget = "single";
+
+notifySingleBtn.classList.add(
+'active'
+);
+
+notifyAllBtn.classList.remove(
+'active'
+);
+
+document.getElementById(
+'notifySearchWrap'
+).classList.remove(
+'hidden'
+);
+
+};
+
+// ==========================
+// FULLSCREEN TOGGLE
+// ==========================
+
+const fullAllBtn =
+document.getElementById(
+'fullAllBtn'
+);
+
+const fullSingleBtn =
+document.getElementById(
+'fullSingleBtn'
+);
+
+fullAllBtn.onclick = ()=>{
+
+fullTarget = "all";
+
+fullAllBtn.classList.add(
+'active'
+);
+
+fullSingleBtn.classList.remove(
+'active'
+);
+
+document.getElementById(
+'fullSearchWrap'
+).classList.add('hidden');
+
+};
+
+fullSingleBtn.onclick = ()=>{
+
+fullTarget = "single";
+
+fullSingleBtn.classList.add(
+'active'
+);
+
+fullAllBtn.classList.remove(
+'active'
+);
+
+document.getElementById(
+'fullSearchWrap'
+).classList.remove(
+'hidden'
+);
+
+};
+
+// ==========================
+// SEARCH
+// ==========================
+
+function setupSearch(
+inputId,
+resultsId,
+selectedId,
+type
+){
+
+const input =
+document.getElementById(
+inputId
+);
+
+const results =
+document.getElementById(
+resultsId
+);
+
+const selected =
+document.getElementById(
+selectedId
+);
+
+input.addEventListener(
+'input',
+()=>{
+
+const value =
+input.value
+.toLowerCase()
+.trim();
+
+if(!value){
+
+results.style.display =
+'none';
+
+return;
+}
+
+const filtered =
+allUsers.filter(user=>{
+
+return (
+
+(user.firstName || '')
+.toLowerCase()
+.includes(value)
+
+||
+
+(user.email || '')
+.toLowerCase()
+.includes(value)
+
+||
+
+(user.phone || '')
+.toLowerCase()
+.includes(value)
+
+);
+
+});
+
+results.innerHTML = '';
+
+filtered.forEach(user=>{
+
+const div =
+document.createElement(
+'div'
+);
+
+div.className =
+'user-item';
+
+div.innerHTML = `
+
+<div>
+<strong>
+${user.firstName}
+</strong>
+</div>
+
+<div style="
+font-size:13px;
+opacity:.7;
+margin-top:4px;
+">
+${user.email}
+</div>
+
+`;
+
+div.onclick = ()=>{
+
+selected.style.display =
+'block';
+
+selected.innerHTML = `
+✅ ${user.firstName}
+`;
+
+results.style.display =
+'none';
+
+input.value =
+user.firstName;
+
+if(type === 'notify'){
+notifyUser = user;
+}else{
+fullUser = user;
+}
+
+};
+
+results.appendChild(div);
+
+});
+
+results.style.display =
+filtered.length
+? 'block'
+: 'none';
+
+});
+
+}
+
+setupSearch(
+'notifySearch',
+'notifyResults',
+'notifySelectedUser',
+'notify'
+);
+
+setupSearch(
+'fullSearch',
+'fullResults',
+'fullSelectedUser',
+'full'
+);
+
+// ==========================
+// SEND
+// ==========================
+
+async function sendMessage(type){
+
+try{
+
+let title;
+let message;
+let targetType;
+let targetUserId;
+
+if(type === 'notification'){
+
+title =
+document.getElementById(
+'notifyTitle'
+).value.trim();
+
+message =
+document.getElementById(
+'notifyMessage'
+).value.trim();
+
+targetType =
+notifyTarget;
+
+targetUserId =
+notifyUser
+? notifyUser.id
+: null;
+
+}else{
+
+title =
+document.getElementById(
+'fullTitle'
+).value.trim();
+
+message =
+document.getElementById(
+'fullMessage'
+).value.trim();
+
+targetType =
+fullTarget;
+
+targetUserId =
+fullUser
+? fullUser.id
+: null;
+
+}
+
+if(!title || !message){
+alert(
+'Please fill all fields'
+);
+return;
+}
+
+if(
+targetType === 'single'
+&& !targetUserId
+){
+alert('Select a user');
+return;
+}
+
+await Parse.Cloud.run(
+'sendAdminMessage',
+{
+title,
+message,
+targetType,
+targetUserId,
+type
+}
+);
+
+alert('Message sent');
+
+if(type === 'notification'){
+
+document.getElementById(
+'notifyTitle'
+).value = '';
+
+document.getElementById(
+'notifyMessage'
+).value = '';
+
+}else{
+
+document.getElementById(
+'fullTitle'
+).value = '';
+
+document.getElementById(
+'fullMessage'
+).value = '';
+
+}
+
+}catch(error){
+
+console.log(error);
+
+alert(
+error.message || error
+);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

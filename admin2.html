@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>EasyPay Admin</title>
+
+  <!-- Parse SDK -->
+  <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+<style>
+  *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#031b34;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  padding:20px;
+  position:relative;
+}
+
+/* =========================
+BACKGROUND EFFECT
+========================= */
+
+.bg-overlay{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0,255,255,.08), transparent 120px),
+    radial-gradient(circle at 80% 20%, rgba(0,255,255,.08), transparent 120px),
+    radial-gradient(circle at 50% 80%, rgba(0,255,255,.08), transparent 120px),
+    linear-gradient(
+      180deg,
+      #03213f,
+      #04284c,
+      #03213f
+    );
+  z-index:-1;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.top-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.header-left{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-center h1{
+  font-size:28px;
+  color:white;
+  margin-bottom:4px;
+}
+
+.header-center span{
+  color:#9cb7d1;
+  font-size:14px;
+}
+
+/* =========================
+NAVIGATION
+========================= */
+
+.nav-btn{
+  height: 48px;
+  border-radius: 16px;
+  border: none;
+  background: #0d2741;
+  color: #b7c9dc;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nav-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.nav-btn{
+  border:none;
+  background:#16385d;
+  color:#cddfff;
+  padding:15px 22px;
+  border-radius:20px;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.nav-btn.active{
+  background:linear-gradient(
+    135deg,
+    #25f0d0,
+    #1ca6ff
+  );
+  color:#001b2e;
+}
+
+/* =========================
+FILTERS
+========================= */
+
+.filter-row{
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+  overflow:auto;
+  padding-bottom:5px;
+}
+
+.filter-row::-webkit-scrollbar{
+  display:none;
+}
+
+.filter-btn,
+.country-btn{
+  border:none;
+  background:#17385d;
+  color:#d6e7ff;
+  padding:13px 20px;
+  border-radius:18px;
+  cursor:pointer;
+  white-space:nowrap;
+  font-weight:bold;
+}
+
+.filter-btn.active,
+.country-btn.active{
+  background:linear-gradient(
+    135deg,
+    #20f0d0,
+    #1dbeff
+  );
+  color:#04213d;
+}
+
+/* =========================
+SEARCH
+========================= */
+
+.search-box{
+  background:#121f28;
+  border-radius:18px;
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.search-box i{
+  color:#8ba8c5;
+}
+
+.search-box input{
+  width:100%;
+  border:none;
+  background:none;
+  outline:none;
+  color:white;
+  font-size:16px;
+}
+
+.search-box input::placeholder{
+  color:#8ba8c5;
+}
+
+/* =========================
+DELETE PENDING
+========================= */
+
+.delete-pending-btn{
+  border:none;
+  background:#d96fd4;
+  color:white;
+  width:100%;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:24px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* =========================
+RECEIPT CARD
+========================= */
+
+.receipt-card{
+  background:#102638;
+  border-radius:28px;
+  padding:20px;
+  margin-bottom:28px;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.25);
+}
+
+/* =========================
+CARD HEADER
+========================= */
+
+.receipt-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.user-info h2{
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.user-info p{
+  color:#9db5cb;
+  margin-bottom:5px;
+  font-size:15px;
+}
+
+.status-badge{
+  padding:12px 18px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:bold;
+  height:fit-content;
+}
+
+.pending{
+  background:#184638;
+  color:#4cff9a;
+}
+
+.approved{
+  background:#0d3d57;
+  color:#44d3ff;
+}
+
+.rejected{
+  background:#4c1616;
+  color:#ff7070;
+}
+
+/* =========================
+COUPON
+========================= */
+
+.coupon-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#173e32;
+  color:#52ffb3;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.coupon-box{
+  background:#1c2b35;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+  position:relative;
+}
+
+.coupon-title{
+  color:#96aec4;
+  margin-bottom:8px;
+}
+
+.coupon-code{
+  font-size:32px;
+  font-weight:bold;
+  letter-spacing:2px;
+  color:white;
+}
+
+.copy-btn{
+  position:absolute;
+  top:18px;
+  right:18px;
+  background:none;
+  border:none;
+  color:#31ffc5;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* =========================
+IMAGE
+========================= */
+
+.image-wrapper{
+  width:100%;
+  height:420px;
+  border-radius:24px;
+  overflow:hidden;
+  background:#0b1720;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.receipt-image{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.action-row{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+
+button{
+  font-weight:bold;
+}
+
+.approve-btn,
+.reject-btn{
+  flex:1;
+  border:none;
+  padding:18px;
+  border-radius:18px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.approve-btn{
+  background:linear-gradient(
+    135deg,
+    #14d65c,
+    #0aa74a
+  );
+}
+
+.reject-btn{
+  background:linear-gradient(
+    135deg,
+    #ff4d4d,
+    #c70000
+  );
+}
+
+.delete-btn{
+  width:100%;
+  border:none;
+  margin-top:16px;
+  background:black;
+  color:#ff4d4d;
+  padding:18px;
+  border-radius:18px;
+  font-size:17px;
+  cursor:pointer;
+}
+
+/* =========================
+EMPTY
+========================= */
+
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+  color:#9db5cb;
+  font-size:18px;
+}
+
+/* =========================
+LOADER
+========================= */
+
+.loader{
+  width:55px;
+  height:55px;
+  border:5px solid rgba(255,255,255,.1);
+  border-top:5px solid #1ef2cf;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:60px auto;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  body{
+    padding:14px;
+  }
+
+  .header-center h1{
+    font-size:24px;
+  }
+
+  .receipt-top{
+    flex-direction:column;
+  }
+
+  .user-info h2{
+    font-size:21px;
+  }
+
+  .coupon-code{
+    font-size:24px;
+  }
+
+  .image-wrapper{
+    height:320px;
+  }
+
+  .action-row{
+    flex-direction:column;
+  }
+
+  .approve-btn,
+  .reject-btn,
+  .delete-btn{
+    width:100%;
+  }
+
+}
+
+.tabs{
+  display:flex;
+  gap:12px;
+  padding:10px;
+  flex-wrap:wrap;
+}
+
+.tab{
+  height:48px;
+  padding:0 18px;
+  border-radius:16px;
+  border:none;
+  background:#0d2741;
+  color:#b7c9dc;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  transition:0.3s;
+}
+
+.tab:hover{
+  background:#12395c;
+}
+
+.tab.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* =========================
+RECEIPT TOGGLES
+========================= */
+
+.receipt-toggle-wrapper{
+  width:100%;
+  display:flex;
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.receipt-toggle{
+  flex:1;
+  border:none;
+  height:56px;
+  border-radius:18px;
+  background:#12314d;
+  color:#c8def3;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  transition:0.3s ease;
+}
+
+.receipt-toggle.active{
+  background:linear-gradient(
+    135deg,
+    #22f0cf,
+    #1ca7ff
+  );
+
+  color:#001b2f;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.25);
+}
+</style>
+</head>
+
+<body>
+
+  <!-- BACKGROUND EFFECT -->
+  <div class="bg-overlay"></div>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="top-header">
+
+      <div class="header-left">
+        <i class="fa fa-arrow-left"></i>
+      </div>
+
+      <div class="header-center">
+        <h1>Admin Panel</h1>
+        <span id="receiptCount">
+          0 Receipts
+        </span>
+      </div>
+
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="tabs"> 
+    <button class="tab" onclick="window.location.href='admin.html'">
+        <i class="fa fa-chart-line"></i>
+        Dashboard
+      </button>
+
+
+
+<button class="tab" onclick="window.location.href='admin4.html'">
+  <i class="fa fa-users"></i>
+  Users
+</button>
+
+      <button class="tab" onclick="window.location.href='admin5.html'">
+        <i class="fa fa-comments"></i>
+        Chat
+      </button>
+
+    <button class="tab" onclick="window.location='admin6.html'"><i class="fas fa-bell"></i> Notify</button>
+    <button class="tab" onclick="window.location='admin7.html'"><i class="fas fa-image"></i> image</button>
+    <button class="tab" onclick="window.location='admin8.html'"><i class="fas fa-gear"></i> settings</button>
+    <button class="tab active" id="receiptTab">
+  <i class="fa fa-receipt"></i>
+  Receipts
+</button>
+
+<button class="tab" onclick="window.location='home.html'"><i class="fas fa-house"></i> home</button>
+    </div>
+<!-- RECEIPT TOGGLES -->
+<div class="receipt-toggle-wrapper">
+
+  <button
+    class="receipt-toggle active"
+    id="couponReceiptToggle"
+  >
+    <i class="fa fa-receipt"></i>
+    Coupon Receipts
+  </button>
+
+  <button
+    class="receipt-toggle"
+    id="upgradeReceiptToggle"
+  >
+    <i class="fa fa-arrow-up"></i>
+    Upgrade Receipts
+  </button>
+
+</div>
+  
+
+
+    <!-- STATUS FILTER -->
+    <div class="filter-row">
+
+      <button
+        class="filter-btn active"
+        data-status="pending"
+      >
+        Pending
+      </button>
+
+      <button
+        class="filter-btn"
+        data-status="approved"
+      >
+        Approved
+      </button>
+
+      <button
+        class="filter-btn"
+        data-status="declined"
+      >
+        Rejected
+      </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="search-box">
+
+      <i class="fa fa-search"></i>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by name or email..."
+      />
+
+    </div>
+
+    <!-- DELETE PENDING -->
+    <button
+      class="delete-pending-btn"
+      id="deleteAllPendingBtn"
+    >
+      <i class="fa fa-trash"></i>
+      Delete All Pending
+    </button>
+
+    <!-- RECEIPTS CONTAINER -->
+    <div id="receiptsContainer">
+
+      <!-- RECEIPTS LOAD HERE -->
+
+    </div>
+
+  </div>
+
+  <script>
+    /* =========================
+PARSE CONFIG
+========================= */
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+/* =========================
+GLOBAL STATE
+========================= */
+
+const receiptsContainer =
+  document.getElementById(
+    "receiptsContainer"
+  );
+
+const receiptCount =
+  document.getElementById(
+    "receiptCount"
+  );
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+let currentStatus =
+  "pending";
+
+let currentCountry =
+  "all";
+
+let allReceipts = [];
+let allUpgradeReceipts = [];
+let currentView = "receipt";
+
+/* =========================
+INIT
+========================= */
+
+window.addEventListener(
+  "load",
+  async () => {
+
+    setupFilters();
+   const couponReceiptToggle =
+  document.getElementById(
+    "couponReceiptToggle"
+  );
+
+const upgradeReceiptToggle =
+  document.getElementById(
+    "upgradeReceiptToggle"
+  );
+
+couponReceiptToggle.addEventListener(
+  "click",
+  () => {
+
+    currentView = "receipt";
+
+    couponReceiptToggle.classList.add(
+      "active"
+    );
+
+    upgradeReceiptToggle.classList.remove(
+      "active"
+    );
+
+    loadReceipts();
+
+  }
+);
+
+upgradeReceiptToggle.addEventListener(
+  "click",
+  () => {
+
+    currentView = "upgrade";
+
+    upgradeReceiptToggle.classList.add(
+      "active"
+    );
+
+    couponReceiptToggle.classList.remove(
+      "active"
+    );
+
+    loadReceipts();
+
+  }
+);
+
+    await loadReceipts();
+
+    // realtime refresh
+    setInterval(
+      loadReceipts,
+      100000
+    );
+
+  }
+);
+
+/* =========================
+LOAD RECEIPTS
+========================= */
+
+async function loadReceipts(){
+
+  try{
+
+    showLoader();
+
+    if(currentView === "receipt"){
+
+      const receipts =
+        await Parse.Cloud.run(
+          "getAllReceipts"
+        );
+
+      allReceipts = receipts;
+
+    } else {
+
+      const receipts =
+        await Parse.Cloud.run(
+          "getAllUpgradeReceipts"
+        );
+
+      allUpgradeReceipts = receipts;
+
+    }
+
+    renderReceipts();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    receiptsContainer.innerHTML =
+      `
+      <div class="empty-state">
+        Failed to load data
+      </div>
+      `;
+
+  }
+
+}
+
+/* =========================
+RENDER
+========================= */
+function renderReceipts(){
+
+  const data =
+    currentView === "receipt"
+    ? allReceipts
+    : allUpgradeReceipts;
+
+  let filtered =
+    data.filter(r => {
+
+      // status
+      if(
+        currentStatus &&
+        r.status !== currentStatus
+      ){
+        return false;
+      }
+
+      // country
+      if(
+        currentCountry !== "all" &&
+        (
+          r.country || ""
+        ).toLowerCase()
+        !== currentCountry
+      ){
+        return false;
+      }
+
+      // search
+      const keyword =
+        searchInput.value
+        .toLowerCase();
+
+      if(keyword){
+
+        const text =
+          `
+          ${r.fullName || ""}
+          ${r.email || ""}
+          `
+          .toLowerCase();
+
+        if(
+          !text.includes(keyword)
+        ){
+          return false;
+        }
+
+      }
+
+      return true;
+
+    });
+
+  receiptCount.innerText =
+    `${filtered.length} ${currentView === "receipt" ? "Receipts" : "Upgrade Requests"}`;
+
+  if(!filtered.length){
+
+    receiptsContainer.innerHTML =
+      `
+      <div class="empty-state">
+        No records found
+      </div>
+      `;
+
+    return;
+
+  }
+
+  receiptsContainer.innerHTML =
+    filtered.map(item => {
+
+      const isUpgrade =
+        currentView === "upgrade";
+
+      return `
+      <div class="receipt-card">
+
+        <div class="receipt-top">
+
+          <div class="user-info">
+
+            <h2>
+              ${item.fullName || "Unknown User"}
+            </h2>
+
+            <p>
+              ${item.email || "No email"}
+            </p>
+
+            <p>
+              ${formatDate(item.createdAt)}
+            </p>
+
+          </div>
+
+          <div class="status-badge ${item.status}">
+            ${capitalize(item.status)}
+          </div>
+
+        </div>
+
+        ${
+          !isUpgrade && item.status === "approved"
+?
+`
+<div class="activated-box">
+    ✅ <strong>Account Activated</strong>
+</div>
+`
+: ""
+        }
+
+        <div class="image-wrapper">
+
+          <img
+            src="${item.image}"
+            class="receipt-image"
+          />
+
+        </div>
+
+        ${
+          item.status === "pending"
+          ?
+          `
+          <div class="action-row">
+
+            <button
+              class="approve-btn"
+              onclick="${
+                isUpgrade
+                ? `approveUpgradeReceipt('${item.id}')`
+                : `approveReceipt('${item.id}')`
+              }"
+            >
+              ✓ Approve & Activate
+            </button>
+
+            <button
+              class="reject-btn"
+              onclick="${
+                isUpgrade
+                ? `rejectUpgradeReceipt('${item.id}')`
+                : `rejectReceipt('${item.id}')`
+              }"
+            >
+              ✕ Reject
+            </button>
+
+          </div>
+          `
+          : ""
+        }
+
+        <button
+          class="delete-btn"
+          onclick="${
+            isUpgrade
+            ? `deleteUpgradeReceipt('${item.id}')`
+            : `deleteReceipt('${item.id}')`
+          }"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+      `;
+    }).join("");
+
+}
+
+/* =========================
+APPROVE
+========================= */
+
+async function approveReceipt(
+  receiptId
+){
+
+  try{
+
+    const confirmed =
+      confirm(
+        "Approve this receipt?"
+      );
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "approveReceipt",
+      {
+        receiptId
+      }
+    );
+
+    await loadReceipts();
+
+  }
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+}
+
+/* =========================
+REJECT
+========================= */
+
+async function rejectReceipt(
+  receiptId
+){
+
+  try{
+
+    const confirmed =
+      confirm(
+        "Reject this receipt?"
+      );
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "declineReceipt",
+      {
+        receiptId
+      }
+    );
+
+    await loadReceipts();
+
+  }
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+}
+
+/* =========================
+DELETE
+========================= */
+
+async function deleteReceipt(
+  receiptId
+){
+
+  try{
+
+    const confirmed =
+      confirm(
+        "Delete receipt?"
+      );
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "deleteReceipt",
+      {
+        receiptId
+      }
+    );
+
+    await loadReceipts();
+
+  }
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+}
+
+/* =========================
+COPY
+========================= */
+
+/* =========================
+FILTERS
+========================= */
+
+function setupFilters(){
+
+  // status buttons
+  document
+  .querySelectorAll(
+    ".filter-btn"
+  )
+  .forEach(btn => {
+
+    btn.onclick = () => {
+
+      document
+      .querySelectorAll(
+        ".filter-btn"
+      )
+      .forEach(b =>
+        b.classList.remove(
+          "active"
+        )
+      );
+
+      btn.classList.add(
+        "active"
+      );
+
+      currentStatus =
+        btn.dataset.status;
+
+      renderReceipts();
+
+    };
+
+  });
+
+  // country
+  document
+  .querySelectorAll(
+    ".country-btn"
+  )
+  .forEach(btn => {
+
+    btn.onclick = () => {
+
+      document
+      .querySelectorAll(
+        ".country-btn"
+      )
+      .forEach(b =>
+        b.classList.remove(
+          "active"
+        )
+      );
+
+      btn.classList.add(
+        "active"
+      );
+
+      currentCountry =
+        btn.dataset.country;
+
+      renderReceipts();
+
+    };
+
+  });
+
+  // search
+  searchInput.addEventListener(
+    "input",
+    renderReceipts
+  );
+
+}
+
+/* =========================
+HELPERS
+========================= */
+
+function capitalize(text){
+
+  return text.charAt(0)
+  .toUpperCase()
+  + text.slice(1);
+
+}
+
+function formatDate(date){
+
+  return new Date(date)
+  .toLocaleString();
+
+}
+
+function showLoader(){
+
+  receiptsContainer.innerHTML =
+    `
+    <div class="loader"></div>
+    `;
+
+}
+
+async function approveUpgradeReceipt(receiptId){
+
+  try{
+
+    const confirmed =
+      confirm("Approve upgrade request?");
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "approveUpgradeReceipt",
+      { receiptId }
+    );
+
+    await loadReceipts();
+
+  } catch(error){
+    alert(error.message);
+  }
+
+}
+
+async function rejectUpgradeReceipt(receiptId){
+
+  try{
+
+    const confirmed =
+      confirm("Reject upgrade request?");
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "declineUpgradeReceipt",
+      { receiptId }
+    );
+
+    await loadReceipts();
+
+  } catch(error){
+    alert(error.message);
+  }
+
+}
+
+async function deleteUpgradeReceipt(receiptId){
+
+  try{
+
+    const confirmed =
+      confirm("Delete upgrade request?");
+
+    if(!confirmed) return;
+
+    await Parse.Cloud.run(
+      "deleteUpgradeReceipt",
+      { receiptId }
+    );
+
+    await loadReceipts();
+
+  } catch(error){
+    alert(error.message);
+  }
+
+}
+  </script>
+
+</body>
+
+</html>

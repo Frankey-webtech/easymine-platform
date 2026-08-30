@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<title>Admin Settings</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.5.1/parse.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#041f36;
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08) 2px, transparent 3px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,.05) 3px, transparent 4px),
+        radial-gradient(circle at 60% 70%, rgba(255,255,255,.06) 2px, transparent 3px),
+        linear-gradient(180deg,#07294b,#04223b);
+    background-size:180px 180px;
+    z-index:-1;
+}
+
+.wrapper{
+    width:100%;
+    max-width:480px;
+    margin:auto;
+    padding:20px 16px 40px;
+}
+
+/* HEADER */
+
+.topTitle{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    margin-top:10px;
+    margin-bottom:24px;
+}
+
+/* TABS */
+
+.topTabs{
+    
+    gap:10px;
+    
+    overflow:auto;
+    padding-bottom:5px;
+    display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:18px;
+}
+
+.topTabs::-webkit-scrollbar{
+    display:none;
+}
+
+.tabBtn{
+    min-width:110px;
+    border:none;
+    padding:13px 18px;
+    border-radius:30px;
+    background:#0b3358;
+    color:#dce8f7;
+    font-size:14px;
+    font-weight:600;
+}
+
+.tabBtn.active{
+    background:#29e0b7;
+    color:#052b2d;
+}
+
+/* CARD */
+
+.settingsCard{
+    background:#072641;
+    border-radius:22px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+/* TOGGLE ROW */
+
+.toggleRow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.toggleLeft{
+    flex:1;
+}
+
+.toggleLeft h3{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.toggleLeft p{
+    font-size:14px;
+    color:#a8bfd7;
+    line-height:1.4;
+}
+
+/* SWITCH */
+
+.switch{
+    position:relative;
+    width:62px;
+    height:34px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#1b2d3d;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.slider::before{
+    content:"";
+    position:absolute;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    left:4px;
+    top:4px;
+    background:#000;
+    transition:.3s;
+}
+
+.switch input:checked + .slider{
+    background:#2ef0bf;
+}
+
+.switch input:checked + .slider::before{
+    transform:translateX(28px);
+}
+
+/* SECTION TITLE */
+
+.sectionTitle{
+    font-size:25px;
+    font-weight:700;
+    margin:22px 0 18px;
+    color:#d8e7f8;
+}
+
+/* FORM */
+
+.formGroup{
+    margin-bottom:18px;
+}
+
+.formGroup label{
+    display:block;
+    margin-bottom:10px;
+    color:#a8bfd7;
+    font-size:16px;
+}
+
+.formInput,
+.formTextarea,
+.formSelect{
+    width:100%;
+    background:#091f31;
+    border:none;
+    outline:none;
+    color:white;
+    border-radius:18px;
+    padding:18px 16px;
+    font-size:17px;
+}
+
+.formTextarea{
+    resize:none;
+    min-height:120px;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder{
+    color:#6f879e;
+}
+
+/* SAVE BTN */
+
+.saveBtn{
+    width:100%;
+    border:none;
+    border-radius:18px;
+    background:#39e7c0;
+    color:#072b33;
+    font-size:20px;
+    font-weight:700;
+    padding:18px;
+    margin-top:8px;
+    cursor:pointer;
+}
+
+/* NOTIFICATION */
+
+.notificationModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+
+.notificationBox{
+    width:90%;
+    max-width:380px;
+    background:#0a2f4f;
+    border-radius:22px;
+    padding:25px;
+    text-align:center;
+}
+
+.notificationBox h2{
+    margin-bottom:15px;
+}
+
+.notificationBox p{
+    color:#c5d6e7;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.notificationBox button{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    background:#2ef0bf;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.uploadBox{
+
+background:#111;
+
+padding:20px;
+
+border-radius:20px;
+
+margin:20px;
+
+border:1px solid rgba(
+255,215,0,0.12
+);
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.uploadBox h3{
+
+margin:0;
+
+color:#ffd700;
+
+font-size:18px;
+
+}
+
+.uploadBox input{
+
+background:#1a1a1a;
+
+color:#fff;
+
+padding:12px;
+
+border-radius:12px;
+
+border:1px solid rgba(
+255,255,255,0.08
+);
+
+}
+
+.uploadBox .btn{
+
+background:#ffd700;
+
+color:#111;
+
+border:none;
+
+padding:14px;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <h1 class="topTitle">
+        Admin Panel
+    </h1>
+
+    <!-- TOP TABS -->
+
+    <div class="topTabs">
+
+    <button class="tabBtn" onclick="window.location='admin.html'"><i class="fas fa-chart-line"></i> Dashboard</button>
+    <button class="tabBtn" onclick="window.location='admin2.html'"><i class="fas fa-receipt"></i> Receipts</button>
+    <button class="tabBtn" onclick="window.location='admin4.html'"><i class="fas fa-users"></i> Users</button>
+    <button class="tabBtn" onclick="window.location='admin5.html'"><i class="fas fa-comments"></i> Chat</button>
+    <button class="tabBtn" onclick="window.location='admin6.html'"><i class="fas fa-bell"></i> Notify</button>
+    <button class="tabBtn" onclick="window.location='admin7.html'"><i class="fas fa-image"></i> image</button>
+
+        <button class="tabBtn active">
+            ⚙ Settings
+        </button>
+        <button class="tab" onclick="window.location='home.html'"><i class="fas fa-house"></i> home</button>
+
+    </div>
+
+    <!-- AI AUTO RESPOND -->
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>AI Auto-Respond</h3>
+            <p>Automatically replies to users when admin is offline.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="aiAutoRespondToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+    <!-- REFERRAL -->
+
+ <div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Referral Challenge</h3>
+            <p>Users must invite others to unlock rewards.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="referralChallengeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+    </div>
+    <!-- SHOW REFERRAL BOX -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Show Referral Progress</h3>
+            <p>Display referral progress on withdrawal page.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="showReferralChallengeToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+</div>
+
+<!-- SHOW UPGRADE WARNING -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Show Upgrade Warning</h3>
+            <p>Display upgrade warning on withdrawal page.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="showUpgradeWarningToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+
+
+    <!-- SECTION -->
+
+<!-- AUTO APPROVE COUPON RECEIPTS -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Auto Approve Coupon Receipts</h3>
+            <p>Automatically approves all coupon payment receipts.</p>
+        </div>
+
+        <label class="switch">
+            <input
+                type="checkbox"
+                id="autoApproveReceiptsToggle"
+            >
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+<!-- AUTO APPROVE UPGRADE RECEIPTS -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Auto Approve Upgrade Receipts</h3>
+            <p>Automatically approves all upgrade payment receipts and upgrades user accounts.</p>
+        </div>
+
+        <label class="switch">
+            <input
+                type="checkbox"
+                id="autoApproveUpgradeReceiptsToggle"
+            >
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+    <!-- AUTO WITHDRAW -->
+
+   <div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Withdrawal Notifications</h3>
+            <p>Send alerts when users withdraw funds.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="withdrawalNotificationToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+    <!-- GOOD MORNING -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Auto Good Morning</h3>
+            <p>Sends daily greeting message to all users.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="goodMorningToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+
+    <!-- UPGRADE -->
+
+<div class="settingsCard">
+
+    <div class="toggleRow">
+
+        <div class="toggleLeft">
+            <h3>Force Upgrade Before Withdrawal</h3>
+            <p>Users must upgrade to withdraw funds.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="autoUpgradeToggle">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+</div>
+
+    <!-- THEME -->
+
+    <div class="formGroup">
+
+        <label>
+            Default Glow Theme
+        </label>
+
+
+
+    <div class="formGroup">
+
+        <label>
+            Bank/Provider Name
+        </label>
+
+        <input
+            type="text"
+            class="formInput"
+            id="bankNameInput"
+            value="Access Bank Plc"
+            
+        >
+
+    </div>
+
+    <div class="formGroup">
+
+        <label>
+            Account Number
+        </label>
+
+        <input
+            type="text"
+            class="formInput"
+            id="accountNumberInput"
+            value="1424601264"
+            
+        >
+
+    </div>
+
+    <div class="formGroup">
+
+        <label>
+            Account Name
+        </label>
+
+        <input
+            type="text"
+            class="formInput"
+            id="accountNameInput"
+            value="Anthonia Chinazaekpere"
+            
+        >
+
+    </div>
+
+    <div class="formGroup">
+
+        <label>
+            Amount (₦)
+        </label>
+
+        <input
+            type="number"
+            class="formInput"
+            id="amountInput"
+            value="3000"
+           
+        >
+
+    </div>
+            <select
+            class="formSelect"
+            id="themeSelect"
+        >
+
+            <option>
+                💎 Diamond
+            </option>
+
+            <option>
+                🌌 Galaxy
+            </option>
+
+            <option>
+                🔥 Fire
+            </option>
+
+        </select>
+<div class="formGroup">
+
+    <label>
+        Required Referrals
+    </label>
+
+    <input
+        type="number"
+        class="formInput"
+        id="requiredReferralInput"
+        value="5"
+    >
+
+</div>
+
+<!-- =========================
+     AD VIDEO UPLOAD
+========================= -->
+
+<div class="settingsCard">
+
+    <h3>
+        Upload Ad Video
+    </h3>
+
+    <p>
+        Upload video ads for users.
+    </p>
+
+<div class="settingsCard">
+
+    <h3>
+        Upload Sponsored Videos
+    </h3>
+
+    <p>
+        Upload each rewarded ad video separately.
+    </p>
+
+    <label style="margin-top:15px;display:block;">
+        Ad Video 1
+    </label>
+
+    <input
+        type="file"
+        id="adVideoInput1"
+        accept="video/*"
+        class="formInput"
+    >
+
+    <button
+        class="saveBtn"
+        id="uploadAdVideo1Btn"
+        style="margin-top:15px;"
+    >
+        Upload Video 1
+    </button>
+
+    <label style="margin-top:25px;display:block;">
+        Ad Video 2
+    </label>
+
+    <input
+        type="file"
+        id="adVideoInput2"
+        accept="video/*"
+        class="formInput"
+    >
+
+    <button
+        class="saveBtn"
+        id="uploadAdVideo2Btn"
+        style="margin-top:15px;"
+    >
+        Upload Video 2
+    </button>
+
+</div>
+
+    </div>
+
+<!-- =========================
+AD POSTER UPLOAD
+========================= -->
+
+<div class="uploadBox">
+
+    <h3>Upload Ad Posters</h3>
+
+    <input
+        type="file"
+        id="adPoster1Input"
+        accept="image/*"
+    >
+
+    <input
+        type="file"
+        id="adPoster2Input"
+        accept="image/*"
+    >
+
+    <button
+        class="btn"
+        onclick="uploadAdPosters()"
+    >
+        Upload Posters
+    </button>
+
+</div>
+    <!-- SAVE -->
+
+    <button
+        class="saveBtn"
+        id="saveAutomationBtn"
+    >
+
+         Save All Settings
+
+    </button>
+
+</div>
+
+<!-- NOTIFICATION -->
+
+<div
+class="notificationModal"
+id="notificationModal"
+>
+
+    <div class="notificationBox">
+
+        <h2 id="notificationTitle">
+            Notification
+        </h2>
+
+        <p id="notificationMessage">
+            Settings saved successfully
+        </p>
+
+        <button id="closeNotificationModal">
+            OK
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+if (!window.Parse) {
+  console.error("Parse SDK not loaded!");
+} else {
+  console.log("Parse SDK Loaded");
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL = "https://parseapi.back4app.com/";
+console.log("Parse ready:", typeof Parse);
+}
+
+const notificationModal =
+document.getElementById(
+    "notificationModal"
+);
+
+const notificationTitle =
+document.getElementById(
+    "notificationTitle"
+);
+
+const notificationMessage =
+document.getElementById(
+    "notificationMessage"
+);
+
+/* KEEP ORIGINAL IDS/NAMES */
+
+const autoWithdrawalToggle =
+document.getElementById("withdrawalNotificationToggle");
+
+const autoGreetingToggle =
+document.getElementById("goodMorningToggle");
+
+const autoUpgradeToggle =
+document.getElementById("autoUpgradeToggle");
+
+
+/* =========================
+   SHOW NOTIFICATION
+========================= */
+
+function showNotification(message){
+
+    notificationTitle.innerText =
+        "Notification";
+
+    notificationMessage.innerText =
+        message;
+
+    notificationModal.style.display =
+        "flex";
+
+}
+
+document
+.getElementById(
+    "closeNotificationModal"
+)
+.onclick = () => {
+
+    notificationModal.style.display =
+        "none";
+
+};
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+async function loadAutomationSettings(){
+
+    try{
+
+        const result =
+await Parse.Cloud.run(
+"getAutomationSettings",
+{},
+{
+sessionToken:
+Parse.User.current().getSessionToken()
+}
+);
+        if(!result) return;
+
+        autoWithdrawalToggle.checked = !!result.autoWithdrawalNotification;
+        autoGreetingToggle.checked = !!result.autoGreetingMessage;
+        autoUpgradeToggle.checked =
+!!result.mustUpgradeBeforeWithdrawal;
+document.getElementById(
+    "aiAutoRespondToggle"
+).checked =
+!!result.aiAutoRespond;
+
+document.getElementById(
+    "showReferralChallengeToggle"
+).checked =
+!!result.showReferralChallenge;
+
+document.getElementById(
+    "showUpgradeWarningToggle"
+).checked =
+!!result.showUpgradeWarning;
+
+document.getElementById(
+    "referralChallengeToggle"
+).checked =
+!!result.referralChallenge;
+
+document.getElementById(
+    "autoApproveReceiptsToggle"
+).checked =
+!!result.autoApproveReceipts;
+
+document.getElementById(
+    "autoApproveUpgradeReceiptsToggle"
+).checked =
+!!result.autoApproveUpgradeReceipts;
+
+document.getElementById(
+    "requiredReferralInput"
+).value =
+result.requiredReferralCount || 5;
+
+    }catch(error){
+        console.error(error);
+    }
+}
+
+/* =========================
+   SAVE SETTINGS
+========================= */
+
+/* =========================
+   SAVE SETTINGS
+========================= */
+
+document.getElementById(
+    "saveAutomationBtn"
+).onclick = async () => {
+
+    try {
+
+        const currentUser =
+            Parse.User.current();
+
+        if (!currentUser) {
+
+            showNotification(
+                "Admin not logged in"
+            );
+
+            return;
+
+        }
+
+        const sessionToken =
+            currentUser.getSessionToken();
+
+        /* =========================
+           SAVE AUTOMATION SETTINGS
+        ========================= */
+
+        await Parse.Cloud.run(
+
+            "saveAutomationSettings",
+
+            {
+
+                autoWithdrawalNotification:
+                document.getElementById(
+                    "withdrawalNotificationToggle"
+                ).checked,
+
+                autoGreetingMessage:
+                document.getElementById(
+                    "goodMorningToggle"
+                ).checked,
+
+                mustUpgradeBeforeWithdrawal:
+                document.getElementById(
+                    "autoUpgradeToggle"
+                ).checked,
+
+                aiAutoRespond:
+                document.getElementById(
+                    "aiAutoRespondToggle"
+                ).checked,
+
+                referralChallenge:
+                document.getElementById(
+                    "referralChallengeToggle"
+                ).checked,
+                
+                showReferralChallenge:
+document.getElementById(
+    "showReferralChallengeToggle"
+).checked,
+
+showUpgradeWarning:
+document.getElementById(
+    "showUpgradeWarningToggle"
+).checked,
+
+autoApproveReceipts:
+document.getElementById(
+    "autoApproveReceiptsToggle"
+).checked,
+
+autoApproveUpgradeReceipts:
+document.getElementById(
+    "autoApproveUpgradeReceiptsToggle"
+).checked,
+
+requiredReferralCount:
+Number(
+    document.getElementById(
+        "requiredReferralInput"
+    ).value
+)
+
+            },
+
+            {
+                sessionToken
+            }
+
+        );
+
+        /* =========================
+           SAVE ADMIN SETTINGS
+        ========================= */
+
+        await Parse.Cloud.run(
+
+    "saveAdminSettings",
+
+    {
+
+        bankName:
+        document.getElementById(
+            "bankNameInput"
+        ).value,
+
+        accountNumber:
+        document.getElementById(
+            "accountNumberInput"
+        ).value,
+
+        accountName:
+        document.getElementById(
+            "accountNameInput"
+        ).value,
+
+        amount:
+        Number(
+            document.getElementById(
+                "amountInput"
+            ).value
+        ),
+
+        defaultTheme:
+        document.getElementById(
+            "themeSelect"
+        ).value
+
+    },
+
+    {
+        sessionToken
+    }
+
+);
+
+
+        showNotification(
+            "Settings saved successfully"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "SAVE ERROR:",
+            error
+        );
+
+        showNotification(
+            error.message ||
+            "Failed to save settings"
+        );
+
+    }
+    
+
+
+};
+/* =========================
+   LOAD PAGE SETTINGS
+========================= */
+
+async function loadPageSettings(){
+
+    try{
+
+        const settings =
+await Parse.Cloud.run(
+"getAdminSettings",
+{},
+{
+sessionToken:
+Parse.User.current().getSessionToken()
+}
+);
+        if(!settings) return;
+
+        
+        document.getElementById("themeSelect").value = settings.defaultTheme || "💎 Diamond";
+
+    }catch(error){
+        console.error(error);
+    }
+}
+
+/* =========================
+   CHECK NOTIFICATIONS
+========================= */
+
+async function checkAutomaticNotifications(){
+
+    try{
+
+        const currentUser =
+            Parse.User.current();
+
+        if(!currentUser) return;
+
+        const result =
+            await Parse.Cloud.run(
+                "checkAutomaticNotifications",
+                {},
+                {
+                    sessionToken:
+                    currentUser.getSessionToken()
+                }
+            );
+
+        if(
+            !result.notifications ||
+            !result.notifications.length
+        ){
+            return;
+        }
+
+        const notification =
+            result.notifications[0];
+
+        showNotification(
+            notification.message
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+/* =========================
+   AUTO CHECK
+========================= */
+
+setInterval(
+    checkAutomaticNotifications,
+    30000
+);
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+async function init(){
+
+    await loadAutomationSettings();
+    await loadPageSettings();
+    checkAutomaticNotifications();
+}
+
+init();
+
+
+/* =========================
+   UPLOAD 2 AD VIDEOS
+========================= */
+/*
+document.getElementById(
+    "uploadAdVideoBtn"
+).onclick = async () => {
+
+    try {
+
+        const currentUser =
+            Parse.User.current();
+
+        if (!currentUser) {
+
+            showNotification(
+                "Admin not logged in"
+            );
+
+            return;
+
+        }
+
+        const file1 =
+            document.getElementById(
+                "adVideoInput1"
+            ).files[0];
+
+        const file2 =
+            document.getElementById(
+                "adVideoInput2"
+            ).files[0];
+
+        if (!file1 || !file2) {
+
+            showNotification(
+                "Select both videos"
+            );
+
+            return;
+
+        }
+
+        const maxSize =
+            50 * 1024 * 1024;
+
+        // SIZE CHECK
+        if (
+            file1.size > maxSize ||
+            file2.size > maxSize
+        ) {
+
+            showNotification(
+                "One of the videos is too large"
+            );
+
+            return;
+
+        }
+
+        showNotification(
+            "Uploading videos..."
+        );
+        
+
+console.log("Files selected:", file1, file2);
+
+        const parseFile1 =
+            new Parse.File(
+                file1.name,
+                file1
+            );
+
+        const parseFile2 =
+            new Parse.File(
+                file2.name,
+                file2
+            );
+console.log("Starting Video 1 upload...");
+
+        // SAVE FILES
+        await parseFile1.save();
+        console.log(
+            "Video 1 uploaded:",
+            parseFile1.url()
+        );
+
+        console.log("Starting Video 2 upload...");
+console.time("Video2Upload");
+        await parseFile2.save();
+        console.timeEnd("Video2Upload");
+        console.log(
+            "Video 2 uploaded:",
+            parseFile2.url()
+        );
+
+        console.log(
+            "Saving AppConfig..."
+        );
+        
+        console.log(parseFile1.url());
+console.log(parseFile2.url());
+
+
+        const AppConfig =
+            Parse.Object.extend(
+                "AppConfig"
+            );
+
+        const query =
+            new Parse.Query(
+                AppConfig
+            );
+
+        let config =
+            await query.first();
+
+        if (!config) {
+
+            config =
+                new AppConfig();
+
+        }
+
+
+        config.set(
+            "adVideo1",
+            parseFile1
+        );
+
+        config.set(
+            "adVideo2",
+            parseFile2
+        );
+
+        await config.save();
+console.log(
+            "AppConfig saved successfully"
+        );
+        showNotification(
+            "Both ad videos uploaded successfully"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "UPLOAD ERROR:",
+            error
+        );
+
+        showNotification(
+            error.message ||
+            "Upload failed"
+        );
+
+    }
+
+}; */
+
+async function uploadSingleAdVideo(inputId, configField, videoNumber) {
+
+    try {
+
+        const currentUser = Parse.User.current();
+
+        if (!currentUser) {
+            showNotification("Admin not logged in");
+            return;
+        }
+
+        const file =
+            document.getElementById(inputId).files[0];
+
+        if (!file) {
+            showNotification(
+                "Select Ad Video " + videoNumber
+            );
+            return;
+        }
+
+        const maxSize =
+            20 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+            showNotification(
+                "Ad Video " +
+                videoNumber +
+                " is larger than 20 MB"
+            );
+            return;
+        }
+
+        if (!file.type.startsWith("video/")) {
+            showNotification(
+                "Please select a valid video"
+            );
+            return;
+        }
+        console.log("========== VIDEO UPLOAD ==========");
+        console.log("Video:", videoNumber);
+        console.log("Name:", file.name);
+        console.log("Type:", file.type);
+        console.log("Size:", file.size);
+        console.log(
+            "Size MB:",
+            (file.size / 1024 / 1024).toFixed(2)
+        );
+        console.log("Parse server:", Parse.serverURL);
+        console.log("==================================");
+
+
+        showNotification(
+            "Uploading Ad Video " +
+            videoNumber +
+            "..."
+        );
+
+        const parseFile =
+            new Parse.File(
+                file.name,
+                file,
+                file.type
+            );
+            console.log(
+            "Starting Parse.File.save()..."
+        );
+
+        const savedFile = await parseFile.save();
+        
+        
+        console.log(
+            "UPLOAD SUCCESS:",
+            savedFile
+        );
+
+        console.log(
+            "FILE URL:",
+            savedFile.url()
+        );
+
+        const AppConfig =
+            Parse.Object.extend("AppConfig");
+
+        const query =
+            new Parse.Query(AppConfig);
+
+        let config =
+            await query.first();
+
+        if (!config) {
+            config =
+                new AppConfig();
+        }
+
+        config.set(
+            configField,
+            parseFile
+        );
+        
+
+        await config.save();
+
+        document.getElementById(inputId).value = "";
+        
+
+        showNotification(
+            "Ad Video " +
+            videoNumber +
+            " uploaded successfully"
+        );
+
+    } catch (error) {
+        
+        console.error(
+            "VIDEO " +
+            videoNumber +
+            " UPLOAD ERROR:",
+            error
+        );
+
+        console.error(
+            "Error code:",
+            error.code
+        );
+
+        console.error(
+            "Error message:",
+            error.message
+        );
+
+        console.error(
+            "Error response:",
+            error.response
+        );
+
+        console.error(
+            "VIDEO " +
+            videoNumber +
+            " UPLOAD ERROR:",
+            error
+        );
+
+        showNotification(
+            "Ad Video " +
+            videoNumber +
+            " upload failed: " +
+            (
+                error.message ||
+                "Failed to fetch"
+            )
+        );
+
+    }
+
+}
+
+document.getElementById(
+    "uploadAdVideo1Btn"
+).onclick = () => {
+
+    uploadSingleAdVideo(
+        "adVideoInput1",
+        "adVideo1",
+        1
+    );
+
+};
+
+document.getElementById(
+    "uploadAdVideo2Btn"
+).onclick = () => {
+
+    uploadSingleAdVideo(
+        "adVideoInput2",
+        "adVideo2",
+        2
+    );
+
+};
+</script>
+
+<script>
+
+async function uploadAdPosters(){
+
+try{
+
+const file1 =
+document.getElementById(
+"adPoster1Input"
+).files[0];
+
+const file2 =
+document.getElementById(
+"adPoster2Input"
+).files[0];
+
+if(!file1 || !file2){
+
+alert(
+"Select both poster images"
+);
+
+return;
+
+}
+
+const parseFile1 =
+new Parse.File(
+file1.name,
+file1
+);
+
+const parseFile2 =
+new Parse.File(
+file2.name,
+file2
+);
+
+await parseFile1.save();
+await parseFile2.save();
+
+await Parse.Cloud.run(
+"uploadAdPosters",
+{
+
+poster1:
+parseFile1,
+
+poster2:
+parseFile2
+
+}
+);
+
+alert(
+"Posters uploaded successfully"
+);
+
+}catch(err){
+
+console.log(err);
+
+alert(
+err.message ||
+"Upload failed"
+);
+
+}
+
+}
+
+</script>
+</body>
+</html>

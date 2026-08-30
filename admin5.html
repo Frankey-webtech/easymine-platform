@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Chat Panel</title>
+
+  <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#031b2e;
+      color:white;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    .container{
+      display:flex;
+      height:100vh;
+      width:100%;
+    }
+
+    /* ======================
+       LEFT SIDEBAR
+    ====================== */
+
+    .sidebar{
+      width:320px;
+      background:#07263f;
+      border-right:1px solid rgba(255,255,255,0.05);
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    .search-box{
+      background:#0b3557;
+      border-radius:10px;
+      padding:12px;
+      margin-bottom:15px;
+    }
+
+    .search-box input{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:white;
+      font-size:15px;
+    }
+
+    .user-list{
+      flex:1;
+      overflow-y:auto;
+    }
+
+    .user-card{
+      background:#081f33;
+      padding:15px;
+      border-radius:16px;
+      margin-bottom:12px;
+      cursor:pointer;
+      transition:0.3s;
+      border:1px solid transparent;
+    }
+
+    .user-card:hover{
+      background:#0d2f4c;
+      border-color:#1dc8ff;
+    }
+
+    .user-card.active{
+      background:#103d60;
+      border-color:#1dc8ff;
+    }
+
+    .user-name{
+      font-size:18px;
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+
+    .last-message{
+      font-size:13px;
+      color:#9bb3c7;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    /* ======================
+       CHAT AREA
+    ====================== */
+
+    .chat-section{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      background:#031827;
+    }
+
+    .chat-header{
+      height:75px;
+      background:#08263d;
+      display:flex;
+      align-items:center;
+      padding:0 20px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+
+    .chat-user-info h2{
+      font-size:20px;
+    }
+
+    .chat-user-info p{
+      font-size:13px;
+      color:#8fa8bd;
+    }
+
+    .chat-messages{
+      flex:1;
+      padding:20px;
+      overflow-y:auto;
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .message{
+      max-width:70%;
+      padding:14px;
+      border-radius:18px;
+      word-wrap:break-word;
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    .user-message{
+      align-self:flex-start;
+      background:#0d3553;
+      border-top-left-radius:5px;
+    }
+
+    .admin-message{
+      align-self:flex-end;
+      background:#1dc8ff;
+      color:#00131f;
+      border-top-right-radius:5px;
+    }
+
+    .chat-input{
+      padding:15px;
+      background:#08263d;
+      display:flex;
+      gap:10px;
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+
+    .chat-input input{
+      flex:1;
+      background:#0b3557;
+      border:none;
+      outline:none;
+      color:white;
+      padding:15px;
+      border-radius:12px;
+      font-size:15px;
+    }
+
+    .chat-input button{
+      background:#1dc8ff;
+      border:none;
+      padding:0 25px;
+      border-radius:12px;
+      color:#00131f;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .chat-input button:hover{
+      opacity:0.8;
+    }
+
+    .empty-chat{
+      margin:auto;
+      text-align:center;
+      color:#6f8aa0;
+      font-size:22px;
+    }
+
+    ::-webkit-scrollbar{
+      width:5px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#1dc8ff;
+      border-radius:10px;
+    }
+
+    @media(max-width:768px){
+
+      .sidebar{
+        width:100px;
+      }
+
+      .user-name{
+        font-size:14px;
+      }
+
+      .last-message{
+        display:none;
+      }
+
+    }
+    
+    .nav-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: #1e293b;
+  border: none;
+  color: #cbd5e1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tab i {
+  margin-right: 6px;
+}
+
+.tab:hover {
+  background: #334155;
+  color: white;
+}
+
+.tab.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* GRID */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 18px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: 0.25s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #243043;
+}
+
+/* ICON CIRCLE */
+.card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+}
+
+/* COLORS */
+.blue { background: #3b82f6; }
+.green { background: #22c55e; }
+.red { background: #ef4444; }
+.orange { background: #f59e0b; }
+.purple { background: #a855f7; }
+.teal { background: #14b8a6; }
+.darkblue { background: #2563eb; }
+
+/* TEXT */
+.card-number {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-title {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+  </style>
+</head>
+<body>
+
+
+
+  <!-- ======================
+       SIDEBAR
+  ======================= -->
+  <div class="nav-tabs">
+    <button class="tab " onclick="window.location='admin.html'"><i class="fas fa-chart-line"></i> Dashboard</button>
+    <button class="tab" onclick="window.location='admin2.html'"><i class="fas fa-receipt"></i> Receipts</button>
+    <button class="tab" onclick="window.location='admin4.html'"><i class="fas fa-users"></i> Users</button>
+    <button class="tab active" onclick="window.location='admin5.html'"><i class="fas fa-comments"></i> Chat</button>
+    <button class="tab" onclick="window.location='admin6.html'"><i class="fas fa-bell"></i> Notify</button>
+    <button class="tab" onclick="window.location='admin7.html'"><i class="fas fa-image"></i> image</button>
+    <button class="tab" onclick="window.location='admin8.html'"><i class="fas fa-gear"></i> settings</button>
+    <button class="tab" onclick="window.location='home.html'"><i class="fas fa-house"></i> home</button>
+  </div>
+  <div class="container">
+  <div class="sidebar">
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search user..." />
+    </div>
+
+    <div class="user-list" id="userList"></div>
+
+  </div>
+
+  <!-- ======================
+       CHAT SECTION
+  ======================= -->
+
+  <div class="chat-section">
+
+    <div class="chat-header">
+
+      <div class="chat-user-info">
+        <h2 id="chatUserName">Select a conversation</h2>
+        <p id="chatUserEmail"></p>
+      </div>
+
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+
+      <div class="empty-chat">
+        Select a conversation
+      </div>
+
+    </div>
+
+    <div class="chat-input">
+
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Type your message..."
+      />
+
+      <button onclick="sendAdminMessage()">
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  // =====================================
+  // PARSE CONFIG
+  // =====================================
+
+  Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+
+
+  // =====================================
+  // GLOBALS
+  // =====================================
+
+  let selectedUserId = null;
+  let selectedUserName = "";
+  let selectedUserEmail = "";
+
+  // =====================================
+  // LOAD USERS
+  // =====================================
+
+  async function loadUsers(){
+
+    const Messages = Parse.Object.extend("Messages");
+
+    const query = new Parse.Query(Messages);
+
+    query.descending("createdAt");
+
+    const results = await query.find();
+
+    const uniqueUsers = {};
+
+    results.forEach(msg => {
+
+      const userId = msg.get("userId");
+
+      if(!uniqueUsers[userId]){
+
+        uniqueUsers[userId] = {
+
+          userId,
+          userName: msg.get("userName"),
+          userEmail: msg.get("userEmail"),
+          lastMessage: msg.get("message")
+
+        };
+
+      }
+
+    });
+
+    renderUsers(Object.values(uniqueUsers));
+
+  }
+
+  // =====================================
+  // RENDER USERS
+  // =====================================
+
+  function renderUsers(users){
+
+    const userList = document.getElementById("userList");
+
+    userList.innerHTML = "";
+
+    users.forEach(user => {
+
+      const div = document.createElement("div");
+
+      div.className = "user-card";
+
+      div.innerHTML = `
+
+        <div class="user-name">${user.userName}</div>
+
+        <div class="last-message">
+          ${user.lastMessage}
+        </div>
+
+      `;
+
+      div.onclick = () => {
+
+        document.querySelectorAll(".user-card")
+          .forEach(card => card.classList.remove("active"));
+
+        div.classList.add("active");
+
+        selectedUserId = user.userId;
+        selectedUserName = user.userName;
+        selectedUserEmail = user.userEmail;
+
+        document.getElementById("chatUserName").innerText = user.userName;
+
+        document.getElementById("chatUserEmail").innerText = user.userEmail;
+
+        loadMessages(user.userId);
+
+      };
+
+      userList.appendChild(div);
+
+    });
+
+  }
+
+  // =====================================
+  // LOAD MESSAGES
+  // =====================================
+
+  async function loadMessages(userId){
+
+    const result = await Parse.Cloud.run("getMessages", {
+      userId
+    });
+
+    const chatMessages = document.getElementById("chatMessages");
+
+    chatMessages.innerHTML = "";
+
+    result.forEach(msg => {
+
+      const div = document.createElement("div");
+
+      div.classList.add("message");
+
+      if(msg.sender === "admin"){
+
+        div.classList.add("admin-message");
+
+      }else{
+
+        div.classList.add("user-message");
+
+      }
+
+      div.innerHTML = `
+        ${msg.message}
+      `;
+
+      chatMessages.appendChild(div);
+
+    });
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  }
+
+  // =====================================
+  // SEND ADMIN MESSAGE
+  // =====================================
+
+  async function sendAdminMessage(){
+
+    const input = document.getElementById("messageInput");
+
+    const message = input.value.trim();
+
+    if(!message || !selectedUserId) return;
+
+    await Parse.Cloud.run("sendMessage", {
+
+      userId: selectedUserId,
+      userName: selectedUserName,
+      userEmail: selectedUserEmail,
+      message: message,
+      sender: "admin"
+
+    });
+
+    input.value = "";
+
+    loadMessages(selectedUserId);
+
+  }
+
+  // =====================================
+  // SEARCH USERS
+  // =====================================
+
+  document
+    .getElementById("searchInput")
+    .addEventListener("keyup", function(){
+
+      const value = this.value.toLowerCase();
+
+      const cards = document.querySelectorAll(".user-card");
+
+      cards.forEach(card => {
+
+        const name = card.innerText.toLowerCase();
+
+        card.style.display =
+          name.includes(value)
+          ? "block"
+          : "none";
+
+      });
+
+    });
+
+  // =====================================
+  // AUTO REFRESH
+  // =====================================
+
+  setInterval(() => {
+
+    loadUsers();
+
+    if(selectedUserId){
+
+      loadMessages(selectedUserId);
+
+    }
+
+  }, 3000);
+
+  // =====================================
+  // INITIAL LOAD
+  // =====================================
+
+  loadUsers();
+
+</script>
+
+</body>
+</html>

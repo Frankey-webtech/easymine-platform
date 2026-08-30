@@ -1,0 +1,4944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Easy Mine Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<style>
+    /* =========================================
+   EASY MINE — PREMIUM BLACK & GOLD UI
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+
+  --gold:#f7c843;
+  --gold-dark:#d9a90f;
+
+  --bg:#050505;
+  --bg2:#0d0d0d;
+  --card:#131313;
+
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.58);
+
+  --line:rgba(247,200,67,.10);
+
+  --shadow:
+  0 20px 60px rgba(0,0,0,.55);
+
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+
+  font-family:'Inter',sans-serif;
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-2;
+
+  background:
+  radial-gradient(circle at top left,
+  rgba(247,200,67,.08),
+  transparent 28%),
+
+  radial-gradient(circle at bottom right,
+  rgba(247,200,67,.06),
+  transparent 30%),
+
+  linear-gradient(
+    145deg,
+    #000,
+    #070707,
+    #0f0f0f,
+    #040404
+  );
+}
+
+.bg,
+.bubbles{
+  display:none;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.wrapper{
+
+  width:100%;
+  max-width:470px;
+
+  margin:auto;
+
+  padding:
+  18px 14px 120px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:22px;
+}
+
+.brand{
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.level-logo{
+
+  width:56px;
+  height:56px;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  background:#111;
+
+  border:
+  1px solid rgba(247,200,67,.14);
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.35);
+}
+
+.level-logo img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.brand h2{
+
+  font-size:24px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #fff,
+    var(--gold)
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================================
+   HEADER ICONS
+========================================= */
+
+.header-icons{
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.header-icons span,
+#notificationBell{
+
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid var(--line);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--gold);
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.header-icons span:hover,
+#notificationBell:hover{
+
+  transform:translateY(-2px);
+
+  border-color:
+  rgba(247,200,67,.22);
+}
+
+/* =========================================
+   BALANCE CARD
+========================================= */
+
+.balance-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:30px;
+
+  padding:26px 22px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(18,18,18,.98),
+    rgba(8,8,8,.98)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.10);
+
+  box-shadow:var(--shadow);
+
+  margin-bottom:20px;
+}
+
+.balance-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:220px;
+  height:220px;
+
+  top:-120px;
+  right:-120px;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(247,200,67,.10),
+    transparent 70%
+  );
+}
+
+.balance-title{
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-bottom:10px;
+}
+
+.balance-row{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+}
+
+.balance{
+
+  font-size:40px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+}
+
+/* =========================================
+   WITHDRAW BUTTON RIGHT
+========================================= */
+
+.withdraw-btn{
+
+  margin-left:auto;
+
+  min-width:140px;
+
+  height:54px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    var(--gold-dark)
+  );
+
+  color:#111;
+
+  font-size:15px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.25s ease;
+
+  box-shadow:
+  0 10px 30px rgba(247,200,67,.16);
+}
+
+.withdraw-btn:hover{
+
+  transform:translateY(-2px);
+}
+
+/* =========================================
+   LEVEL ROW
+========================================= */
+
+.level-row{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-top:18px;
+}
+
+.level-badge{
+
+  background:
+  rgba(247,200,67,.08);
+
+  color:var(--gold);
+
+  border:
+  1px solid rgba(247,200,67,.12);
+
+  padding:10px 16px;
+
+  border-radius:16px;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+.upgrade{
+
+  color:var(--gold);
+
+  font-size:14px;
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:14px;
+
+  margin-bottom:16px;
+}
+
+.box{
+
+  min-height:135px;
+
+  border-radius:28px;
+
+  padding:20px 16px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+.box:hover{
+
+  transform:translateY(-3px);
+
+  border-color:
+  rgba(247,200,67,.18);
+}
+
+.icon-circle{
+
+  width:56px;
+  height:56px;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+  rgba(247,200,67,.10);
+
+  border:
+  1px solid rgba(247,200,67,.12);
+
+  color:var(--gold);
+
+  margin-bottom:16px;
+
+  font-size:24px;
+}
+
+.box p{
+
+  font-size:15px;
+  font-weight:700;
+}
+
+.cooldown-text{
+
+  margin-top:8px;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+/* =========================================
+   LONG BOX
+========================================= */
+
+.long-grid{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:14px;
+
+  margin-bottom:22px;
+}
+
+.long-box{
+
+  min-height:94px;
+
+  border-radius:28px;
+
+  padding:18px;
+
+  display:flex;
+  align-items:center;
+
+  gap:16px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+.long-box:hover{
+
+  transform:translateY(-2px);
+
+  border-color:
+  rgba(247,200,67,.18);
+}
+
+.long-box p{
+
+  font-size:15px;
+  font-weight:700;
+}
+
+/* =========================================
+   TEXT LINKS
+========================================= */
+
+.plain-link{
+
+  color:rgba(255,255,255,.72);
+
+  text-decoration:none;
+
+  font-size:15px;
+  font-weight:600;
+
+  transition:.25s ease;
+}
+
+.plain-link:hover{
+
+  color:var(--gold);
+}
+
+/* =========================================
+   SECTION TITLES
+========================================= */
+
+.section-title{
+
+  margin:
+  20px 0 14px;
+
+  font-size:16px;
+  font-weight:700;
+
+  color:white;
+}
+
+/* =========================================
+   REFERRAL CARD
+========================================= */
+
+.referral-card{
+
+  border-radius:30px;
+
+  padding:24px;
+
+  margin-bottom:24px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.referral-top{
+
+  display:flex;
+  justify-content:space-between;
+
+  gap:14px;
+
+  margin-bottom:22px;
+}
+
+.referral-top h3{
+
+  font-size:21px;
+  font-weight:800;
+}
+
+.referral-top span{
+
+  color:var(--muted);
+
+  font-size:13px;
+}
+
+.referral-inner{
+
+  border-radius:22px;
+
+  padding:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  margin-bottom:16px;
+}
+
+.referral-label{
+
+  font-size:12px;
+
+  color:var(--muted);
+
+  margin-bottom:10px;
+}
+
+.referral-code-row{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:12px;
+}
+
+.referral-code{
+
+  font-size:22px;
+  font-weight:800;
+
+  color:var(--gold);
+}
+
+.referral-actions{
+
+  display:flex;
+  gap:10px;
+}
+
+.referral-actions span{
+
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--gold);
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.referral-actions span:hover{
+
+  transform:translateY(-2px);
+}
+
+/* =========================================
+   TRANSACTION BOX
+========================================= */
+
+.transaction-box{
+
+  width:100%;
+
+  border-radius:28px;
+
+  padding:18px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  display:flex;
+  flex-direction:column;
+
+  gap:14px;
+}
+
+.transaction-item{
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(247,200,67,.06);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+
+  margin-top:26px;
+
+  text-align:center;
+
+  color:rgba(255,255,255,.40);
+
+  font-size:12px;
+}
+
+/* =========================================
+   CHAT BUTTON
+========================================= */
+
+.chat-btn{
+
+  position:fixed;
+
+  right:18px;
+  bottom:18px;
+
+  width:66px;
+  height:66px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    var(--gold-dark)
+  );
+
+  color:#111;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:26px;
+
+  box-shadow:
+  0 15px 35px rgba(247,200,67,.22);
+
+  z-index:999;
+
+  cursor:pointer;
+}
+
+/* =========================================
+   MODALS
+========================================= */
+
+.modal,
+.taskWithdrawModal,
+.modal-overlay{
+
+  position:fixed;
+
+  inset:0;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  background:
+  rgba(0,0,0,.78);
+
+  backdrop-filter:blur(8px);
+
+  z-index:999999;
+
+  padding:20px;
+}
+
+/* JS SHOULD ADD THIS */
+
+.modal.active,
+.taskWithdrawModal.active,
+.modal-overlay.active{
+
+  display:flex;
+}
+
+/* =========================================
+   MODAL BOXES
+========================================= */
+
+.modal-box,
+.taskWithdrawBox,
+.notification-modal{
+
+  width:100%;
+  max-width:420px;
+
+  border-radius:30px;
+
+  padding:28px 22px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(16,16,16,.98),
+    rgba(7,7,7,.98)
+  );
+
+  border:
+  1px solid rgba(247,200,67,.10);
+
+  box-shadow:var(--shadow);
+
+  animation:modalShow .25s ease;
+}
+
+@keyframes modalShow{
+
+  from{
+
+    opacity:0;
+    transform:translateY(16px) scale(.96);
+  }
+
+  to{
+
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   MODAL HEADER
+========================================= */
+
+.modal-header{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:24px;
+}
+
+.modal-header h3{
+
+  font-size:20px;
+  font-weight:800;
+}
+
+.level{
+
+  color:var(--gold);
+}
+
+.close{
+
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:
+  rgba(255,255,255,.04);
+
+  border:
+  1px solid rgba(247,200,67,.08);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--gold);
+
+  cursor:pointer;
+
+  font-size:24px;
+}
+
+/* =========================================
+   MODAL BODY
+========================================= */
+
+.modal-body{
+
+  text-align:center;
+}
+
+.icon-box{
+
+  width:90px;
+  height:90px;
+
+  border-radius:28px;
+
+  margin:auto auto 20px;
+
+  background:
+  rgba(247,200,67,.08);
+
+  border:
+  1px solid rgba(247,200,67,.12);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:42px;
+
+  color:var(--gold);
+}
+
+.icon-box.success{
+
+  background:
+  rgba(0,255,120,.10);
+
+  color:#00d26a;
+}
+
+.progress-bar{
+
+  width:100%;
+  height:14px;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  background:
+  rgba(255,255,255,.05);
+}
+
+#progressFill{
+
+  width:0%;
+
+  height:100%;
+
+  background:
+  linear-gradient(
+    90deg,
+    var(--gold),
+    var(--gold-dark)
+  );
+
+  border-radius:999px;
+}
+
+/* =========================
+   BALANCE LIMIT MODAL
+========================= */
+
+#balanceLimitModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    backdrop-filter:blur(6px);
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    padding:20px;
+}
+
+/* CARD */
+
+#balanceLimitModal .modal-content{
+
+    width:100%;
+    max-width:420px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #111111,
+        #050505
+    );
+
+    border:1px solid
+    rgba(255,215,0,.18);
+
+    border-radius:24px;
+
+    padding:28px 22px;
+
+    text-align:center;
+
+    box-shadow:
+    0 0 40px rgba(255,215,0,.12),
+    inset 0 0 20px rgba(255,215,0,.04);
+
+    position:relative;
+    overflow:hidden;
+}
+
+/* GOLD GLOW */
+
+#balanceLimitModal .modal-content::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,215,0,.12),
+        transparent 70%
+    );
+
+    top:-120px;
+    right:-120px;
+
+    pointer-events:none;
+}
+
+/* TITLE */
+
+#balanceLimitModal h2{
+
+    margin-bottom:14px;
+
+    font-size:24px;
+    font-weight:800;
+
+    background:
+    linear-gradient(
+        90deg,
+        #FFD700,
+        #FFB800
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* TEXT */
+
+#balanceLimitModal p{
+
+    color:rgba(255,255,255,.75);
+
+    font-size:15px;
+    line-height:1.7;
+
+    margin-bottom:24px;
+}
+
+/* BUTTON WRAPPER */
+
+.limit-actions{
+
+    display:flex;
+    gap:12px;
+}
+
+/* BUTTONS */
+
+.limit-btn{
+
+    flex:1;
+
+    height:52px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-decoration:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+    font-weight:700;
+
+    transition:.3s ease;
+}
+
+/* WITHDRAW */
+
+.limit-btn{
+
+    background:
+    linear-gradient(
+        90deg,
+        #FFD700,
+        #FFB800
+    );
+
+    color:#111;
+
+    box-shadow:
+    0 0 18px rgba(255,215,0,.18);
+}
+
+/* UPGRADE */
+
+.limit-btn.upgrade{
+
+    background:
+    rgba(255,215,0,.08);
+
+    color:#FFD700;
+
+    border:
+    1px solid rgba(255,215,0,.22);
+}
+
+/* HOVER */
+
+.limit-btn:hover{
+
+    transform:
+    translateY(-2px);
+}
+
+.limit-btn.upgrade:hover{
+
+    background:
+    rgba(255,215,0,.12);
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+    #balanceLimitModal .modal-content{
+
+        padding:24px 18px;
+    }
+
+    .limit-actions{
+
+        flex-direction:column;
+    }
+
+    .limit-btn{
+
+        width:100%;
+    }
+
+}
+/* =========================================
+   BUTTONS
+========================================= */
+
+.done-btn,
+.taskLaterBtn,
+.taskGoBtn,
+.notification-close-btn{
+
+  border:none;
+
+  height:54px;
+
+  border-radius:18px;
+
+  font-size:15px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.done-btn,
+.taskGoBtn,
+.notification-close-btn{
+
+  width:100%;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    var(--gold-dark)
+  );
+
+  color:#111;
+
+  margin-top:18px;
+}
+
+.taskLaterBtn{
+
+  flex:1;
+
+  background:
+  rgba(255,255,255,.05);
+
+  color:white;
+}
+
+.taskGoBtn{
+
+  flex:1;
+}
+
+.taskWithdrawButtons{
+
+  display:flex;
+  gap:12px;
+
+  margin-top:24px;
+}
+
+/* =========================================
+   NOTIFICATION MODAL
+========================================= */
+
+.notification-modal{
+
+  text-align:center;
+}
+
+#notificationTitle{
+
+  font-size:22px;
+  margin-bottom:16px;
+}
+
+#notificationMessage{
+
+  color:var(--muted);
+
+  line-height:1.7;
+}
+
+/* =========================================
+   FORCE UPGRADE FIX
+========================================= */
+
+#forceUpgradeModal{
+
+  backdrop-filter:blur(8px);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:480px){
+
+  .balance{
+    font-size:33px;
+  }
+
+  .withdraw-btn{
+
+    min-width:120px;
+    height:50px;
+
+    font-size:14px;
+  }
+
+  .brand h2{
+    font-size:20px;
+  }
+
+  .box{
+    min-height:120px;
+  }
+
+  .referral-code{
+    font-size:18px;
+  }
+
+}
+
+/* =========================
+MODAL OVERLAY
+========================= */
+
+.modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.82);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999999;
+padding:20px;
+backdrop-filter:blur(5px);
+animation:fadeIn .25s ease;
+}
+
+/* =========================
+FULLSCREEN ADMIN MODAL
+========================= */
+
+.admin-message-modal{
+width:100%;
+max-width:420px;
+background:
+linear-gradient(
+180deg,
+#171717,
+#0d0d0d
+);
+border:1px solid rgba(255,215,0,.16);
+border-radius:30px;
+padding:28px;
+text-align:center;
+box-shadow:
+0 0 30px rgba(255,215,0,.08),
+0 18px 45px rgba(0,0,0,.65);
+animation:popIn .25s ease;
+}
+
+.admin-message-header{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:14px;
+margin-bottom:18px;
+}
+
+.admin-message-icon{
+width:78px;
+height:78px;
+border-radius:50%;
+background:
+linear-gradient(
+135deg,
+#ffd700,
+#b8860b
+);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+color:#111;
+box-shadow:
+0 0 25px rgba(255,215,0,.35);
+}
+
+#adminModalTitle{
+font-size:24px;
+font-weight:700;
+color:#ffd700;
+letter-spacing:.3px;
+}
+
+.admin-message-text{
+font-size:15px;
+line-height:1.8;
+color:#d8d8d8;
+margin-bottom:30px;
+white-space:pre-wrap;
+}
+
+.admin-message-btn{
+width:100%;
+height:56px;
+border:none;
+border-radius:18px;
+background:
+linear-gradient(
+135deg,
+#ffd700,
+#c99700
+);
+color:#111;
+font-size:16px;
+font-weight:700;
+box-shadow:
+0 8px 22px rgba(255,215,0,.22);
+transition:.18s;
+}
+
+.admin-message-btn:active{
+transform:scale(.97);
+}
+
+/* =========================
+NOTIFICATION MODAL
+========================= */
+
+.notification-modal{
+width:100%;
+max-width:360px;
+background:
+linear-gradient(
+180deg,
+#181818,
+#0d0d0d
+);
+border:1px solid rgba(255,215,0,.14);
+border-radius:26px;
+padding:26px;
+text-align:center;
+box-shadow:
+0 0 25px rgba(255,215,0,.07),
+0 15px 40px rgba(0,0,0,.6);
+animation:popIn .22s ease;
+}
+
+#notificationTitle{
+font-size:22px;
+margin-bottom:14px;
+color:#ffd700;
+font-weight:700;
+}
+
+#notificationMessage{
+font-size:15px;
+line-height:1.7;
+color:#d5d5d5;
+margin-bottom:26px;
+}
+
+.notification-close-btn{
+width:100%;
+height:52px;
+border:none;
+border-radius:16px;
+background:
+linear-gradient(
+135deg,
+#ffd700,
+#c99700
+);
+color:#111;
+font-size:15px;
+font-weight:700;
+box-shadow:
+0 8px 20px rgba(255,215,0,.2);
+}
+
+.notification-close-btn:active{
+transform:scale(.98);
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+
+@keyframes popIn{
+
+0%{
+opacity:0;
+transform:
+scale(.82)
+translateY(10px);
+}
+
+100%{
+opacity:1;
+transform:
+scale(1)
+translateY(0);
+}
+
+}
+
+@keyframes fadeIn{
+
+0%{
+opacity:0;
+}
+
+100%{
+opacity:1;
+}
+
+}
+.transaction-box{
+  width:100%;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:40px;
+
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  min-height:130px;
+}
+
+/* EMPTY STATE */
+.empty-text{
+  width:100%;
+  text-align:center;
+  font-size:16px;
+  color:rgba(255,255,255,.5);
+  padding:20px;
+}
+
+.referral-note,
+#couponList,
+#transactionBox{
+    text-align:center;
+    color:#9ca3af; /* grey */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Optional: give transaction and coupon cards a minimum height */
+#couponList,
+#transactionBox{
+    min-height:80px;
+}
+
+.transaction-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#9ca3af;
+    min-height:80px;
+}
+
+.withdraw-btn{
+    position:relative;
+    z-index:9999;
+}
+
+.activation-status-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    padding:14px 18px;
+    margin:15px 0;
+    border:1.5px solid #d4af37;
+    border-radius:16px;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:
+        0 4px 20px rgba(212,175,55,.18),
+        inset 0 0 8px rgba(255,255,255,.05);
+}
+
+.activation-status-card span:first-child{
+    color:#d4af37;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.5px;
+}
+
+#activationStatus{
+    font-size:15px;
+    font-weight:700;
+    padding:6px 14px;
+    border-radius:999px;
+    background:rgba(255,255,255,.06);
+    transition:.3s ease;
+}
+
+/* Activated */
+#activationStatus.active{
+    color:gold;
+    background:rgba(34,197,94,.12);
+    border:1px solid rgba(34,197,94,.35);
+    box-shadow:0 0 12px rgba(34,197,94,.25);
+}
+
+/* Not Activated */
+#activationStatus.inactive{
+    color:#ef4444;
+    background:rgba(239,68,68,.12);
+    border:1px solid rgba(239,68,68,.35);
+    box-shadow:0 0 12px rgba(239,68,68,.25);
+}
+ </style> 
+    
+</head>
+
+<body>
+
+<div id="app-root">
+
+  <div class="bg"></div>
+  <div class="bubbles"></div>
+
+  
+  <div class="wrapper">
+      <div class="header">
+
+  <div class="brand">
+<div class="level-logo">
+   <img src="logo.png">
+</div>
+    <h2>Easy Mine</h2>
+  </div>
+
+  <div class="header-icons">
+
+
+    <!-- NOTIFICATION BELL -->
+<div id="notificationBell" onclick="openLatestNotification()">
+    <i class="fa-solid fa-bell"></i>
+</div>
+
+    <span id="profileBtn" onclick="window.location='profile.html'">
+      <i class="fa-solid fa-user"></i>
+    </span>
+
+    <span id="logoutBtn" onclick="logoutUser()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </span>
+
+  </div>
+
+</div>
+
+<div class="activation-status-card">
+  <span>User: </span>
+  <span id="activationStatus">Checking...</span>
+</div>
+<div class="balance-card">
+
+  <div class="balance-title">
+    Available Balance
+  </div>
+
+  <div class="balance-row">
+
+    <div>
+      <div class="balance">
+          ₦<span class="balance" id="walletBalance"></span>
+      
+      </div>
+    </div>
+
+    <button class="withdraw-btn" id="withdrawBtn" type="button"> ↙ Withdraw</button>
+<!--<button onclick="alert('Clicked')">
+Withdraw
+</button>-->
+    
+
+  </div>
+
+  <div class="level-row">
+
+    <div class="level-badge" id="userLevel">
+⚡ Lvl 1
+</div>
+
+    <div class="upgrade openUpgradeModal" id="upgradeBtn" onclick="window.location='upgradeModal.html'">
+      Upgrade
+      </div><br>
+
+  </div>
+</div>
+
+<div class="grid">
+
+  <div class="box" onclick="startMining()">
+    <div class="icon-circle">⛏</div>
+    <p>Mine</p> 
+<div class="cooldown-text" id="cooldownText">
+</div>
+  </div>
+
+  <div class="box" id="couponBtn" onclick="window.location.href='couponModal.html'">
+    <div class="icon-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M7.5 4.5a8 8 0 1 0 9 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+    <p>Activate</p>
+  </div>
+
+  <div class="box" id="taskBtn" onclick="window.location='tasks.html'">
+    <div class="icon-circle">✨</div>
+    <p>Tasks</p>
+  </div>
+
+  <div class="box" id="leaderBtn" onclick="window.location='#'">
+    <div class="icon-circle">🏆</div>
+    <p>Leaders</p>
+  </div>
+
+</div>
+
+<div class="long-grid">
+    
+    <div class="long-box" onclick="window.location.href='chat.html'">
+    
+    <div class="icon-circle">
+<i class="fa-solid fa-comments"></i>
+    </div>
+
+    <p>
+        <span class="plain-link">
+            Chat Admin
+        </span>
+    </p>
+
+</div>
+
+  <div class="long-box" id="supportBtn">
+    <div class="icon-circle"><i class="fa-brands fa-telegram"></i></div>
+    <p><a href="https://t.me/easyminewebsite" class="plain-link">Support</a></p>
+  </div>
+
+  <div class="long-box openUpgradeModal" id="upgradeBox" onclick="window.location='upgradeModal.html'">
+    <div class="icon-circle">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+      </svg>
+    </div>
+    <p>Upgrade Lvl</p>
+  </div>
+
+</div>
+
+<div class="referral-card">
+
+  <div class="referral-top">
+    <h3>Invite & Earn ₦5,000</h3>
+    <span id="referralCount">0 referred</span>
+  </div>
+
+  <div class="referral-inner">
+
+    <div class="referral-label">
+      Your Referral Code
+    </div>
+
+    <div class="referral-code-row">
+
+      <div class="referral-code" id="referralCode">
+        ------
+      </div>
+
+      <div class="referral-actions">
+
+        <span id="copyBtn" class="copy-icon">
+          <i class="fa-regular fa-copy"></i>
+        </span>
+
+        <span id="shareReferralBtn">
+          <i class="fa-solid fa-share-nodes"></i>
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="referral-note">
+    You would earn ₦5,000 when they sign up with your referral code!
+  </div>
+
+</div>
+<div class="section-title">
+  Recent Transactions
+</div>
+
+<div class="transaction-box" id="transactionBox">
+  No transactions yet
+</div>
+
+<div class="footer">
+  <a href="Terms.html" style="text-decoration:none; color:inherit;">
+    Terms of Service | Privacy Policy
+  </a>
+</div>
+
+<div class="chat-btn" id="chatBtn" onclick="window.location='chat.html'">
+  <i class="fa-solid fa-message"></i>
+</div>
+
+<!--//==============={===
+MINIG BEGINS
+//=========================-->
+<div id="miningModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="close" onclick="closeMiningModal()">×</span>
+    </div>
+
+    <div class="modal-body">
+      <div class="icon-box">
+       ⛏
+      </div>
+
+      <h2>Mining in progress...</h2><br>
+      <p id="mineCount">0/3 mined today</p><br>
+      <p id="amountText">₦0 / ₦80,000</p><br>
+
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div><br>
+
+      <p id="percentText">0%</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL 2 (SUCCESS) -->
+<!-- ========================= -->
+<div id="successModal" class="modal">
+  <div class="modal-box">
+
+      <div class="modal-header">
+      <span class="close" onclick="closeSuccessModal()">×</span>
+    </div>
+
+    <div class="modal-body">
+      <div class="icon-box success">
+        <i class="fas fa-check"></i>
+      </div>
+
+      <h2>Mining Complete!</h2>
+      <p>₦80,000 has been added to your balance.</p>
+
+      <button class="done-btn" onclick="closeSuccessModal()">Done</button>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="taskWithdrawModal" id="taskWithdrawModal">
+
+    <div class="taskWithdrawBox">
+
+        <!-- ICON -->
+        <div class="taskWithdrawIcon">
+            ✨
+        </div>
+
+        <!-- TITLE -->
+        <h2 class="taskWithdrawTitle">
+            Complete Tasks First
+        </h2>
+
+        <!-- TEXT -->
+<p
+    class="taskWithdrawText"
+    id="taskWithdrawText"
+>
+    Withdrawal unavailable
+</p>
+
+        <!-- BUTTONS -->
+        <div class="taskWithdrawButtons">
+
+            <button
+                class="taskLaterBtn"
+                id="taskLaterBtn">
+
+                Later
+
+            </button>
+
+            <button
+                class="taskGoBtn"
+                id="taskGoBtn" onclick="window.location='tasks.html'">
+
+                Go to Tasks
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+ADMIN MESSAGE MODAL
+========================= -->
+
+<div
+  id="adminModalOverlay"
+  style="
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999999;
+    padding:20px;
+    box-sizing:border-box;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:400px;
+      background:#111;
+      border-radius:20px;
+      padding:25px;
+      text-align:center;
+      color:white;
+      box-shadow:0 0 30px rgba(0,0,0,0.4);
+      animation:fadeIn 0.3s ease;
+    "
+  >
+
+    <!-- TITLE -->
+    <h2
+      id="adminModalTitle"
+      style="
+        margin:0 0 15px;
+        font-size:24px;
+        font-weight:700;
+      "
+    >
+      Admin Message
+    </h2>
+
+    <!-- MESSAGE -->
+    <p
+      id="adminModalMessage"
+      style="
+        font-size:15px;
+        line-height:1.6;
+        color:#ddd;
+        margin-bottom:25px;
+      "
+    >
+      Message goes here
+    </p>
+
+    <!-- BUTTON -->
+    <button
+      onclick="closeAdminModal()"
+      style="
+        width:100%;
+        border:none;
+        outline:none;
+        background:#00c853;
+        color:white;
+        padding:14px;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:600;
+        cursor:pointer;
+      "
+    >
+      OK
+    </button>
+
+  </div>
+
+</div>
+
+<!-- OPTIONAL ANIMATION -->
+<style>
+
+@keyframes fadeIn{
+
+  from{
+
+    transform:scale(0.9);
+    opacity:0;
+
+  }
+
+  to{
+
+    transform:scale(1);
+    opacity:1;
+
+  }
+
+}
+
+</style>
+
+
+
+</div>
+
+</div>
+
+<!-- =========================
+ADMIN FULLSCREEN MODAL
+========================= -->
+
+<div
+id="adminModalOverlay"
+class="modal-overlay"
+style="display:none;"
+>
+
+    <div class="admin-message-modal">
+
+        <div class="admin-message-header">
+
+            <div class="admin-message-icon">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+
+            <h2 id="adminModalTitle">
+                Admin Message
+            </h2>
+
+        </div>
+
+        <div
+        id="adminModalMessage"
+        class="admin-message-text"
+        >
+            Message here
+        </div>
+
+        <button
+        onclick="closeAdminModal()"
+        class="admin-message-btn"
+        >
+            Okay
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- NOTIFICATION MODAL -->
+<div
+id="notificationModal"
+class="modal-overlay"
+>
+
+    <div class="notification-modal">
+
+        <h2 id="notificationTitle">
+            Notification
+        </h2>
+
+        <p id="notificationMessage">
+            Message here
+        </p>
+
+        <button
+        onclick="closeModal('notificationModal')"
+        class="notification-close-btn"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+<!-- =========================
+FORCED UPGRADE MODAL
+========================= -->
+
+<div id="forceUpgradeModal"
+style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.92);
+z-index:999999;
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+">
+
+<div
+style="
+width:100%;
+max-width:420px;
+background:#081b29;
+border-radius:24px;
+padding:30px 24px;
+text-align:center;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(0,0,0,.5);
+"
+>
+
+<div
+style="
+width:90px;
+height:90px;
+margin:auto;
+margin-bottom:24px;
+border-radius:50%;
+background:#132c40;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+"
+>
+🔒
+</div>
+
+<h2
+style="
+font-size:28px;
+margin-bottom:16px;
+color:white;
+"
+>
+Upgrade Required
+</h2>
+
+<p
+style="
+font-size:16px;
+line-height:1.7;
+color:#a9bfd3;
+margin-bottom:30px;
+"
+>
+Your account has been restricted.
+
+You must upgrade your account before you can continue using the platform.
+</p>
+
+<button
+id="forceUpgradeBtn"
+style="
+width:100%;
+height:58px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#19d7c4,#2b72ff);
+color:white;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+"
+>
+Upgrade Account
+</button>
+
+</div>
+
+</div>
+
+<div id="balanceLimitModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>⚠ Balance Limit Reached</h2>
+
+        <p>
+            Your account has reached its maximum earning limit.
+            You can no longer receive mining rewards until you
+            either withdraw funds or upgrade your account.
+        </p>
+
+        <div class="limit-actions">
+
+            <a href="withdraw.html" class="limit-btn">
+                Withdraw
+            </a>
+
+            <a href="upgradeModal.html" class="limit-btn upgrade">
+                Upgrade Account
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+async function handleWithdraw(event) {
+
+    console.log("BUTTON CLICKED");
+
+    if(event){
+        event.preventDefault();
+    }
+
+    
+}
+console.log("Foundation handler script loaded ");
+
+/* =========================================
+APP STATE
+========================================= */
+
+const AppState = {
+
+    initialized: false,
+
+    isLoading: false,
+
+    currentUser: null,
+
+    activeModal: null,
+
+    mining: {
+
+        running: false,
+
+        completed: false
+
+    },
+
+    ui: {
+
+        theme: "dark"
+
+    }
+
+};
+
+
+
+/* =========================================
+PARSE INITIALIZATION
+========================================= */
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+Parse.liveQueryServerURL =
+'wss://parseapi.back4app.com/';
+
+async function refreshDashboard() {
+
+   const user = Parse.User.current();
+
+   if (!user) return;
+
+   await user.fetch();
+
+   document.getElementById("walletBalance").innerText =
+      Number(
+         user.get("walletBalance") || 0
+      ).toLocaleString();
+
+}
+/* =========================================
+DOM CACHE
+Avoid repeated DOM querying
+========================================= */
+
+const DOM = {
+
+    body:
+        document.body,
+
+    walletBalance:
+        document.getElementById(
+            "walletBalance"
+        ),
+
+    userLevel:
+        document.getElementById(
+            "userLevel"
+        ),
+
+    referralCode:
+        document.getElementById(
+            "referralCode"
+        ),
+
+    referralCount:
+        document.getElementById(
+            "referralCount"
+        ),
+
+    transactionBox:
+        document.getElementById(
+            "transactionBox"
+        ),
+
+    
+
+    toast:
+        document.getElementById(
+            "toast"
+        )
+
+};
+
+
+
+/* =========================================
+UTILITY FUNCTIONS
+========================================= */
+
+/* ---------- FORMAT MONEY ---------- */
+
+function formatMoney(amount = 0) {
+
+    return "" +
+        Number(amount)
+        .toLocaleString();
+
+}
+
+
+/* ---------- LOCK BODY SCROLL ---------- */
+
+function lockBodyScroll() {
+
+    DOM.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* ---------- UNLOCK BODY SCROLL ---------- */
+
+function unlockBodyScroll() {
+
+    DOM.body.style.overflow =
+        "auto";
+
+}
+
+
+/* ---------- SAFE ELEMENT CHECK ---------- */
+
+function elementExists(element) {
+
+    return !!element;
+
+}
+
+
+/* ---------- SAFE TEXT UPDATE ---------- */
+
+function setText(element, value) {
+
+    if (!elementExists(element))
+        return;
+
+    element.textContent = value;
+
+}
+
+
+/* ---------- SAFE HTML UPDATE ---------- */
+
+function setHTML(element, value) {
+
+    if (!elementExists(element))
+        return;
+
+    element.innerHTML = value;
+
+}
+
+
+
+/* =========================================
+TOAST SYSTEM
+========================================= */
+
+let toastTimeout = null;
+
+function showToast(message = "") {
+
+    if (!elementExists(DOM.toast))
+        return;
+
+    clearTimeout(toastTimeout);
+
+    DOM.toast.textContent =
+        message;
+
+    DOM.toast.classList.add(
+        "show"
+    );
+
+    toastTimeout =
+        setTimeout(() => {
+
+            DOM.toast.classList.remove(
+                "show"
+            );
+
+        }, 2500);
+
+}
+
+
+
+/* =========================================
+MODAL SYSTEM
+Unified modal manager
+========================================= */
+
+async function openModal(modalId) {
+
+    // close current modal first
+    if (
+        AppState.activeModal &&
+        AppState.activeModal !== modalId
+    ) {
+
+        closeModal(
+            AppState.activeModal
+        );
+
+    }
+
+    const modal =
+        document.getElementById(
+            modalId
+        );
+
+    if (!modal) return;
+
+    modal.classList.add("active");
+
+    AppState.activeModal =
+        modalId;
+
+    lockBodyScroll();
+    
+    if(modal){
+    await refreshDashboard();
+}
+
+}
+
+
+function closeModal(modalId) {
+
+    const modal =
+        document.getElementById(
+            modalId
+        );
+
+    if (!modal) return;
+
+    modal.classList.remove(
+        "active"
+    );
+
+    if (
+        AppState.activeModal ===
+        modalId
+    ) {
+
+        AppState.activeModal =
+            null;
+
+    }
+
+    const stillOpen =
+        document.querySelector(".active")
+
+    if (!stillOpen) {
+
+        unlockBodyScroll();
+
+    }
+
+}
+
+
+/* ---------- BACKDROP CLOSE ---------- */
+
+function enableBackdropClose(modalId) {
+
+    const modal =
+        document.getElementById(
+            modalId
+        );
+
+    if (!modal) return;
+
+    modal.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeModal(
+                    modalId
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+AUTHENTICATION SYSTEM
+========================================= */
+
+/* ---------- GET CURRENT USER ---------- */
+
+async function getCurrentUser() {
+
+    try {
+
+        const user =
+            Parse.User.current();
+            
+
+        if (!user) {
+
+            return null;
+
+        }
+
+        await user.fetch();
+
+        return user;
+
+    } catch (error) {
+
+        console.log(
+            "User fetch error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+
+/* ---------- REQUIRE LOGIN ---------- */
+
+async function requireAuth() {
+    try {
+
+        const user = await getCurrentUser();
+
+        if (!user) {
+            window.location.replace("./index.html");
+            return null;
+        }
+
+        AppState.currentUser = user;
+        return user;
+
+    } catch (error) {
+        console.log("Auth Error:", error);
+        return null;
+    }
+}
+
+
+
+/* ---------- LOGOUT ---------- */
+
+async function logoutUser() {
+
+    try {
+
+        await Parse.User.logOut();
+
+        window.location.href =
+            "index.html";
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Logout Error:",
+            error
+        );
+
+        showToast(
+            "Failed to logout"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+GLOBAL ERROR SCREEN
+========================================= */
+
+function showFatalError(
+    message = "Something went wrong"
+) {
+
+    const errorContainer =
+        document.createElement("div");
+
+    errorContainer.innerHTML = `
+
+        <div
+            style="
+                position:fixed;
+                inset:0;
+                width:100%;
+                height:100vh;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                flex-direction:column;
+                gap:20px;
+                background:#08110d;
+                color:white;
+                font-family:Inter,sans-serif;
+                padding:20px;
+                text-align:center;
+                z-index:999999;
+            "
+        >
+
+            <h1
+                style="
+                    font-size:32px;
+                    font-weight:800;
+                "
+            >
+                Easy Mine Error
+            </h1>
+
+            <p
+                style="
+                    opacity:.7;
+                    line-height:1.7;
+                    max-width:400px;
+                "
+            >
+                ${message}
+            </p>
+
+            <button
+                onclick="location.reload()"
+                style="
+                    border:none;
+                    cursor:pointer;
+                    height:56px;
+                    padding:0 24px;
+                    border-radius:16px;
+                    background:#25d07f;
+                    color:white;
+                    font-size:16px;
+                    font-weight:700;
+                "
+            >
+                Reload Page
+            </button>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+        errorContainer
+    );
+
+}
+
+
+
+/* =========================================
+APP INITIALIZATION
+========================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    initializeApplication
+);
+
+async function initializeApplication() {
+
+    try {
+
+        AppState.isLoading =
+            true;
+
+        console.log(
+            "Initializing EasyMine..."
+        );
+
+        
+
+        startNotificationPolling();
+
+        
+
+        /* =============================
+           AUTH CHECK
+        ============================= */
+
+        
+
+        const user = await requireAuth();
+
+if (!user) return;
+
+/* INTRO CHECK */
+const completedIntro = user.get("completedIntro");
+
+if (!completedIntro) {
+    window.location.replace("./welcome.html");
+    return;
+}
+
+        /* =============================
+           ENABLE MODAL BACKDROPS
+        ============================= */
+
+        enableBackdropClose(
+            "couponModal"
+        );
+
+        enableBackdropClose(
+            "processingModal"
+        ); 
+
+        enableBackdropClose(
+            "failedModal"
+        );
+
+        enableBackdropClose(
+            "taskWithdrawModal"
+        );
+
+        enableBackdropClose(
+            "miningModal"
+        );
+
+        enableBackdropClose(
+            "successModal"
+        );
+        
+bindTaskWithdrawModalButtons();
+
+        /* =============================
+           LOAD DASHBOARD
+        ============================= */
+
+        if (
+            typeof loadUserDashboard
+            === "function"
+        ) {
+
+            await loadUserDashboard();
+
+        }
+
+
+        /* =============================
+           MARK READY
+        ============================= */
+
+        AppState.initialized =
+            true;
+
+        console.log(
+            "EasyMine Initialized"
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Initialization Error:",
+            error
+        );
+
+        showFatalError(
+            "Failed to initialize application"
+        );
+
+    }
+
+    finally {
+
+        AppState.isLoading =
+            false;
+
+    }
+
+}
+
+
+function bindTaskWithdrawModalButtons() {
+
+    document.getElementById("taskLaterBtn")?.addEventListener("click", () => {
+        hideTaskWithdrawModal();
+    });
+
+    document.getElementById("taskGoBtn")?.addEventListener("click", () => {
+        hideTaskWithdrawModal();
+        openModal("taskWithdrawModal"); // change if your real modal name differs
+    });
+
+}
+console.log("First Script has loaded");
+</script>
+<script>
+
+/* =========================================
+LOAD USER DASHBOARD
+========================================= */
+
+let dashboardLoading = false;
+
+async function loadUserDashboard() {
+
+    if (dashboardLoading) return;
+
+    dashboardLoading = true;
+
+    try {
+
+        const user = AppState.currentUser;
+
+        if (!user) {
+            showToast("User not found");
+            return;
+        }
+
+        const dashboardData = {
+
+            walletBalance:
+                Number(user.get("walletBalance") || 0),
+
+            referralCode:
+                user.get("myReferralCode") || "------",
+
+            referralCount:
+                Number(user.get("referralCount") || 0),
+
+            level:
+                Number(user.get("level") || 1)
+
+        };
+
+        renderWalletBalance(
+            dashboardData.walletBalance
+        );
+
+        renderUserLevel(
+            dashboardData.level
+        );
+
+        renderReferralCode(
+            dashboardData.referralCode
+        );
+
+        renderReferralCount(
+            dashboardData.referralCount
+        );
+
+        await loadTransactionsFromServer(
+            user.id
+        );
+await refreshDashboard();
+    }
+
+    catch (error) {
+
+        console.log(
+            "Dashboard Load Error:",
+            error
+        );
+
+        showToast(
+            "Failed to load dashboard"
+        );
+
+    }
+
+    finally {
+
+        dashboardLoading = false;
+
+    }
+
+}
+/* =========================================
+WALLET BALANCE
+========================================= */
+
+function renderWalletBalance(balance = 0) {
+
+    if (!DOM.walletBalance)
+        return;
+
+    setText(
+        DOM.walletBalance,
+        formatMoney(balance)
+    );
+    
+
+}
+
+
+
+/* =========================================
+USER LEVEL
+========================================= */
+function renderUserLevel(level = 1){
+
+    const levelBox =
+        document.getElementById(
+            "userLevel"
+        );
+
+    if(!levelBox) return;
+
+    levelBox.innerHTML =
+        `⚡ Lvl ${level}`;
+
+}
+
+/* =========================================
+REFERRAL CODE
+========================================= */
+
+function renderReferralCode(
+    code = "------"
+) {
+
+    if (!DOM.referralCode)
+        return;
+
+    setText(
+        DOM.referralCode,
+        code
+    );
+
+}
+
+
+
+/* =========================================
+REFERRAL COUNT
+========================================= */
+
+function renderReferralCount(
+    count = 0
+) {
+
+    if (!DOM.referralCount)
+        return;
+
+    setText(
+        DOM.referralCount,
+        `${count} referred`
+    );
+
+}
+
+
+
+/* =========================================
+LOAD TRANSACTIONS
+========================================= */
+
+async function loadTransactionsFromServer(
+    userId
+) {
+
+    try {
+
+        if (!userId)
+            return;
+
+        const transactions =
+            await Parse.Cloud.run(
+                "getRecentTransactions",
+                {
+                    userId: userId
+                }
+            );
+            if (transactions){
+            await refreshDashboard();
+            }
+
+        renderTransactions(
+            transactions
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Transaction Load Error:",
+            error
+        );
+
+        renderEmptyTransactions();
+
+    }
+
+}
+
+
+
+/* =========================================
+EMPTY TRANSACTION STATE
+========================================= */
+
+function renderEmptyTransactions() {
+
+    if (!DOM.transactionBox)
+        return;
+
+    DOM.transactionBox.innerHTML = `
+
+        <div class="empty-transactions">
+
+            No transactions yet
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================
+RENDER TRANSACTIONS
+========================================= */
+
+async function renderTransactions(
+    transactions = []
+) {
+    
+
+    if (!DOM.transactionBox)
+        return;
+        
+
+    /* =====================================
+       EMPTY STATE
+    ===================================== */
+
+    if (
+        !Array.isArray(
+            transactions
+        ) ||
+        transactions.length === 0
+    ) {
+
+        renderEmptyTransactions();
+        await refreshDashboard();
+        return;
+
+    }
+
+
+    /* =====================================
+       CLEAR EXISTING
+    ===================================== */
+
+    DOM.transactionBox.innerHTML =
+        "";
+
+
+    /* =====================================
+       RENDER EACH ITEM
+    ===================================== */
+
+    transactions.forEach(
+        transaction => {
+
+        const transactionItem =
+            createTransactionItem(
+                transaction
+            );
+
+        DOM.transactionBox.appendChild(
+            transactionItem
+        );
+
+    });
+
+}
+
+
+
+/* =========================================
+CREATE TRANSACTION ITEM
+========================================= */
+
+function createTransactionItem(
+    transaction = {}
+) {
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+    item.className =
+        "transaction-item";
+
+
+    /* =====================================
+       SAFE DATA
+    ===================================== */
+
+    const type =
+        transaction.type ||
+        "Transaction";
+
+    const amount =
+        Number(
+            transaction.amount || 0
+        );
+
+    const status =
+        transaction.status ||
+        "success";
+
+
+    /* =====================================
+       STATUS CLASS
+    ===================================== */
+
+    let statusClass =
+        "success";
+
+    if (
+        status === "pending"
+    ) {
+
+        statusClass =
+            "pending";
+
+    }
+
+    if (
+        status === "failed"
+    ) {
+
+        statusClass =
+            "failed";
+
+    }
+
+
+    /* =====================================
+       TEMPLATE
+    ===================================== */
+
+    item.innerHTML = `
+
+        <div class="transaction-left">
+
+            <div class="transaction-type">
+
+                ${type}
+
+            </div>
+
+            <div class="
+                transaction-status
+                ${statusClass}
+            ">
+
+                ${status}
+
+            </div>
+
+        </div>
+
+        <div class="transaction-amount">
+
+            ${formatMoney(amount)}
+
+        </div>
+
+    `;
+
+    return item;
+
+}
+
+
+
+/* =========================================
+COPY REFERRAL CODE
+========================================= */
+
+async function copyReferralCode() {
+
+    try {
+
+        const code =
+            DOM.referralCode
+            ?.textContent
+            ?.trim();
+
+        if (!code) {
+
+            showToast(
+                "Referral code unavailable"
+            );
+
+            return;
+
+        }
+
+        await navigator.clipboard
+        .writeText(code);
+
+        showToast(
+            "Referral code copied"
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Copy Referral Error:",
+            error
+        );
+
+        showToast(
+            "Failed to copy"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+SHARE REFERRAL
+========================================= */
+
+async function shareReferral() {
+
+    try {
+
+        const code =
+            DOM.referralCode
+            ?.textContent
+            ?.trim();
+
+        if (!code) {
+
+            showToast(
+                "Referral code unavailable"
+            );
+
+            return;
+
+        }
+
+        const websiteLink =
+`https://easymine-platform.onrender.com`
+
+const signupLink =
+`${websiteLink}?ref=${code}`;
+
+const message =
+
+`Easymine is a modern rewards platform that enables users to earn daily through mining, completing simple tasks, and inviting others to join the community. Our platform is built to deliver a secure, user-friendly, and rewarding experience for everyone looking to maximize their earning potential.
+
+Referral Code: ${code}
+
+Sign up here:
+${signupLink}`;
+
+        /* =================================
+           NATIVE SHARE
+        ================================= */
+
+        if (navigator.share) {
+
+            await navigator.share({
+
+                title: "Easy Mine",
+
+                text: message
+
+            });
+
+        }
+
+        else {
+
+            await navigator.clipboard
+            .writeText(message);
+
+            showToast(
+                "Referral message copied"
+            );
+
+        }
+
+
+        /* =================================
+           TRACK SHARE
+        ================================= */
+
+        try {
+
+            await Parse.Cloud.run(
+                "trackReferralShare"
+            );
+
+        }
+
+        catch (trackingError) {
+
+            console.log(
+                "Referral Tracking Error:",
+                trackingError
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Share Referral Error:",
+            error
+        );
+
+        showToast(
+            "Sharing cancelled"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+EVENT LISTENERS
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      const shareBtn =
+    document.getElementById(
+        "shareReferralBtn"
+    );
+
+if (shareBtn) {
+
+    shareBtn.addEventListener(
+        "click",
+        shareReferral
+    );
+
+}
+
+        /* =============================
+           COPY REFERRAL
+        ============================= */
+
+        const copyBtn =
+            document.getElementById(
+                "copyBtn"
+            );
+
+        if (copyBtn) {
+
+            copyBtn.addEventListener(
+                "click",
+                copyReferralCode
+            );
+
+        }
+
+
+        /* =============================
+           LOGOUT BUTTON
+        ============================= */
+
+        const logoutBtn =
+            document.getElementById(
+                "logoutBtn"
+            );
+
+        if (logoutBtn) {
+
+            logoutBtn.addEventListener(
+                "click",
+                logoutUser
+            );
+
+        }
+
+    }
+);
+console.log("Display Script handler has loaded");
+</script>
+<script>
+console.log("The notification handler has loaded");
+/* =========================================
+INIT
+========================================= */
+
+/*function showNotificationModal(type, message) {
+
+    const modal =
+        document.getElementById("notificationModal");
+
+    const title =
+        document.getElementById("notificationTitle");
+
+    const msg =
+        document.getElementById("notificationMessage");
+
+    if (type === "greeting") {
+        title.innerText = "Greeting";
+    }
+
+    if (type === "withdrawal") {
+        title.innerText = "Withdrawal Alert";
+    }
+
+    if (type === "upgrade") {
+        title.innerText = "Upgrade Notice";
+    }
+
+    msg.innerText = message;
+
+    openModal("notificationModal");
+}
+*/
+
+// ===============================
+// BACKEND POLLING FUNCTION
+// ===============================
+
+const notificationQueue = [];
+
+let isShowingNotification = false;
+
+function wait(ms) {
+
+    return new Promise(resolve => {
+
+        setTimeout(resolve, ms);
+
+    });
+
+}
+
+function addNotificationToQueue(
+    notification
+) {
+
+    notificationQueue.push(
+        notification
+    );
+
+    processNotificationQueue();
+
+}
+
+async function processNotificationQueue() {
+
+    if (isShowingNotification) {
+        return;
+    }
+
+    isShowingNotification = true;
+
+    while (
+        notificationQueue.length > 0
+    ) {
+
+        const notification =
+            notificationQueue.shift();
+
+        showNotificationModal(
+notification.title || "Notification",
+notification.message
+);
+        await wait(5000);
+
+closeModal(
+    "notificationModal"
+);
+
+    }
+
+    isShowingNotification = false;
+
+}
+
+async function checkAutomaticNotifications() {
+
+    try {
+
+        const result =
+            await Parse.Cloud.run(
+                "checkAutomaticNotifications"
+            );
+
+        if (
+            !result.notifications ||
+            result.notifications.length === 0
+        ) return;
+
+        for (
+            const notification
+            of result.notifications
+        ) {
+
+            addNotificationToQueue(
+                notification
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===============================
+// AUTO POLLING (KEEP LAST)
+// ===============================
+let notificationPolling = null;
+
+function startNotificationPolling() {
+
+    if (notificationPolling) {
+
+        clearInterval(
+            notificationPolling
+        );
+
+    }
+
+    notificationPolling =
+        setInterval(
+            checkAutomaticNotifications,
+            30000
+        );
+
+}
+    
+// initial call
+checkAutomaticNotifications();
+startNotificationPolling();
+
+
+console.log("Fourth Script has loaded");
+</script>
+<script>
+console.log("Mining System loaded");
+
+function showBalanceLimitModal(){
+
+    const modal =
+    document.getElementById(
+        "balanceLimitModal"
+    );
+
+    if(modal){
+
+        modal.style.display =
+        "flex";
+
+    }
+
+}
+
+const MiningSystem = {
+
+    config: {
+        maxAmount: 80000,
+        duration: 60000
+    },
+
+    state: {
+        running: false,
+        progress: 0
+    }
+
+};
+
+async function startMining() {
+    
+
+    try {
+
+        if (MiningSystem.state.running) {
+
+            showToast("Mining already in progress");
+            return;
+
+        }
+
+        MiningSystem.state.running = true;
+
+        // current user
+        const user = Parse.User.current();
+
+        if (!user) {
+
+            showToast("User not found");
+
+            MiningSystem.state.running = false;
+            return;
+
+        }
+
+        // Ask backend FIRST
+        const result =
+        await Parse.Cloud.run(
+            "canStartMining"
+        );
+
+        // update mine count safely
+        const mineCountEl =
+        document.getElementById(
+            "mineCount"
+        );
+
+        if (
+            mineCountEl &&
+            typeof result.miningCount !==
+            "undefined"
+        ) {
+
+            mineCountEl.textContent =
+            `${result.miningCount}/3 mined today`;
+
+        }
+
+        // limit reached
+        // NOT ALLOWED
+if (!result.allowed) {
+
+    // ACCOUNT LIMIT
+    if(result.limitReached){
+
+    showToast(result.message);
+
+    showBalanceLimitModal();
+
+    const cooldownText =
+    document.getElementById(
+        "cooldownText"
+    );
+
+    if(cooldownText){
+
+        cooldownText.textContent =
+        "Account limit reached.";
+
+    }
+
+}
+
+    // COOLDOWN
+    else if(result.remaining){
+
+        const remaining =
+        result.remaining || 0;
+
+        startCooldownTimer(
+            remaining
+        );
+
+        const minutes =
+        Math.floor(
+            remaining / 60000
+        );
+
+        const seconds =
+        Math.floor(
+            (remaining % 60000) / 1000
+        );
+
+        showToast(
+            `Wait ${minutes}m ${seconds}s before mining again`
+        );
+
+    }
+
+    // DAILY LIMIT
+    else {
+
+        showToast(
+            result.message ||
+            "Mining unavailable"
+        );
+
+    }
+
+    MiningSystem.state.running =
+    false;
+
+    return;
+
+}
+
+        // start mining UI
+        runMiningUI();
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+        showToast("Mining error");
+
+        MiningSystem.state.running = false;
+
+    }
+
+} 
+
+let miningInterval = null;
+
+function runMiningUI() {
+
+    const startTime = Date.now();
+
+    const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+    const percentText =
+    document.getElementById(
+        "percentText"
+    );
+
+    const amountText =
+    document.getElementById(
+        "amountText"
+    );
+
+    if (
+        !progressFill ||
+        !percentText ||
+        !amountText
+    ) {
+
+        console.log(
+            "Mining UI elements missing"
+        );
+
+        showToast(
+            "Mining UI error"
+        );
+
+        MiningSystem.state.running = false;
+
+        return;
+
+    }
+
+    openModal("miningModal");
+
+    miningInterval = setInterval(() => {
+
+        const elapsed =
+        Date.now() - startTime;
+
+        const progress =
+        Math.min(
+            elapsed /
+            MiningSystem.config.duration,
+            1
+        );
+
+        const percent =
+        Math.floor(progress * 100);
+
+        const amount =
+        Math.floor(
+            progress *
+            MiningSystem.config.maxAmount
+        );
+
+        progressFill.style.width =
+        percent + "%";
+
+        percentText.textContent =
+        percent + "%";
+
+        amountText.textContent =
+        `₦${amount.toLocaleString()} / ₦80,000`;
+
+        if (progress >= 1) {
+
+            clearInterval(
+                miningInterval
+            );
+
+            finishMining();
+
+        }
+
+    }, 50);
+
+}
+
+async function finishMining() {
+
+    try {
+
+        closeModal("miningModal");
+
+        openModal("successModal");
+
+        // backend decides reward
+        const result =
+        await Parse.Cloud.run(
+            "completeMining"
+        );
+
+        if (result.success) {
+
+            const mineCountEl =
+            document.getElementById(
+                "mineCount"
+            );
+
+            if (mineCountEl) {
+
+                mineCountEl.textContent =
+                `${result.miningCount}/3 mined today`;
+
+            }
+
+            document.getElementById(
+                "walletBalance"
+            ).innerText =
+            Number(
+                result.newBalance
+            ).toLocaleString();
+
+            showToast(
+                "Mining completed"
+            );
+
+            const cooldownText =
+            document.getElementById(
+                "cooldownText"
+            );
+
+            if (cooldownText) {
+
+                cooldownText.textContent =
+                "Mining unavailable";
+
+            }
+
+            // refresh dashboard
+            await loadUserDashboard();
+
+        }
+
+        else {
+
+   // ACCOUNT LIMIT REACHED
+   if(result.limitReached){
+
+    showToast(result.message);
+
+    showBalanceLimitModal();
+
+    const cooldownText =
+    document.getElementById(
+        "cooldownText"
+    );
+
+    if(cooldownText){
+
+        cooldownText.textContent =
+        "Account limit reached.";
+
+    }
+
+}
+
+   // OTHER ERRORS
+   else {
+
+      showToast(
+         result.message ||
+         "Reward failed verification"
+      );
+
+   }
+
+}
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        showToast(
+            "Mining completion error"
+        );
+
+    }
+
+    finally {
+
+        MiningSystem.state.running = false;
+
+    }
+
+}
+
+function closeMiningModal() {
+
+    closeModal("miningModal");
+
+}
+
+function closeSuccessModal() {
+
+    closeModal("successModal");
+
+}
+
+function forceStopMining() {
+
+    MiningSystem.state.running = false;
+
+    if (miningInterval) {
+
+        clearInterval(
+            miningInterval
+        );
+
+    }
+
+}
+
+let cooldownInterval = null;
+
+function startCooldownTimer(duration) {
+
+    const cooldownText =
+    document.getElementById(
+        "cooldownText"
+    );
+
+    if (!cooldownText) return;
+
+    if (cooldownInterval) {
+
+        clearInterval(
+            cooldownInterval
+        );
+
+    }
+
+    let remaining = duration;
+
+    function updateCooldown() {
+
+        const minutes =
+        Math.floor(
+            remaining / 60000
+        );
+
+        const seconds =
+        Math.floor(
+            (remaining % 60000) / 1000
+        );
+
+        cooldownText.textContent =
+        `Next mining in ${minutes}m ${seconds}s`;
+
+        if (remaining <= 0) {
+
+            clearInterval(
+                cooldownInterval
+            );
+
+            cooldownText.textContent =
+"Mining unavailable";
+
+            return;
+
+        }
+
+        remaining -= 1000;
+
+    }
+
+    updateCooldown();
+
+    cooldownInterval =
+    setInterval(
+        updateCooldown,
+        1000
+    );
+
+}
+
+console.log(
+    "Fifth Script has loaded"
+);
+
+</script>
+<script>
+console.log("withdraw handler loaded");
+async function handleWithdraw(event) {
+    if (event) event.preventDefault();
+
+    console.log("Withdraw button clicked");
+
+    if (!navigator.onLine) {
+        alert("You are offline. Please connect to the internet.");
+        return;
+    }
+
+    try {
+        const user = Parse.User.current();
+
+        if (!user) {
+            alert("User not found");
+            return;
+        }
+
+        const responsePromise = Parse.Cloud.run(
+            "getTaskStatus",
+            {},
+            { sessionToken: user.getSessionToken() }
+        );
+
+        // safety timeout (prevents freezing)
+        const timeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Request timeout")), 10000)
+        );
+
+        const response = await Promise.race([responsePromise, timeout]);
+
+        const currentTask = response.currentTask;
+
+        if (currentTask.progress < currentTask.target) {
+            showTaskWithdrawModal(
+                `Complete <b>${currentTask.title}</b> before you can withdraw.`
+            );
+            return;
+        }
+
+        console.log("Redirecting...");
+        window.location.href = "withdraw.html";
+
+    } catch (error) {
+        console.error("Withdraw Error:", error);
+
+        alert(
+            error?.message ||
+            "Something went wrong while processing withdrawal"
+        );
+    }
+}
+
+function showTaskWithdrawModal(message) {
+
+    const text =
+    document.getElementById(
+        "taskWithdrawText"
+    );
+
+    if(text){
+
+        text.innerHTML =
+        message;
+
+    }
+
+    openModal(
+        "taskWithdrawModal"
+    );
+
+}
+
+function hideTaskWithdrawModal() {
+    closeModal("taskWithdrawModal");
+}
+
+/* ATTACH BUTTON EVENT */
+document.addEventListener("DOMContentLoaded", () => {
+
+    const withdrawBtn =
+        document.getElementById(
+            "withdrawBtn"
+        );
+
+    if (!withdrawBtn) {
+        console.log(
+            "Withdraw button not found"
+        );
+        return;
+    }
+
+    withdrawBtn.addEventListener(
+        "click",
+        handleWithdraw
+    );
+
+    console.log(
+        "Withdraw button connected"
+    );
+
+});
+
+console.log("Sixth Script has loaded");
+
+</script>
+<script>
+console.log("Admin message handler script loaded ");
+let currentAdminMessage = null;
+
+// ============================
+// START LISTENER
+// ============================
+let adminSubscription = null;
+async function startAdminListener(){
+
+const user =
+Parse.User.current();
+
+if(!user) return;
+
+// ============================
+// QUERY
+// ============================
+
+const AdminMessage =
+Parse.Object.extend(
+'AdminMessages'
+);
+
+const query =
+new Parse.Query(
+AdminMessage
+);
+
+query.equalTo(
+'isActive',
+true
+);
+
+query.descending(
+'createdAt'
+);
+
+// ============================
+// LIVEQUERY
+// ============================
+
+
+
+if (adminSubscription) {
+    await adminSubscription.unsubscribe();
+}
+
+adminSubscription =
+    await query.subscribe();
+
+// ============================
+// REALTIME EVENT
+// ============================
+
+adminSubscription.on(
+'create',
+(message)=>{
+
+handleAdminMessage(
+message
+);
+
+});
+
+adminSubscription.on(
+'error',
+(error)=>{
+console.log(
+'LiveQuery error',
+error
+);
+});
+
+adminSubscription.on(
+'close',
+()=>{
+console.log(
+'LiveQuery closed'
+);
+});
+// ============================
+// CHECK EXISTING
+// ============================
+
+checkExistingMessages();
+
+}
+
+
+// ========================================
+// STORE LAST NOTIFICATION
+// ========================================
+
+let latestNotification = null;
+
+// ========================================
+// SHOW NOTIFICATION MODAL
+// ========================================
+
+/*function showNotificationModal(type, message) {
+
+    const modal =
+        document.getElementById(
+            "notificationModal"
+        );
+
+    const title =
+        document.getElementById(
+            "notificationTitle"
+        );
+
+    const msg =
+        document.getElementById(
+            "notificationMessage"
+        );
+
+    // SAVE LAST NOTIFICATION
+    latestNotification = {
+        type,
+        message
+    };
+
+    // TITLE
+    if (type === "greeting") {
+        title.innerText = "Greeting";
+    }
+
+    else if (type === "withdrawal") {
+        title.innerText =
+            "Withdrawal Alert";
+    }
+
+    else if (type === "upgrade") {
+        title.innerText =
+            "Upgrade Notice";
+    }
+
+    else if (type === "notification") {
+        title.innerText =
+            "Notification";
+    }
+
+    else {
+        title.innerText =
+            "Message";
+    }
+
+    // MESSAGE
+    msg.innerText = message;
+
+    // OPEN
+    openModal("notificationModal");
+
+}*/
+
+
+function showNotificationModal(
+    titleText,
+    messageText
+){
+
+    const modal =
+        document.getElementById(
+            "notificationModal"
+        );
+
+    const title =
+        document.getElementById(
+            "notificationTitle"
+        );
+
+    const msg =
+        document.getElementById(
+            "notificationMessage"
+        );
+
+    // SAVE LAST NOTIFICATION
+    latestNotification = {
+        title:titleText,
+        message:messageText
+    };
+
+    // SET TITLE
+    title.innerText =
+        titleText || "Notification";
+
+    // SET MESSAGE
+    msg.innerText =
+        messageText || "";
+
+    // SHOW MODAL
+    modal.style.display =
+        "flex";
+
+}
+
+// ============================
+// CLOSE MODAL
+// ============================
+
+function closeModal(id){
+
+document.getElementById(id)
+.style.display = "none";
+
+}
+
+
+// ========================================
+// OPEN FROM BELL
+// ========================================
+
+function openLatestNotification() {
+
+    // NO NOTIFICATION YET
+    if (!latestNotification) {
+
+        showToast(
+            "No notifications yet"
+        );
+
+        return;
+
+    }
+
+    // REOPEN LAST NOTIFICATION
+    showNotificationModal(
+    latestNotification.title,
+    latestNotification.message
+);
+
+}
+// ============================
+// CHECK EXISTING
+// ============================
+const shownAdminMessages = new Set();
+
+async function checkExistingMessages(){
+
+const user =
+Parse.User.current();
+
+const AdminMessage =
+Parse.Object.extend(
+'AdminMessages'
+);
+
+const query =
+new Parse.Query(
+AdminMessage
+);
+
+query.equalTo(
+'isActive',
+true
+);
+
+query.descending(
+'createdAt'
+);
+
+const results =
+await query.find();
+
+results.forEach(message=>{
+
+handleAdminMessage(
+message
+);
+
+});
+
+}
+
+// ============================
+// HANDLE MESSAGE
+// ============================
+
+function handleAdminMessage(message){
+
+const user =
+Parse.User.current();
+
+if(!user) return;
+
+// ============================
+// TARGET CHECK FIRST
+// ============================
+
+const targetType =
+message.get("targetType");
+
+const targetUserId =
+message.get("targetUserId");
+
+if(
+targetType === "single" &&
+targetUserId !== user.id
+){
+return;
+}
+
+
+// ============================
+// EXPIRE CHECK
+// ============================
+
+const expiresAt =
+message.get("expiresAt");
+
+if(
+expiresAt &&
+new Date(expiresAt) < new Date()
+){
+return;
+}
+
+if(
+shownAdminMessages.has(message.id)
+){
+return;
+}
+
+// DISMISSED CHECK
+const dismissedBy =
+message.get("dismissedBy") || [];
+
+if(
+dismissedBy.includes(user.id)
+){
+return;
+}
+
+shownAdminMessages.add(message.id);
+
+// ============================
+// TYPE
+// ============================
+
+const type =
+message.get("type");
+
+// ============================
+// FULLSCREEN
+// ============================
+
+if(type === "fullscreen"){
+
+currentAdminMessage =
+message;
+
+document.getElementById(
+"adminModalTitle"
+).innerText =
+message.get("title");
+
+document.getElementById(
+"adminModalMessage"
+).innerText =
+message.get("message");
+
+document.getElementById(
+"adminModalOverlay"
+).style.display =
+"flex";
+
+return;
+
+}
+
+// ============================
+// NORMAL NOTIFICATION
+// ============================
+
+showNotificationModal(
+message.get("title"),
+message.get("message")
+);
+
+}
+// ============================
+// CLOSE MODAL
+// ============================
+
+async function closeAdminModal(){
+
+const overlay =
+document.getElementById(
+'adminModalOverlay'
+);
+
+overlay.style.display =
+'none';
+
+if(!currentAdminMessage){
+return;
+}
+
+try{
+
+const user =
+Parse.User.current();
+
+const dismissedBy =
+currentAdminMessage.get(
+'dismissedBy'
+) || [];
+
+if(
+!dismissedBy.includes(
+user.id
+)
+){
+
+dismissedBy.push(
+user.id
+);
+
+currentAdminMessage.set(
+'dismissedBy',
+dismissedBy
+);
+
+await currentAdminMessage.save();
+
+}
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+// ============================
+// START
+// ============================
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        setTimeout(() => {
+            startAdminListener();
+        }, 1000);
+
+    }
+);
+console.log("The last script has loaded");
+</script>
+<script>
+console.log("coupon-code handler script loaded ");
+    // If you're using Parse SDK make sure it's initialized above this
+
+async function loadActivationStatus() {
+
+  try {
+
+    const currentUser = Parse.User.current();
+
+    if (!currentUser) {
+      document.getElementById("activationStatus").innerHTML =
+        "<span style='color:red'>Not Logged In</span>";
+      return;
+    }
+
+    
+    
+await currentUser.fetch();
+
+console.log(currentUser.toJSON());
+console.log("accountActivated:", currentUser.get("accountActivated"));
+console.log("User ID:", currentUser.id);
+console.log("Email:", currentUser.get("email"));
+
+    const activated =
+      currentUser.get("accountActivated");
+
+    const status =
+      document.getElementById("activationStatus");
+
+    if (activated) {
+
+      status.textContent = "Activated";
+status.className = "active";
+
+    } else {
+
+      status.textContent = "Not Activated";
+status.className = "inactive";
+
+    }
+
+  } catch (err) {
+
+    console.log(err);
+
+    document.getElementById("activationStatus").innerHTML =
+      "<span style='color:red'>Error</span>";
+
+  }
+
+}
+
+loadActivationStatus();
+</script>
+<script>
+
+/* =========================================
+FORCED UPGRADE SYSTEM
+========================================= */
+
+/* =========================================
+FORCED UPGRADE SYSTEM
+========================================= */
+
+async function checkForcedUpgrade(){
+
+    try{
+
+        const user =
+            Parse.User.current();
+
+        if(!user) return;
+
+        await user.fetch();
+
+        const mustUpgrade =
+            user.get("mustUpgrade");
+
+        const returnedFromUpgrade =
+            sessionStorage.getItem(
+                "comingFromUpgrade"
+            );
+
+        const modal =
+            document.getElementById(
+                "forceUpgradeModal"
+            );
+
+        // =================================
+        // USER RETURNED FROM UPGRADE PAGE
+        // =================================
+
+        if(returnedFromUpgrade === "true"){
+
+            sessionStorage.removeItem(
+                "comingFromUpgrade"
+            );
+
+            if(modal){
+
+                modal.style.display =
+                    "none";
+
+            }
+
+            document.body.style.overflow =
+                "auto";
+
+            return;
+
+        }
+
+        // =========================
+        // FORCE MODAL
+        // =========================
+
+        if(mustUpgrade === true){
+
+            if(modal){
+
+                modal.style.display =
+                    "flex";
+
+            }
+
+            // LOCK PAGE SCROLL
+            document.body.style.overflow =
+                "hidden";
+
+            // PREVENT ESC CLOSE
+            document.addEventListener(
+                "keydown",
+                e => {
+
+                    if(e.key === "Escape"){
+
+                        e.preventDefault();
+
+                    }
+
+                }
+            );
+
+            // PREVENT BACK BUTTON
+            history.pushState(
+                null,
+                "",
+                location.href
+            );
+
+            window.onpopstate = function () {
+
+                history.go(1);
+
+            };
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Forced upgrade check failed",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+UPGRADE BUTTON
+========================================= */
+
+document.getElementById(
+    "forceUpgradeBtn"
+)?.addEventListener(
+    "click",
+    () => {
+
+    // SAVE RETURN FLAG
+    sessionStorage.setItem(
+        "comingFromUpgrade",
+        "true"
+    );
+
+    window.location.href =
+        "upgradeModal.html";
+
+});
+
+
+/* =========================================
+INITIALIZE
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    checkForcedUpgrade
+);
+</script>
+<script>
+async function loadUserLevel() {
+
+    try {
+
+        const currentUser =
+            Parse.User.current();
+
+        if (!currentUser) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+        // REFRESH USER
+        await currentUser.fetch();
+
+        const tier =
+            Number(
+                currentUser.get(
+                    "accountTier"
+                ) || 1
+            );
+
+        const levelEl =
+            document.getElementById(
+                "userLevel"
+            );
+
+        // PREVENT NULL ERROR
+        if (levelEl) {
+
+            levelEl.innerHTML =
+                `⚡ Lvl ${tier}`;
+
+        }
+
+        console.log(
+            "Loaded user tier:",
+            tier
+        );
+
+    }
+
+    catch(err) {
+
+        console.log(
+            "Failed to load level",
+            err
+        );
+
+        // INVALID SESSION
+        if (
+            err.code === 209
+        ) {
+
+            await Parse.User.logOut();
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    }
+
+}
+
+// LOAD ON PAGE OPEN
+document.addEventListener(
+    "DOMContentLoaded",
+    loadUserLevel
+);
+
+// LOAD WHEN USER RETURNS
+window.addEventListener(
+    "focus",
+    loadUserLevel
+);
+
+// LOAD WHEN TAB BECOMES ACTIVE
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            loadUserLevel();
+
+        }
+
+    }
+);
+</script>
+</body>
+
+</html>
