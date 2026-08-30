@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withdrawal Status</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<style>
+/* =========================================
+   RESET
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+
+  background:
+  radial-gradient(circle at top left,
+  rgba(255,215,0,.10),
+  transparent 30%),
+
+  radial-gradient(circle at bottom right,
+  rgba(255,180,0,.08),
+  transparent 35%),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+/* =========================================
+   GOLD PARTICLES
+========================================= */
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+
+  background-image:
+  radial-gradient(rgba(255,215,0,.18) 1px, transparent 1px);
+
+  background-size:90px 90px;
+
+  opacity:.12;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card{
+  width:100%;
+  max-width:470px;
+
+  padding:38px 26px;
+
+  border-radius:34px;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(12,12,12,.96),
+    rgba(7,7,7,.96)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:
+  0 0 45px rgba(255,215,0,.06),
+  inset 0 0 25px rgba(255,255,255,.02);
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* GOLD GLOW */
+
+.card::before{
+  content:"";
+  position:absolute;
+
+  width:260px;
+  height:260px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.10),
+    transparent 70%
+  );
+
+  top:-120px;
+  right:-120px;
+
+  pointer-events:none;
+}
+
+/* =========================================
+   SUCCESS ICON
+========================================= */
+
+.icon{
+  width:90px;
+  height:90px;
+
+  margin:0 auto 24px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:38px;
+  font-weight:900;
+
+  color:#111;
+
+  background:
+  linear-gradient(
+    135deg,
+    #FFD700,
+    #FFB800
+  );
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.30);
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.card h2{
+  text-align:center;
+
+  font-size:34px;
+  font-weight:800;
+
+  margin-bottom:10px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.sub{
+  text-align:center;
+
+  color:rgba(255,255,255,.55);
+
+  font-size:15px;
+  line-height:1.7;
+
+  margin-bottom:34px;
+}
+
+/* =========================================
+   INFO ROWS
+========================================= */
+
+.row{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:16px;
+
+  padding:18px 20px;
+
+  margin-bottom:14px;
+
+  border-radius:22px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.06);
+
+  transition:.3s ease;
+}
+
+.row:hover{
+  border-color:rgba(255,215,0,.18);
+
+  background:
+  rgba(255,215,0,.03);
+}
+
+/* LABEL */
+
+.row span:first-child{
+  color:rgba(255,255,255,.55);
+
+  font-size:14px;
+  font-weight:600;
+}
+
+/* VALUE */
+
+.value{
+  color:#fff;
+
+  font-size:15px;
+  font-weight:800;
+
+  text-align:right;
+
+  word-break:break-word;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status{
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  background:
+  rgba(255,215,0,.10);
+
+  border:
+  1px solid rgba(255,215,0,.15);
+
+  color:#FFD700;
+
+  font-size:13px;
+  font-weight:800;
+
+  letter-spacing:.3px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn{
+  width:100%;
+  height:62px;
+
+  border:none;
+  outline:none;
+
+  margin-top:24px;
+
+  border-radius:22px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:18px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 0 28px rgba(255,215,0,.18);
+
+  position:relative;
+  overflow:hidden;
+}
+
+/* SHINE EFFECT */
+
+.btn::before{
+  content:"";
+
+  position:absolute;
+  top:0;
+  left:-100%;
+
+  width:100%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.28),
+    transparent
+  );
+
+  transition:.7s;
+}
+
+.btn:hover::before{
+  left:100%;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 0 40px rgba(255,215,0,.28);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+  body{
+    padding:14px;
+  }
+
+  .card{
+    padding:30px 18px;
+    border-radius:28px;
+  }
+
+  .icon{
+    width:78px;
+    height:78px;
+
+    font-size:32px;
+  }
+
+  .card h2{
+    font-size:28px;
+  }
+
+  .sub{
+    font-size:14px;
+  }
+
+  .row{
+    padding:16px;
+    border-radius:18px;
+
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .value{
+    text-align:left;
+    font-size:14px;
+  }
+
+  .btn{
+    height:58px;
+    border-radius:18px;
+
+    font-size:17px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="icon">✓</div>
+
+<h2>Withdrawal Submitted!</h2>
+<div class="sub">Your withdrawal is being processed</div>
+
+<div class="row">
+<span>Amount</span>
+<span class="value" id="amount">--</span>
+</div>
+
+<div class="row">
+<span>Bank</span>
+<span class="value" id="bank">--</span>
+</div>
+
+<div class="row">
+<span>Account Number</span>
+<span class="value" id="account">--</span>
+</div>
+
+<div class="row">
+<span>Account Name</span>
+<span class="value" id="name">--</span>
+</div>
+
+<div class="row">
+<span>Status</span>
+<span class="status" id="status">Pending</span>
+</div>
+
+<button class="btn" onclick="goHome()">Done</button>
+
+</div>
+
+<script>
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+const params = new URLSearchParams(window.location.search);
+const wid = params.get("wid");
+
+async function loadWithdrawal(){
+
+if(!wid){
+alert("Missing withdrawal ID");
+return;
+}
+
+try{
+
+const currentUser = Parse.User.current();
+
+if(!currentUser){
+alert("User not logged in");
+return;
+}
+
+const Withdrawal = Parse.Object.extend("Withdrawals");
+const query = new Parse.Query(Withdrawal);
+
+console.log("Withdrawal ID:", wid);
+console.log("Current User:", currentUser.id);
+query.equalTo("objectId", wid);
+query.equalTo("userId", currentUser.id);
+
+const res = await query.first();
+
+if(!res){
+alert("Withdrawal not found");
+return;
+}
+
+const walletTransactionId =
+res.get("walletTransactionId");
+
+if(walletTransactionId){
+
+    localStorage.setItem(
+        "latestWalletTransactionId",
+        walletTransactionId
+    );
+
+}
+
+document.getElementById("amount").innerText =
+"₦" + res.get("amount");
+
+document.getElementById("bank").innerText =
+res.get("bank");
+
+document.getElementById("account").innerText =
+res.get("accountNumber");
+
+document.getElementById("name").innerText =
+res.get("accountName");
+
+const status = res.get("status") || "Pending";
+
+document.getElementById("status").innerText =
+status;
+
+}catch(err){
+
+console.log(err);
+
+alert(
+err.message || "Failed to load withdrawal"
+);
+
+}
+
+}
+
+function goHome(){
+window.location.href = "home.html";
+}
+
+loadWithdrawal();
+
+</script>
+
+</body>
+</html>

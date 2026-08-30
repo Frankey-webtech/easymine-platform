@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+       <link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+        <title>Upgrade Your Account</title> 
+<style>
+    /* =========================================
+   EASYMINE PREMIUM GOLD UPGRADE PAGE
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-5;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,215,0,.12),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,180,0,.08),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+
+}
+
+/* =========================================
+   GOLD PARTICLES
+========================================= */
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-4;
+
+  background-image:
+  radial-gradient(
+    rgba(255,215,0,.18) 1px,
+    transparent 1px
+  );
+
+  background-size:90px 90px;
+
+  opacity:.12;
+}
+
+/* =========================================
+   MAIN MODAL PAGE
+========================================= */
+
+.coupon-modal{
+  position:relative;
+
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+
+  padding:45px 16px 80px;
+
+  overflow:hidden;
+}
+
+/* =========================================
+   HIDE NON ACTIVE MODALS
+========================================= */
+
+.processing-modal,
+.upgrade-modal-overlay{
+  position:fixed;
+  inset:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+  rgba(0,0,0,.78);
+
+  backdrop-filter:blur(12px);
+
+  z-index:9999;
+
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  transition:.35s ease;
+}
+
+/* ACTIVE */
+
+.processing-modal.active,
+.upgrade-modal-overlay.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.modal-content,
+.upgrade-modal{
+  position:relative;
+
+  width:100%;
+  max-width:760px;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(14,14,14,.98),
+    rgba(6,6,6,.98)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  border-radius:38px;
+
+  padding:42px 34px;
+
+  overflow:hidden;
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:
+  0 0 0 1px rgba(255,255,255,.02),
+  0 35px 80px rgba(0,0,0,.70),
+  0 0 50px rgba(255,215,0,.06);
+}
+
+/* =========================================
+   GOLD GLOW
+========================================= */
+
+.modal-content::before,
+.upgrade-modal::before{
+  content:"";
+
+  position:absolute;
+
+  width:320px;
+  height:320px;
+
+  top:-120px;
+  right:-120px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.14),
+    transparent 70%
+  );
+
+  pointer-events:none;
+}
+
+.modal-content::after,
+.upgrade-modal::after{
+  content:"";
+
+  position:absolute;
+
+  width:250px;
+  height:250px;
+
+  bottom:-100px;
+  left:-100px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,180,0,.08),
+    transparent 70%
+  );
+
+  pointer-events:none;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:32px;
+}
+
+.modal-title{
+  font-size:42px;
+  font-weight:900;
+  line-height:1.2;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  letter-spacing:-1px;
+}
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.close-modal{
+  width:54px;
+  height:54px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.3s ease;
+}
+
+.close-modal:hover{
+
+  transform:
+  rotate(90deg)
+  scale(1.05);
+
+  background:
+  rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.18);
+}
+
+/* =========================================
+   WARNING BOX
+========================================= */
+
+.warning-box{
+  width:100%;
+
+  display:flex;
+  align-items:flex-start;
+
+  gap:14px;
+
+  padding:22px;
+
+  border-radius:26px;
+
+  margin-bottom:22px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.06),
+    rgba(255,255,255,.01)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+}
+
+.warning-icon{
+  font-size:22px;
+  color:#FFD700;
+}
+
+.warning-content h4{
+  font-size:16px;
+  font-weight:800;
+
+  color:#fff;
+
+  margin-bottom:8px;
+}
+
+.warning-content p{
+  font-size:14px;
+  line-height:1.8;
+
+  color:rgba(255,255,255,.68);
+}
+
+/* =========================================
+   EXACT BOX
+========================================= */
+
+.exact-box{
+  width:100%;
+
+  padding:22px;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  margin-bottom:28px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.10),
+    rgba(255,184,0,.03)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.14);
+
+  color:#FFD700;
+
+  font-size:17px;
+  font-weight:800;
+}
+
+/* =========================================
+   PAYMENT TEXT
+========================================= */
+
+.payment-text{
+  font-size:16px;
+  line-height:1.9;
+
+  color:rgba(255,255,255,.70);
+
+  margin-bottom:32px;
+}
+
+/* =========================================
+   ACCOUNT CARD
+========================================= */
+
+.account-card{
+  width:100%;
+
+  padding:30px 26px;
+
+  border-radius:32px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.01)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(16px);
+
+  margin-bottom:34px;
+
+  position:relative;
+
+  box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.03),
+  0 20px 40px rgba(0,0,0,.35);
+}
+
+.account-item{
+  margin-bottom:28px;
+}
+
+.account-item:last-child{
+  margin-bottom:0;
+}
+
+.label{
+  font-size:14px;
+
+  color:rgba(255,255,255,.45);
+
+  margin-bottom:8px;
+
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.value{
+  font-size:22px;
+  font-weight:800;
+
+  color:#fff;
+
+  word-break:break-word;
+}
+
+/* =========================================
+   COPY BUTTON
+========================================= */
+
+.copy-btn{
+  width:56px;
+  height:56px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.10),
+    rgba(255,184,0,.04)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.3s ease;
+}
+
+.copy-btn:hover{
+
+  transform:scale(1.05);
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.18);
+}
+
+/* =========================================
+   RECEIPT
+========================================= */
+
+.receipt-title{
+  font-size:22px;
+  font-weight:800;
+
+  margin-bottom:18px;
+}
+
+/* =========================================
+   UPLOAD BOX
+========================================= */
+
+.upload-box{
+  position:relative;
+
+  width:100%;
+  min-height:120px;
+
+  border-radius:28px;
+
+  border:
+  1.5px dashed rgba(255,215,0,.18);
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.03),
+    rgba(255,255,255,.01)
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  gap:14px;
+
+  padding:24px;
+
+  cursor:pointer;
+
+  overflow:hidden;
+
+  transition:.3s ease;
+
+  margin-bottom:24px;
+}
+
+.upload-box:hover{
+
+  border-color:#FFD700;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.06),
+    rgba(255,255,255,.02)
+  );
+}
+
+.upload-box i{
+  font-size:34px;
+  color:#FFD700;
+}
+
+.upload-box span{
+  font-size:16px;
+  font-weight:600;
+
+  color:rgba(255,255,255,.72);
+}
+
+.upload-box input{
+  position:absolute;
+  inset:0;
+
+  opacity:0;
+  cursor:pointer;
+}
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.receipt-preview{
+  width:100%;
+
+  border-radius:24px;
+
+  display:none;
+
+  margin-bottom:24px;
+
+  border:
+  1px solid rgba(255,215,0,.08);
+}
+
+/* =========================================
+   PRIMARY BUTTON
+========================================= */
+
+.payment-btn,
+.telegram-btn{
+  width:100%;
+  height:72px;
+
+  border:none;
+  outline:none;
+
+  border-radius:24px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:20px;
+  font-weight:900;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 20px 35px rgba(255,215,0,.18);
+}
+
+.payment-btn:hover,
+.telegram-btn:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 28px 45px rgba(255,215,0,.26);
+}
+
+/* =========================================
+   LOADER
+========================================= */
+
+.loader-wrapper{
+  display:flex;
+  justify-content:center;
+
+  margin-bottom:28px;
+}
+
+.loader{
+  width:90px;
+  height:90px;
+
+  border-radius:50%;
+
+  border:
+  7px solid rgba(255,215,0,.12);
+
+  border-top-color:#FFD700;
+
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* =========================================
+   PROCESSING TITLE
+========================================= */
+
+.processing-title{
+  text-align:center;
+
+  font-size:24px;
+  font-weight:800;
+
+  margin-bottom:38px;
+}
+
+/* =========================================
+   PROCESSING STEPS
+========================================= */
+
+.processing-steps{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:20px;
+}
+
+.processing-step{
+  font-size:16px;
+  font-weight:700;
+
+  color:rgba(255,255,255,.35);
+
+  animation:textGlow 1.4s infinite;
+}
+
+.processing-step:nth-child(1){
+  animation-delay:0s;
+}
+
+.processing-step:nth-child(2){
+  animation-delay:.3s;
+}
+
+.processing-step:nth-child(3){
+  animation-delay:.6s;
+}
+
+@keyframes textGlow{
+
+  0%{
+    color:rgba(255,255,255,.35);
+    transform:translateY(0);
+  }
+
+  50%{
+    color:#FFD700;
+    transform:translateY(-3px);
+  }
+
+  100%{
+    color:rgba(255,255,255,.35);
+    transform:translateY(0);
+  }
+
+}
+
+/* =========================================
+   FAILED CONTENT
+========================================= */
+
+.failed-content{
+  text-align:center;
+}
+
+.failed-title{
+  font-size:34px;
+  font-weight:900;
+
+  line-height:1.3;
+
+  margin-bottom:18px;
+}
+
+.failed-text{
+  font-size:16px;
+  line-height:1.9;
+
+  color:rgba(255,255,255,.68);
+
+  margin-bottom:34px;
+}
+
+.failed-close-btn{
+  width:100%;
+  height:66px;
+
+  border:none;
+  outline:none;
+
+  border-radius:22px;
+
+  cursor:pointer;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#fff;
+
+  font-size:17px;
+  font-weight:700;
+
+  margin-top:14px;
+
+  transition:.3s ease;
+}
+
+.failed-close-btn:hover{
+  border-color:#FFD700;
+}
+
+/* =========================================
+   TOAST
+========================================= */
+
+.custom-toast{
+  position:fixed;
+
+  left:50%;
+  bottom:40px;
+
+  transform:
+  translateX(-50%)
+  translateY(20px);
+
+  background:
+  rgba(15,15,15,.96);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#fff;
+
+  padding:18px 24px;
+
+  border-radius:18px;
+
+  font-size:15px;
+  font-weight:600;
+
+  z-index:99999;
+
+  opacity:0;
+
+  transition:.3s ease;
+}
+
+.custom-toast.show{
+  opacity:1;
+
+  transform:
+  translateX(-50%)
+  translateY(0);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px){
+
+  .coupon-modal{
+    padding:20px 12px 60px;
+  }
+
+  .modal-content,
+  .upgrade-modal{
+    padding:28px 18px;
+    border-radius:28px;
+  }
+
+  .modal-title{
+    font-size:30px;
+    padding-right:12px;
+  }
+
+  .warning-box{
+    padding:18px;
+    border-radius:22px;
+  }
+
+  .account-card{
+    padding:24px 18px;
+    border-radius:24px;
+  }
+
+  .value{
+    font-size:18px;
+  }
+
+  .upload-box{
+    min-height:100px;
+    border-radius:22px;
+  }
+
+  .payment-btn,
+  .telegram-btn{
+    height:64px;
+    border-radius:20px;
+    font-size:18px;
+  }
+
+  .failed-title{
+    font-size:26px;
+  }
+
+}
+
+.easy{
+    font-size: 10px;
+    color: dimgrey;
+}
+
+.account-item{
+margin-bottom:20px;
+}
+
+.top-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:6px;
+}
+
+.copy-btn{
+background:
+  linear-gradient(
+    135deg,
+    rgba(255,215,0,.12),
+    rgba(255,184,0,.05)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+</style>
+</head>
+
+<body>
+      <div class="coupon-modal active" id="upgradeModal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Upgrade Account</h2>
+
+      <button class="close-modal" id="closeUpgradeModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+
+
+    
+
+
+    <!-- WARNING 2 -->
+    <div class="warning-box yellow">
+      <div class="warning-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+
+      <div class="warning-content">
+        <h4>⚠️ Important Warning</h4>
+        <p>
+          Upgrade ONLY from this platform.
+          Payments outside this system will NOT be valid.
+        </p>
+      </div>
+    </div>
+
+
+    <!-- AMOUNT -->
+    <div class="exact-box">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Pay the exact amount of ₦3,000 only</span>
+    </div>
+
+
+    <p class="payment-text">
+      Make payment to the account below and upload your receipt.
+    </p>
+
+
+    <!-- ACCOUNT CARD -->
+      <div class="account-card">
+
+
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Amount</span><br>
+<button class="copy-btn" id="copyUpgradeAccountBtn">
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+
+    </button>
+
+          <div class="value">₦3,000</div>
+
+        </div>
+
+<div class="account-item">
+
+  <div class="top-row">
+    <span class="label">Account Number</span>
+
+    <button class="copy-btn" id="copyBtn">
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+
+    </button>
+
+  </div>
+
+<div class="value" id="upgradeAccountNumber">
+    Loading...
+
+</div>
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Bank</span>
+<div class="value" id="upgradeBankName">
+    Loading...
+</div><br>
+        </div>
+
+        <div class="account-item">
+          <span class="label" style="font-weight:bold;">Account Name</span><br>
+        <div class="value" id="upgradeAccountName">
+    Loading...
+<br>
+<span class="easy">Easy Mine UPGRADE Payment Account</span>
+</div>
+        </div>
+
+      </div>
+
+
+    <!-- UPLOAD -->
+    <div class="receipt-title">Upload Payment Receipt</div>
+
+    <label class="upload-box">
+      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+      <span id="upgradeUploadText">Tap to upload receipt</span>
+
+      <input type="file" id="upgradeReceiptInput" accept="image/*">
+    </label>
+
+    <img class="receipt-preview" id="upgradeReceiptPreview" alt="Receipt Preview">
+
+
+    <!-- BUTTON -->
+    <button class="payment-btn" id="upgradePaymentBtn">
+      I have made my payment
+    </button>
+
+  </div>
+</div>
+
+
+
+<!-- =========================
+PROCESSING MODAL
+========================= -->
+
+<div class="processing-modal" id="upgradeProcessingModal">
+
+  <div class="processing-content">
+
+    <div class="modal-header processing-header">
+
+      <h2 class="modal-title">Processing Payment</h2>
+
+      <button class="close-modal" id="closeUpgradeProcessingModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+
+    <h2 class="processing-title">
+      Please wait...
+    </h2>
+
+
+    <div class="processing-steps">
+
+  <p class="processing-step">
+    Uploading receipt...
+  </p>
+
+  <p class="processing-step">
+    Verifying payment...
+  </p>
+
+  <p class="processing-step">
+    Confirming upgrade...
+  </p>
+
+</div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+FAILED MODAL
+========================= -->
+
+<div class="upgrade-modal-overlay" id="upgradeFailedModal">
+
+  <div class="upgrade-modal failed-content">
+
+    <div class="modal-header">
+
+      <button class="close-modal" id="closeUpgradeFailedModal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div class="failed-icon-wrap">
+<!-- SVG removed -->
+    </div>
+
+
+    <div class="failed-title">
+      Your Receipt is being processed 
+    </div>
+
+
+    <div class="failed-text">
+      Your receipt is being processed, for faster approval send your email and a text to support to verify your payment.
+    </div>
+
+
+    <button class="telegram-btn" onclick="openTelegramSupport()">
+      Contact Support
+    </button>
+
+
+    <button class="failed-close-btn" id="closeUpgradeFailedBtn">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+async function loadUpgradeAccountDetails(){
+
+    try{
+
+        const settings =
+            await Parse.Cloud.run(
+                "getAdminSettings"
+            );
+
+        if(!settings){
+            return;
+        }
+
+        const accountNumber =
+            document.getElementById(
+                "upgradeAccountNumber"
+            );
+
+        if(accountNumber){
+            accountNumber.textContent =
+                settings.accountNumber || "";
+        }
+
+        const bank =
+            document.getElementById(
+                "upgradeBankName"
+            );
+
+        if(bank){
+            bank.textContent =
+                settings.bankName || "";
+        }
+
+        const name =
+            document.getElementById(
+                "upgradeAccountName"
+            );
+
+        if(name){
+            name.innerHTML =
+                `${settings.accountName || ""}
+                <br>
+                <span class="easy">Easy Mine UPGRADE Payment Account</span>`;
+        }
+
+    }
+    catch(error){
+
+        console.log(
+            "Upgrade account loading error:",
+            error
+        );
+
+    }
+
+}
+
+const UpgradeSystem = {
+
+    modal: document.getElementById("upgradeModal"),
+
+    processingModal: document.getElementById("upgradeProcessingModal"),
+
+    failedModal: document.getElementById("upgradeFailedModal"),
+
+    receiptInput: document.getElementById("upgradeReceiptInput"),
+
+    receiptPreview: document.getElementById("upgradeReceiptPreview"),
+
+    uploadText: document.getElementById("upgradeUploadText"),
+
+    paymentBtn: document.getElementById("upgradePaymentBtn"),
+
+    accountNumber: document.getElementById("upgradeAccountNumber"),
+
+    copyAccountBtn: document.getElementById("copyUpgradeAccountBtn")
+
+};
+
+
+
+/* =========================================
+INIT
+========================================= */
+
+function initializeUpgradeSystem() {
+
+    bindUpgradeButtons();
+
+    bindUpgradeEvents();
+
+}
+
+
+
+/* =========================================
+OPEN BUTTONS
+========================================= */
+
+function bindUpgradeButtons() {
+
+    const openButtons =
+        document.querySelectorAll(".openUpgradeModal");
+
+    openButtons.forEach(btn => {
+
+        btn.addEventListener("click", openUpgradeModal);
+
+    });
+
+}
+
+
+
+/* =========================================
+EVENTS
+========================================= */
+
+function bindUpgradeEvents() {
+
+    document.getElementById("closeUpgradeModal")
+        ?.addEventListener("click", () => closeModal("upgradeModal"));
+
+
+    document.getElementById("closeUpgradeProcessingModal")
+        ?.addEventListener("click", () => closeModal("upgradeProcessingModal"));
+
+
+    document.getElementById("closeUpgradeFailedBtn")
+        ?.addEventListener("click", closeUpgradeFailedModal);
+
+
+    document.getElementById("closeUpgradeFailedModal")
+        ?.addEventListener("click", closeUpgradeFailedModal);
+
+
+    UpgradeSystem.receiptInput?.addEventListener(
+        "change",
+        handleUpgradeReceiptPreview
+    );
+
+    UpgradeSystem.copyAccountBtn?.addEventListener(
+        "click",
+        copyUpgradeAccountNumber
+    );
+
+    UpgradeSystem.paymentBtn?.addEventListener(
+        "click",
+        handleUpgradePayment
+    );
+
+}
+
+
+
+/* =========================================
+OPEN MODAL
+========================================= */
+
+function openUpgradeModal() {
+
+    resetUpgradeState();
+
+    openModal("upgradeModal");
+
+}
+
+
+
+/* =========================================
+RESET
+========================================= */
+
+function resetUpgradeState() {
+
+    if (UpgradeSystem.receiptInput) {
+        UpgradeSystem.receiptInput.value = "";
+    }
+
+    if (UpgradeSystem.receiptPreview) {
+        UpgradeSystem.receiptPreview.src = "";
+    }
+
+    if (UpgradeSystem.receiptPreview) {
+        UpgradeSystem.receiptPreview.style.display = "none";
+    }
+
+    if (UpgradeSystem.uploadText) {
+
+        UpgradeSystem.uploadText.textContent =
+            "Tap to upload receipt";
+
+    }
+
+    if (UpgradeSystem.paymentBtn) {
+
+        UpgradeSystem.paymentBtn.disabled = false;
+
+        UpgradeSystem.paymentBtn.innerHTML =
+            "I have made my payment";
+
+    }
+
+} 
+
+
+/* =========================================
+COPY ACCOUNT
+========================================= */
+
+async function copyUpgradeAccountNumber() {
+
+    try {
+
+        const number =
+            UpgradeSystem.accountNumber?.textContent?.trim();
+
+        if (!number) return;
+
+        await navigator.clipboard.writeText(number);
+
+        showToast("Account number copied");
+
+    } catch (e) {
+
+        showToast("Failed to copy");
+
+    }
+
+}
+
+
+
+/* =========================================
+RECEIPT PREVIEW
+========================================= */
+
+function handleUpgradeReceiptPreview(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    UpgradeSystem.uploadText.textContent = file.name;
+
+    const reader = new FileReader();
+
+    reader.onload = e => {
+
+        UpgradeSystem.receiptPreview.src = e.target.result;
+
+        UpgradeSystem.receiptPreview.style.display = "block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+
+
+/* =========================================
+PAYMENT FLOW
+========================================= */
+function showToast(message){
+
+    const toast =
+        document.createElement("div");
+
+    toast.className = "custom-toast";
+
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("show");
+    },100);
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+        setTimeout(() => {
+            toast.remove();
+        },300);
+
+    },3000);
+
+}
+
+
+async function handleUpgradePayment() {
+
+    const file =
+        UpgradeSystem.receiptInput?.files[0];
+
+    if (!file) {
+        return showToast("Upload receipt first");
+    }
+
+    try {
+
+        UpgradeSystem.paymentBtn.disabled = true;
+
+        UpgradeSystem.paymentBtn.innerHTML =
+            "Uploading Receipt...";
+
+        // OPEN PROCESSING MODAL FIRST
+        openModal("upgradeProcessingModal");
+
+        // CREATE FILE
+        const parseFile =
+            new Parse.File(
+                file.name,
+                file
+            );
+
+        await parseFile.save();
+
+        // CREATE RECEIPT
+        const UpgradeReceipt =
+            Parse.Object.extend("UpgradeReceipt");
+
+        const receipt =
+            new UpgradeReceipt();
+
+        const currentUser =
+            Parse.User.current();
+
+        receipt.set("user", currentUser);
+
+        receipt.set("image", parseFile);
+
+/* =========================================
+AUTO APPROVE CHECK
+========================================= */
+
+await currentUser.fetch();
+
+/* LOAD AUTOMATION SETTINGS */
+
+const settings =
+await Parse.Cloud.run(
+    "getAutomationSettings"
+);
+
+/* GLOBAL AUTO APPROVE */
+
+const autoApprove =
+settings?.autoApproveUpgradeReceipts === true;
+/* =========================================
+AUTO APPROVE ENABLED
+========================================= */
+
+receipt.set(
+    "status",
+    "pending"
+);
+
+        receipt.set(
+            "fullName",
+            currentUser.get("fullName") || ""
+        );
+
+        receipt.set(
+            "email",
+            currentUser.get("email") || ""
+        );
+
+        receipt.set(
+            "country",
+            currentUser.get("country") || "Nigeria"
+        );
+
+        
+
+await currentUser.fetch();
+
+const currentTier =
+    currentUser.get(
+        "accountTier"
+    ) || 1;
+
+let upgradePlan = "";
+let nextTier = "";
+
+if(currentTier === 1){
+
+    upgradePlan =
+        "Tier 2 Vendor";
+
+    nextTier = 2;
+
+}
+
+else if(currentTier === 2){
+
+    upgradePlan =
+        "Tier 3 Unlimited";
+
+    nextTier = 3;
+
+}
+
+receipt.set(
+    "upgradePlan",
+    upgradePlan
+);
+
+receipt.set(
+    "newAccountLevel",
+    nextTier
+);
+
+const adminSettings =
+await Parse.Cloud.run(
+    "getAdminSettings"
+);
+
+receipt.set(
+    "accountNumber",
+    adminSettings.accountNumber
+);
+
+receipt.set(
+    "bankName",
+    adminSettings.bankName
+);
+
+receipt.set(
+    "accountName",
+    adminSettings.accountName
+);
+
+
+        await receipt.save();
+
+
+closeModal("upgradeModal");
+
+// KEEP PROCESSING VISIBLE
+setTimeout(() => {
+
+    closeModal("upgradeProcessingModal");
+
+setTimeout(() => {
+
+    openModal("upgradeFailedModal");
+
+},300);
+
+    UpgradeSystem.paymentBtn.disabled = false;
+
+    UpgradeSystem.paymentBtn.innerHTML =
+        "I have made my payment";
+
+}, 5000);
+
+    } catch (error) {
+
+        console.error(error);
+
+        closeModal("upgradeProcessingModal");
+
+        showToast("Upload failed, try again");
+
+        UpgradeSystem.paymentBtn.disabled = false;
+
+        UpgradeSystem.paymentBtn.innerHTML =
+            "I have made my payment";
+
+    }
+
+}
+
+
+
+/* =========================================
+CLOSE FAILED
+========================================= */
+async function loadUpgradeTier(){
+
+    const user =
+        Parse.User.current();
+
+    if(!user) return;
+
+    await user.fetch();
+
+    const tier =
+        user.get("accountTier") || 1;
+
+    // =========================
+    // TIER 1 -> TIER 2
+    // =========================
+
+    if(tier === 1){
+
+        document.querySelector(
+            ".modal-title"
+        ).innerText =
+        "Upgrade To Tier 2";
+
+        document.querySelector(
+            ".exact-box span"
+        ).innerText =
+        "Pay the exact amount of ₦3,000 only";
+
+    }
+
+    // =========================
+    // TIER 2 -> TIER 3
+    // =========================
+
+    else if(tier === 2){
+
+        document.querySelector(
+            ".modal-title"
+        ).innerText =
+        "Upgrade To Tier 3";
+
+        document.querySelector(
+            ".exact-box span"
+        ).innerText =
+        "Pay the exact amount of ₦3,000 only";
+
+        document.querySelector(
+            ".payment-text"
+        ).innerText =
+        "Upgrade to Tier 3 for unlimited withdrawal.";
+
+        // amount
+        document.querySelectorAll(
+            ".value"
+        )[0].innerText =
+        "₦3,000";
+
+    }
+
+    // =========================
+    // ALREADY MAX TIER
+    // =========================
+
+    else if(tier >= 3){
+
+        showToast(
+            "You already have highest tier"
+        );
+
+        window.location.href =
+            "home.html";
+
+    }
+
+}
+
+function closeUpgradeFailedModal() {
+
+    closeModal("upgradeFailedModal");
+
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeUpgradeSystem();
+
+    loadUpgradeTier();
+
+    loadUpgradeAccountDetails();
+
+    console.log("Upgrade System Initialized");
+
+});
+
+console.log("Fourth Script has loaded");
+</script>
+
+<script>
+
+
+
+/* =========================
+CLOSE + REDIRECT
+========================= */
+
+function redirectHome() {
+
+    window.location.href = "home.html";
+
+}
+
+
+/* CLOSE BUTTONS */
+
+document.getElementById("closeUpgradeModal")
+?.addEventListener("click", redirectHome);
+
+document.getElementById("closeUpgradeProcessingModal")
+?.addEventListener("click", redirectHome);
+
+document.getElementById("closeUpgradeFailedBtn")
+?.addEventListener("click", redirectHome);
+
+document.getElementById("closeUpgradeFailedModal")
+?.addEventListener("click", redirectHome);
+
+</script>
+<script>
+
+/* =========================
+AUTO OPEN ON PAGE LOAD
+========================= */
+
+
+
+
+/* =========================
+OPEN MODAL
+========================= */
+
+function openModal(id){
+
+    const modal = document.getElementById(id);
+
+    if(!modal) return;
+
+    modal.style.display = "flex";
+
+    setTimeout(() => {
+        modal.classList.add("active");
+    }, 10);
+
+}
+
+
+/* =========================
+CLOSE MODAL
+========================= */
+
+function closeModal(id){
+
+    const modal = document.getElementById(id);
+
+    if(!modal) return;
+
+    modal.classList.remove("active");
+
+    setTimeout(() => {
+
+        modal.style.display = "none";
+
+    }, 300);
+
+}
+
+
+
+/* =========================
+FAILED MODAL CLOSE
+========================= */
+
+function closeUpgradeFailedModal(){
+
+    closeModal("upgradeFailedModal");
+
+    window.location.href = "home.html";
+
+}
+
+</script>
+<script>
+
+function openTelegramSupport(){
+
+    window.open(
+        "http://t.me/easyminewebsite",
+        "_blank"
+    );
+
+}
+
+</script>
+</body>
+
+</html>

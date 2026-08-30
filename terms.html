@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms of Service</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  position:relative;
+}
+
+/* =========================
+   PREMIUM BACKGROUND
+========================= */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+
+  background:
+  radial-gradient(circle at top left,
+  rgba(255,215,0,.10),
+  transparent 30%),
+
+  radial-gradient(circle at bottom right,
+  rgba(255,180,0,.08),
+  transparent 35%),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+/* =========================
+   GOLD PARTICLES
+========================= */
+
+.particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.particles span{
+  position:absolute;
+  bottom:-100px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle at 30% 30%,
+    rgba(255,255,255,.9),
+    rgba(255,215,0,.18)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.15);
+
+  box-shadow:
+  0 0 15px rgba(255,215,0,.15);
+
+  animation:
+  floatBubble linear infinite;
+
+  opacity:.45;
+}
+
+@keyframes floatBubble{
+
+  0%{
+    transform:
+    translateY(0)
+    scale(1);
+
+    opacity:0;
+  }
+
+  10%{
+    opacity:.5;
+  }
+
+  100%{
+    transform:
+    translateY(-120vh)
+    scale(1.5);
+
+    opacity:0;
+  }
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+  padding:28px 16px 80px;
+}
+
+/* =========================
+   BACK BTN
+========================= */
+
+.back{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  width:fit-content;
+
+  padding:14px 18px;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(14px);
+
+  cursor:pointer;
+
+  margin-bottom:26px;
+
+  transition:.3s ease;
+}
+
+.back:hover{
+  border-color:#FFD700;
+}
+
+.back p{
+  font-size:15px;
+  font-weight:600;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top{
+  margin-bottom:28px;
+}
+
+.top h1{
+  font-size:42px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  margin-bottom:10px;
+}
+
+.top p{
+  color:rgba(255,255,255,.45);
+  line-height:1.7;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  background:
+  rgba(12,12,12,.88);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(18px);
+
+  border-radius:30px;
+
+  padding:30px 24px;
+
+  box-shadow:
+  0 0 40px rgba(255,215,0,.06),
+  inset 0 0 20px rgba(255,255,255,.02);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+  margin-bottom:34px;
+}
+
+.section:last-child{
+  margin-bottom:0;
+}
+
+.section h2{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:16px;
+  color:white;
+}
+
+.section p{
+  color:rgba(255,255,255,.70);
+  font-size:16px;
+  line-height:1.9;
+}
+
+.section ul{
+  margin-top:16px;
+  padding-left:22px;
+}
+
+.section li{
+  color:rgba(255,255,255,.70);
+  font-size:16px;
+  line-height:1.9;
+  margin-bottom:12px;
+}
+
+.bold{
+  color:#FFD700;
+  font-weight:800;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  .top h1{
+    font-size:30px;
+  }
+
+  .card{
+    padding:24px 18px;
+    border-radius:24px;
+  }
+
+  .section h2{
+    font-size:19px;
+  }
+
+  .section p,
+  .section li{
+    font-size:14px;
+  }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg"></div>
+
+<!-- PARTICLES -->
+<div class="particles">
+  <span style="left:8%; width:10px; height:10px; animation-duration:10s;"></span>
+  <span style="left:18%; width:16px; height:16px; animation-duration:14s;"></span>
+  <span style="left:34%; width:12px; height:12px; animation-duration:12s;"></span>
+  <span style="left:52%; width:18px; height:18px; animation-duration:15s;"></span>
+  <span style="left:66%; width:14px; height:14px; animation-duration:11s;"></span>
+  <span style="left:82%; width:10px; height:10px; animation-duration:13s;"></span>
+</div>
+
+<div class="page">
+
+<!-- BACK -->
+<div class="back" onclick="history.back()">
+
+<svg viewBox="0 0 24 24"
+width="24"
+height="24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+<path d="M15 18l-6-6 6-6"/>
+</svg>
+
+<p>Back</p>
+
+</div>
+
+<!-- TOP -->
+<div class="top">
+<h1>Terms of Service</h1>
+
+<p>
+Please read these terms carefully before using EasyMine. By using this platform, you agree to follow all rules, policies and withdrawal conditions listed below.
+</p>
+</div>
+
+<!-- CARD -->
+<div class="card">
+
+<!-- 1 -->
+<div class="section">
+
+<h2>1. Acceptance of Terms</h2>
+
+<p>
+By accessing and using Easy Mine Wallet, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.
+</p>
+
+</div>
+
+<!-- 2 -->
+<div class="section">
+
+<h2>2. Coupon Code</h2>
+
+<p>
+You can only make payment of 
+<span class="bold">₦10,000</span>
+to the account that will be displayed. After payment, contact support and submit the receipt together with the email used during signup for faster payment verification.
+</p>
+
+<p style="margin-top:14px;">
+Any coupon code already used for withdrawal cannot be reused for another withdrawal. A new valid unused code will always be required.
+</p>
+</div>
+
+<!-- 3 -->
+<div class="section">
+
+<h2>3. Mining</h2>
+
+<p>
+You can mine only three times daily with a five-minute cooldown interval between each mine. Every successful mine will credit your account 
+<span class="bold">₦80,000</span> per mine which sums up to <span class="bold">₦240,000</span>
+per day.
+</p>
+
+</div>
+
+<!-- 4 -->
+<div class="section">
+
+<h2>4. Upgrade</h2>
+
+<p>
+As a new user, you are automatically at Level 1, which it's max balance acceptable is 
+<span class="bold">₦500,000</span>, which when hit, you can no longer receive funds. When this happens, you can only either withdraw part or full of your current balance and continue earning or you can upgrade your account to Level 2 which has max balance of <span class="bold">₦1,000,000</span>. When this happens, you can only either withdraw part or full of your current balance and continue earning or you can upgrade your account to Level 3 which has unlimited max balance 
+</p>
+
+<p style="margin-top:14px;">
+After making payment for the upgrade, contact support and provide the email address used during registration  so that your account can be upgraded instantly after approval.
+</p>
+
+
+
+</div>
+
+<!-- 5 -->
+<div class="section">
+
+<h2>5. Withdrawals</h2>
+
+<p>
+Before requesting withdrawal, you must have completed your daily tasks. Any wrong information given for the withdrawal is fully your fault and cant be reversed so fill all fields carefully. 
+</p>
+
+</div>
+
+<!-- 6 -->
+<div class="section">
+
+<h2>6. Referrals</h2>
+
+<p>
+When a friend signs up using your referral code during registration, you will receive a referral bonus of <span class="bold">₦5,000</span>. 
+</p>
+
+</div>
+
+<!-- 7 -->
+<div class="section">
+
+<h2>7. Transfer Speed</h2>
+
+<p>
+Some transfers may not be instant depending on the amount being transferred and verification requirements from the receiving bank or payment provider.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+</script>
+
+</body>
+</html>

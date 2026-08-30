@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Withdraw</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<style>
+    /* =========================================
+   RESET
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+
+  background:
+  radial-gradient(circle at top left,
+  rgba(255,215,0,.10),
+  transparent 28%),
+
+  radial-gradient(circle at bottom right,
+  rgba(255,190,0,.08),
+  transparent 35%),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #050505,
+    #0b0b0b,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+/* =========================================
+   FLOATING GOLD PARTICLES
+========================================= */
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+
+  background-image:
+  radial-gradient(rgba(255,215,0,.18) 1px, transparent 1px);
+
+  background-size:80px 80px;
+
+  opacity:.15;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container{
+  width:100%;
+  max-width:520px;
+
+  margin:auto;
+
+  padding:28px 14px 40px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  margin-bottom:28px;
+}
+
+.back{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:24px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(10px);
+
+  transition:.3s ease;
+}
+
+.back:hover{
+  transform:translateY(-2px);
+
+  border-color:#FFD700;
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.12);
+}
+
+.header h3{
+  font-size:34px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card{
+  width:100%;
+
+  padding:30px 22px;
+
+  border-radius:34px;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(12,12,12,.96),
+    rgba(8,8,8,.96)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:
+  0 0 50px rgba(255,215,0,.06),
+  inset 0 0 25px rgba(255,255,255,.02);
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+
+  width:260px;
+  height:260px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.10),
+    transparent 70%
+  );
+
+  top:-120px;
+  right:-120px;
+
+  pointer-events:none;
+}
+
+/* =========================================
+   LABELS
+========================================= */
+
+.card label{
+  display:block;
+
+  margin-bottom:10px;
+  margin-top:18px;
+
+  font-size:14px;
+  font-weight:700;
+
+  color:rgba(255,255,255,.88);
+}
+
+.card label:first-child{
+  margin-top:0;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.card input,
+.card select{
+  width:100%;
+  height:60px;
+
+  border:none;
+  outline:none;
+
+  border-radius:20px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  padding:0 18px;
+
+  color:#fff;
+
+  font-size:15px;
+  font-weight:500;
+
+  transition:.3s ease;
+
+  appearance:none;
+}
+
+.card select{
+  cursor:pointer;
+}
+
+.card input::placeholder{
+  color:rgba(255,255,255,.28);
+}
+
+.card input:focus,
+.card select:focus{
+
+  border-color:#FFD700;
+
+  background:
+  rgba(255,215,0,.03);
+
+  box-shadow:
+  0 0 0 4px rgba(255,215,0,.08);
+}
+
+/* =========================================
+   NOTE
+========================================= */
+
+.note{
+  margin-top:12px;
+  margin-bottom:20px;
+
+  color:rgba(255,255,255,.45);
+
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* =========================================
+   INFO / WARNING BOXES
+========================================= */
+
+#withdrawRequirementsBox,
+#referralChallengeBox,
+#upgradeRequirementBox,
+#opayWarningBox{
+
+  width:100%;
+
+  border-radius:24px !important;
+
+  padding:20px !important;
+
+  margin-bottom:18px !important;
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:
+  inset 0 0 18px rgba(255,255,255,.02);
+
+  overflow:hidden;
+}
+
+/* BLUE INFO */
+
+#withdrawRequirementsBox,
+#referralChallengeBox{
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(40,80,140,.18),
+    rgba(20,40,70,.18)
+  ) !important;
+
+  border:
+  1px solid rgba(80,160,255,.18) !important;
+}
+
+/* RED WARNING */
+
+#upgradeRequirementBox,
+#opayWarningBox{
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,80,80,.10),
+    rgba(80,20,20,.16)
+  ) !important;
+
+  border:
+  1px solid rgba(255,120,120,.15) !important;
+}
+
+/* TITLES */
+
+#referralChallengeBox h3,
+#upgradeRequirementBox h3,
+#opayWarningTitle{
+
+  font-size:18px !important;
+  font-weight:800 !important;
+
+  margin-bottom:10px !important;
+}
+
+#referralChallengeBox h3{
+  color:#FFD700 !important;
+}
+
+#upgradeRequirementBox h3,
+#opayWarningTitle{
+  color:#ffb4b4 !important;
+}
+
+/* PARAGRAPHS */
+
+#referralChallengeText,
+#upgradeRequirementBox p,
+#opayWarningText{
+
+  font-size:14px !important;
+  line-height:1.7 !important;
+
+  color:rgba(255,255,255,.76) !important;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn{
+  width:100%;
+  height:64px;
+
+  border:none;
+  outline:none;
+
+  margin-top:10px;
+
+  border-radius:22px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:18px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 0 28px rgba(255,215,0,.18);
+
+  position:relative;
+  overflow:hidden;
+}
+
+/* SHINE EFFECT */
+
+.btn::before{
+  content:"";
+
+  position:absolute;
+  top:0;
+  left:-100%;
+
+  width:100%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.25),
+    transparent
+  );
+
+  transition:.7s;
+}
+
+.btn:hover::before{
+  left:100%;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 0 40px rgba(255,215,0,.28);
+}
+
+/* DISABLED */
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+
+  transform:none !important;
+  box-shadow:none !important;
+}
+
+/* =========================================
+   CUSTOM SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:rgba(255,215,0,.20);
+  border-radius:50px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+  .container{
+    padding:22px 10px 35px;
+  }
+
+  .card{
+    padding:24px 16px;
+    border-radius:28px;
+  }
+
+  .header h3{
+    font-size:28px;
+  }
+
+  .back{
+    width:46px;
+    height:46px;
+
+    font-size:22px;
+  }
+
+  .card input,
+  .card select{
+    height:56px;
+    border-radius:18px;
+  }
+
+  .btn{
+    height:58px;
+    border-radius:18px;
+
+    font-size:17px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<div class="back" onclick="goBack()">←</div>
+<h3>Withdraw Funds</h3>
+</div>
+
+<div class="card">
+<label>Full Name</label>
+<input id="name" placeholder="Enter your name">
+
+<label>Account Number</label>
+<input id="account" placeholder="Enter account number" inputmode="numeric" maxlength="10">
+
+<label>Search Bank</label>
+<input
+  id="bankSearch"
+  type="text"
+  placeholder="Type bank name..."
+>
+
+<label>Bank</label>
+<select id="bank">
+<option value="">Select Bank</option>
+
+<option>9PSB (9mobile Payment Bank)</option>
+<option>Access Bank</option>
+<option>ALAT by Wema</option>
+<option>SmartCash PSB</option>
+<option>Carbon</option>
+<option>Ecobank Nigeria</option>
+<option>FairMoney</option>
+<option>Fidelity Bank</option>
+<option>First Bank of Nigeria</option>
+<option>First City Monument Bank (FCMB)</option>
+<option>Globus Bank</option>
+<option>Guaranty Trust Bank (GTBank)</option>
+<option>Jaiz Bank</option>
+<option>Keystone Bank</option>
+<option>Kuda Bank</option>
+<option>Lotus Bank</option>
+<option>Mintyn Bank</option>
+<option>Moniepoint MFB</option>
+<option>MTN MoMo Payment Bank</option>
+<option>Opay</option>
+<option>Optimus Bank</option>
+<option>Paga</option>
+<option>PalmPay</option>
+<option>Parallex Bank</option>
+<option>Polaris Bank</option>
+<option>Premium Trust Bank</option>
+<option>Providus Bank</option>
+<option>Sparkle</option>
+<option>Stanbic IBTC Bank</option>
+<option>Standard Chartered Bank Nigeria</option>
+<option>Sterling Bank</option>
+<option>SunTrust Bank Nigeria</option>
+<option>TAJ Bank</option>
+<option>Titan Trust Bank</option>
+<option>United Bank for Africa (UBA)</option>
+<option>Union Bank</option>
+<option>Unity Bank</option>
+<option>VFD Microfinance Bank</option>
+<option>Wema Bank</option>
+<option>Zenith Bank</option>
+
+</select>
+
+<label>Amount</label>
+<input id="amount" type="number" placeholder="Enter amount">
+
+
+<div
+    id="withdrawRequirementsBox"
+    style="
+    display:none;
+    background:#10263d;
+    padding:15px;
+    border-radius:14px;
+    margin-bottom:15px;
+    color:#fff;
+    "
+></div>
+
+<div
+id="referralChallengeBox"
+style="
+display:none;
+background:#10263d;
+border:1px solid #1d4567;
+padding:16px;
+border-radius:16px;
+margin-bottom:15px;
+"
+>
+
+<h3 style="
+margin-bottom:10px;
+font-size:18px;
+color:#2ef0bf;
+">
+👥 Referral Challenge
+</h3>
+
+<p
+id="referralChallengeText"
+style="
+font-size:15px;
+line-height:1.5;
+color:#dce8f7;
+"
+>
+Loading...
+</p>
+
+</div>
+
+<div
+id="upgradeRequirementBox"
+style="
+display:none;
+background:#2b1b1b;
+border:1px solid #7b3030;
+padding:16px;
+border-radius:16px;
+margin-bottom:15px;
+"
+>
+
+<h3 style="
+margin-bottom:10px;
+font-size:18px;
+color:#ff8f8f;
+">
+⚠ Upgrade Required
+</h3>
+
+<p
+style="
+font-size:15px;
+line-height:1.5;
+color:#ffe7e7;
+"
+>
+You must upgrade your account before withdrawal can be made.
+</p>
+
+</div>
+
+<div
+id="opayWarningBox"
+style="
+display:none;
+background:#341616;
+border:1px solid #8f3f3f;
+padding:16px;
+border-radius:16px;
+margin-bottom:18px;
+"
+>
+
+<h3
+id="opayWarningTitle"
+style="
+margin-bottom:10px;
+font-size:18px;
+color:#ffb0b0;
+"
+>
+⚠ Warning
+</h3>
+
+<p
+id="opayWarningText"
+style="
+font-size:15px;
+line-height:1.5;
+color:#ffe7e7;
+"
+>
+Loading...
+</p>
+
+</div>
+
+<button id="withdrawBtn" class="btn" disabled onclick="withdraw()">
+Withdraw
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+// INIT PARSE
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+const user = Parse.User.current();
+if (!user) window.location.href = "login.html";
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    try {
+
+       
+            
+            const currentUser = Parse.User.current();
+
+await currentUser.fetch();
+
+if (!currentUser.get("accountActivated")) {
+
+    alert("Your account has not been activated yet.");
+
+window.location.href =
+                "home.html";
+                
+    return;
+
+}
+
+        
+
+            
+
+        document.getElementById(
+            "withdrawBtn"
+        ).disabled = false;
+
+    } catch(error){
+
+        console.error(error);
+
+        alert("Unable to load withdrawal page");
+
+    }
+
+});
+
+async function withdraw() {
+
+    const btn =
+        document.getElementById(
+            "withdrawBtn"
+        );
+
+    const name =
+        document.getElementById(
+            "name"
+        ).value.trim();
+
+    const account =
+        document.getElementById(
+            "account"
+        ).value.trim();
+
+    const bank =
+        document.getElementById(
+            "bank"
+        ).value;
+
+
+    const amount =
+        Number(
+            document.getElementById(
+                "amount"
+            ).value
+        );
+
+
+    if(!name || !account || !bank){
+
+        alert("All fields required");
+        return;
+
+    }
+
+    if(!amount || amount <= 0){
+
+        alert("Enter valid amount");
+        return;
+
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    try{
+
+        const res =
+        await Parse.Cloud.run(
+            "withdrawFunds",
+            {
+                amount,
+                bank,
+                accountNumber: account,
+                accountName: name
+                
+            }
+        );
+
+        if(!res.success){
+
+            alert(res.message);
+
+            btn.disabled = false;
+            btn.innerText = "Withdraw";
+
+            return;
+        }
+
+        alert(
+            "Withdrawal submitted successfully"
+        );
+
+        if (res.special) {
+    window.location.href = `success.html?sid=${res.withdrawalId}&type=special`;
+} else {
+    window.location.href = `success.html?wid=${res.withdrawalId}`;
+}
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(
+            err.message ||
+            "Withdrawal failed"
+        );
+
+        btn.disabled = false;
+        btn.innerText = "Withdraw";
+
+    }
+
+}
+
+async function loadWithdrawRequirements(){
+
+    try{
+
+        const settings =
+        await Parse.Cloud.run(
+            "getAutomationSettings"
+        );
+
+        const user =
+        Parse.User.current();
+
+        if(!user) return;
+
+        await user.fetch();
+
+        let messages = [];
+
+/* =========================
+   UPGRADE REQUIREMENT
+========================= */
+
+if(
+    settings.showUpgradeWarning === true &&
+    settings.mustUpgradeBeforeWithdrawal === true &&
+    !user.get("upgraded")
+){
+
+    messages.push(
+        "⚠ You must upgrade before withdrawal."
+    );
+
+}
+
+        /* =========================
+           REFERRAL REQUIREMENT
+        ========================= */
+
+        if(
+    settings.showReferralChallenge === true
+){
+
+            const required =
+            settings.requiredReferralCount || 5;
+
+            const referrals =
+            user.get("referrals") || 0;
+
+            messages.push(
+                `👥 Referrals: ${referrals}/${required}`
+            );
+
+        }
+
+        const box =
+        document.getElementById(
+            "withdrawRequirementsBox"
+        );
+
+        if(messages.length){
+
+            box.style.display =
+            "block";
+
+            box.innerHTML =
+            messages.join("<br><br>");
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+/*loadPlatformWarnings();
+
+async function loadPlatformWarnings(){
+
+    try{
+
+        const settings =
+        await Parse.Cloud.run(
+            "getPublicAdminSettings"
+        );
+
+        const automation =
+        await Parse.Cloud.run(
+            "getAutomationSettings"
+        );
+
+        const user =
+        Parse.User.current();
+
+        if(user){
+
+            await user.fetch();
+        }
+
+        /* =========================
+           PURCHASE WARNING
+        ========================= 
+
+        if(settings.purchaseWarning){
+
+            
+
+            document.getElementById(
+                "purchaseWarningText"
+            ).innerText =
+            settings.purchaseWarning;
+
+        }
+
+        /* =========================
+           OPAY WARNING
+        ========================= 
+
+        if(settings.warningText){
+
+            document.getElementById(
+                "opayWarningBox"
+            ).style.display =
+            "block";
+
+            document.getElementById(
+                "opayWarningTitle"
+            ).innerText =
+            settings.warningTitle ||
+            "Warning";
+
+            document.getElementById(
+                "opayWarningText"
+            ).innerText =
+            settings.warningText;
+
+        }
+
+/* =========================
+   REFERRAL CHALLENGE
+========================= 
+
+const amount =
+Number(
+    document.getElementById(
+        "amount"
+    ).value
+) || 0;
+
+if(
+    automation.showReferralChallenge === true &&
+    amount >= 1000000
+){
+
+    const referrals =
+    user.get("referrals") || 0;
+
+    const required =
+    automation.requiredReferralCount || 5;
+
+    document.getElementById(
+        "referralChallengeBox"
+    ).style.display =
+    "block";
+
+    document.getElementById(
+        "referralChallengeText"
+    ).innerHTML =
+
+    `Invite at least <b>${required}</b> users before withdrawal.<br><br>
+    Your referrals: <b>${referrals}/${required}</b>`;
+
+}
+
+/* =========================
+   UPGRADE REQUIRED
+========================= 
+
+if(
+    automation.showUpgradeWarning === true &&
+    automation.mustUpgradeBeforeWithdrawal === true &&
+    !user.get("upgraded") &&
+    amount >= 1000000
+)
+{
+
+    document.getElementById(
+        "upgradeRequirementBox"
+    ).style.display =
+    "block";
+
+}
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}*/
+
+
+loadWithdrawRequirements();
+
+
+
+
+function goBack() {
+    window.location.href = "home.html";
+}
+
+const bankSearch =
+document.getElementById("bankSearch");
+
+const bank =
+document.getElementById("bank");
+
+bankSearch.addEventListener(
+"input",
+function(){
+
+  const text =
+  this.value.toLowerCase();
+
+  for(
+    const option of bank.options
+  ){
+
+    if(
+      option.text
+      .toLowerCase()
+      .includes(text)
+    ){
+
+      bank.value =
+      option.value ||
+      option.text;
+
+      break;
+    }
+
+  }
+
+});
+</script>
+
+</body>
+</html>

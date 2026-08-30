@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Daily Tasks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+<style>
+    /* =========================================
+   EASY MINE TASK PAGE
+   BLACK + GOLD PREMIUM UI
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+
+  --gold:#FFD700;
+  --gold2:#FFB800;
+
+  --bg:#050505;
+  --bg2:#0d0d0d;
+  --card:#121212;
+
+  --line:rgba(255,215,0,.08);
+
+  --white:#ffffff;
+  --text:rgba(255,255,255,.88);
+  --muted:rgba(255,255,255,.50);
+
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+
+  font-family:'Inter',sans-serif;
+
+  background:#050505;
+
+  color:white;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+
+  position:relative;
+}
+
+/* =========================================
+   PREMIUM BACKGROUND
+========================================= */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+  inset:0;
+
+  z-index:-5;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,215,0,.10),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,180,0,.08),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container{
+
+  width:100%;
+  max-width:470px;
+
+  margin:auto;
+
+  padding:22px 14px 120px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  margin-bottom:24px;
+}
+
+.backBtn,
+.back-btn{
+
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.backBtn:hover,
+.back-btn:hover{
+
+  border-color:
+  rgba(255,215,0,.20);
+
+  transform:translateY(-2px);
+}
+
+.backBtn i,
+.back-btn i{
+
+  color:var(--gold);
+
+  font-size:18px;
+}
+
+.logo{
+
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  background:#111;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.35);
+}
+
+.header h1{
+
+  font-size:22px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #ffffff,
+    #FFD700
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================================
+   PROGRESS CARD
+========================================= */
+
+.progress{
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:28px;
+
+  padding:22px 18px;
+
+  margin-bottom:20px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(18,18,18,.96),
+    rgba(8,8,8,.96)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.45);
+}
+
+.progress::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  top:-90px;
+  right:-90px;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.08),
+    transparent 70%
+  );
+}
+
+.progress p{
+
+  font-size:13px;
+
+  color:rgba(255,255,255,.55);
+
+  margin-bottom:8px;
+}
+
+.progress h2{
+
+  font-size:20px;
+  font-weight:800;
+
+  color:white;
+}
+
+/* =========================================
+   TASK CONTAINER
+========================================= */
+
+#taskContainer{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:14px;
+}
+
+/* =========================================
+   TASK CARD
+========================================= */
+
+.task{
+
+  position:relative;
+
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+
+  padding:18px;
+
+  border-radius:26px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(14px);
+
+  transition:.25s ease;
+}
+
+.task:hover{
+
+  transform:translateY(-2px);
+
+  border-color:
+  rgba(255,215,0,.18);
+}
+
+.task::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  top:-60px;
+  right:-60px;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.05),
+    transparent 70%
+  );
+}
+
+.task-left{
+
+  display:flex;
+  align-items:center;
+
+  gap:14px;
+
+  flex:1;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.icon{
+
+  width:56px;
+  height:56px;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,215,0,.08);
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:24px;
+
+  color:var(--gold);
+
+  flex-shrink:0;
+}
+
+/* =========================================
+   TASK TEXT
+========================================= */
+
+.task-text h3{
+
+  font-size:15px;
+  font-weight:700;
+
+  margin-bottom:5px;
+
+  color:white;
+}
+
+.task-text p{
+
+  font-size:12px;
+
+  color:rgba(255,255,255,.48);
+
+  line-height:1.5;
+}
+
+/* =========================================
+   AMOUNT
+========================================= */
+
+.amount{
+
+  font-size:15px;
+  font-weight:800;
+
+  color:var(--gold);
+
+  margin-bottom:10px;
+
+  text-align:right;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn{
+
+  min-width:110px;
+
+  height:46px;
+
+  padding:0 18px;
+
+  border:none;
+  outline:none;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:14px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+
+  box-shadow:
+  0 10px 25px rgba(255,215,0,.16);
+}
+
+.btn:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 12px 30px rgba(255,215,0,.22);
+}
+
+.btn:disabled,
+.btn.done{
+
+  background:
+  rgba(255,255,255,.06);
+
+  color:
+  rgba(255,255,255,.45);
+
+  box-shadow:none;
+
+  cursor:not-allowed;
+}
+
+/* =========================================
+   REFERRAL CARD
+========================================= */
+
+.ref{
+
+  margin-top:22px;
+
+  border-radius:28px;
+
+  padding:20px 18px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.015)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+}
+
+.ref-title{
+
+  font-size:13px;
+
+  color:rgba(255,255,255,.55);
+
+  margin-bottom:14px;
+}
+
+.ref-box{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.06);
+}
+
+.ref-box span{
+
+  font-size:18px;
+  font-weight:800;
+
+  letter-spacing:1px;
+
+  color:var(--gold);
+}
+
+.copy{
+
+  width:44px;
+  height:44px;
+
+  border-radius:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+  rgba(255,215,0,.08);
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  color:var(--gold);
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.copy:hover{
+
+  transform:translateY(-2px);
+
+  border-color:
+  rgba(255,215,0,.20);
+}
+
+/* =========================================
+   AD MODAL
+========================================= */
+
+.adModal{
+
+  position:fixed;
+  inset:0;
+
+  background:
+  rgba(0,0,0,.88);
+
+  backdrop-filter:blur(10px);
+
+  z-index:999999;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+}
+
+/* =========================================
+   AD BOX
+========================================= */
+
+.adBox{
+
+  width:100%;
+  max-width:430px;
+
+  border-radius:30px;
+
+  padding:24px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(18,18,18,.98),
+    rgba(6,6,6,.98)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  box-shadow:
+  0 25px 60px rgba(0,0,0,.60);
+
+  animation:modalShow .3s ease;
+}
+
+@keyframes modalShow{
+
+  from{
+
+    transform:
+    translateY(20px)
+    scale(.96);
+
+    opacity:0;
+  }
+
+  to{
+
+    transform:
+    translateY(0)
+    scale(1);
+
+    opacity:1;
+  }
+
+}
+
+.adBox h3{
+
+  text-align:center;
+
+  font-size:20px;
+  font-weight:800;
+
+  margin-bottom:20px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #ffffff,
+    #FFD700
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================================
+   VIDEO
+========================================= */
+
+#rewardVideo{
+
+  width:100%;
+
+  border-radius:22px;
+
+  background:black;
+
+  overflow:hidden;
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  max-height:420px;
+}
+
+/* =========================================
+   CLAIM BUTTON
+========================================= */
+
+#claimAdRewardBtn{
+
+  width:100%;
+
+  margin-top:18px;
+
+  height:54px;
+
+  font-size:15px;
+}
+
+/* =========================================
+   TOAST STYLE SUPPORT
+========================================= */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+  bottom:24px;
+
+  transform:translateX(-50%);
+
+  padding:14px 20px;
+
+  border-radius:16px;
+
+  background:
+  rgba(12,12,12,.96);
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  color:white;
+
+  font-size:14px;
+  font-weight:600;
+
+  z-index:999999;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.45);
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+  width:5px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:
+  rgba(255,215,0,.25);
+
+  border-radius:10px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+  .container{
+    padding:18px 12px 100px;
+  }
+
+  .task{
+    padding:16px;
+  }
+
+  .task-text h3{
+    font-size:14px;
+  }
+
+  .amount{
+    font-size:14px;
+  }
+
+  .btn{
+    min-width:95px;
+    height:42px;
+    font-size:13px;
+  }
+
+  .icon{
+    width:50px;
+    height:50px;
+    font-size:20px;
+  }
+
+  .header h1{
+    font-size:19px;
+  }
+
+}
+
+.close-modal{
+  width:54px;
+  height:54px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#FFD700;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.3s ease;
+}
+
+.close-modal:hover{
+
+  transform:
+  rotate(90deg)
+  scale(1.05);
+
+  background:
+  rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.18);
+}
+
+/* =========================
+LIMIT WARNING
+========================= */
+
+#limitWarning{
+
+display:none;
+
+margin:18px;
+
+padding:16px 18px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#1a1a1a,
+#0d0d0d
+);
+
+border:1px solid
+rgba(255,215,0,0.25);
+
+color:#ffd700;
+
+font-size:14px;
+
+font-weight:600;
+
+line-height:1.7;
+
+box-shadow:
+0 6px 18px rgba(
+0,0,0,0.45
+);
+
+animation:
+fadeIn .35s ease;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+#limitWarning::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:4px;
+height:100%;
+
+background:
+linear-gradient(
+to bottom,
+#ffd700,
+#b8860b
+);
+
+}
+
+/* =========================
+REFERRAL CARD
+========================= */
+
+.referral-card{
+
+margin:18px;
+
+padding:20px;
+
+border-radius:24px;
+
+background:
+linear-gradient(
+145deg,
+#121212,
+#050505
+);
+
+border:1px solid
+rgba(255,215,0,0.12);
+
+box-shadow:
+0 10px 24px rgba(
+0,0,0,0.5
+);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* GOLD GLOW */
+
+.referral-card::before{
+
+content:"";
+
+position:absolute;
+
+top:-40px;
+right:-40px;
+
+width:120px;
+height:120px;
+
+background:
+rgba(255,215,0,0.06);
+
+border-radius:50%;
+
+filter:blur(10px);
+
+}
+
+/* =========================
+TOP SECTION
+========================= */
+
+.ref-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:15px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+/* =========================
+LABEL
+========================= */
+
+.ref-label{
+
+margin:0 0 10px;
+
+font-size:13px;
+
+font-weight:500;
+
+color:#b8a96b;
+
+letter-spacing:.5px;
+
+text-transform:uppercase;
+
+}
+
+/* =========================
+REF CODE
+========================= */
+
+#refCode{
+
+margin:0;
+
+font-size:30px;
+
+font-weight:800;
+
+letter-spacing:3px;
+
+color:#ffd700;
+
+text-shadow:
+0 0 12px rgba(
+255,215,0,0.18
+);
+
+}
+
+/* =========================
+COPY BUTTON
+========================= */
+
+.copy-btn{
+
+width:52px;
+
+height:52px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+145deg,
+#2a2a2a,
+#111
+);
+
+border:1px solid
+rgba(255,215,0,0.15);
+
+color:#ffd700;
+
+font-size:18px;
+
+cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+transition:.25s ease;
+
+box-shadow:
+0 4px 12px rgba(
+0,0,0,0.35
+);
+
+}
+
+/* HOVER */
+
+.copy-btn:hover{
+
+transform:
+translateY(-2px)
+scale(1.04);
+
+background:
+linear-gradient(
+145deg,
+#333,
+#151515
+);
+
+box-shadow:
+0 6px 18px rgba(
+255,215,0,0.08
+);
+
+}
+
+/* CLICK */
+
+.copy-btn:active{
+
+transform:scale(.95);
+
+}
+
+/* =========================
+ANIMATION
+========================= */
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(-10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+#adModal video{
+
+width:100%;
+
+border-radius:18px;
+
+background:#000;
+
+object-fit:cover;
+
+}
+
+#limitWarning a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+ <button class="close-modal" onclick="window.location='home.html'">
+     
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+
+<!-- LIMIT WARNING -->
+<div id="limitWarning"></div>
+
+<!-- REFERRAL CARD -->
+<div class="referral-card">
+
+    <div class="ref-top">
+
+        <div>
+            <p class="ref-label">
+                Your Referral Code
+            </p>
+
+            <h2 id="refCode">
+                ------
+            </h2>
+        </div>
+
+        <button
+            class="copy-btn"
+            onclick="copyReferral()"
+        >
+            <i class="fa-regular fa-copy"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<div id="taskContainer"></div>
+
+
+<!-- =========================
+REWARD AD MODAL
+========================= -->
+
+<div id="adModal" class="adModal">
+
+    <div class="adBox">
+
+        <h3>Watch Ad To Earn Reward</h3>
+
+        <video
+            id="rewardVideo"
+            controls
+            playsinline
+        ></video>
+
+        <button
+            id="claimAdRewardBtn"
+            class="btn"
+            style="display:none;"
+        >
+            Claim ₦10,000
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// =====================================
+// PARSE INIT
+// =====================================
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+let user = null;
+document.addEventListener("DOMContentLoaded", async () => {
+    user = Parse.User.current();
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        await user.fetch(); // refresh user data
+    } catch (e) {
+        console.log("Session expired:", e);
+        window.location.href = "login.html";
+        return;
+    }
+
+    await loadTaskStatus();
+    renderReferralCode();
+});
+
+function goBack() {
+window.location.href = "home.html";
+}
+function showToast(message){
+
+const toast = document.createElement("div");
+
+toast.innerText = message;
+
+toast.style.position = "fixed";
+toast.style.bottom = "20px";
+toast.style.left = "50%";
+toast.style.transform = "translateX(-50%)";
+toast.style.background = "#111";
+toast.style.color = "#fff";
+toast.style.padding = "12px 20px";
+toast.style.borderRadius = "10px";
+toast.style.zIndex = "9999";
+
+document.body.appendChild(toast);
+
+setTimeout(() => {
+toast.remove();
+}, 3000);
+
+}
+
+// =====================================
+// STATE
+// =====================================
+
+let taskState = {
+completedTasks: 0,
+daily: false,
+whatsapp: false,
+telegram: false,
+canWithdraw: false
+
+};
+let taskProcessing = false;
+let pendingTask = null;
+// =====================================
+// INIT
+// =====================================
+
+
+// =====================================
+// LOAD STATUS FROM BACKEND (IMPORTANT)
+// =====================================
+
+async function loadTaskStatus() {
+
+    try {
+
+        const res =
+            await Parse.Cloud.run(
+                "getTaskStatus"
+            );
+
+        renderTask(
+            res.currentTask
+        );
+
+        // =========================
+        // CHECK ACCOUNT LIMIT
+        // =========================
+
+        const currentUser =
+            Parse.User.current();
+
+        await currentUser.fetch();
+
+        const balance =
+            Number(
+                currentUser.get(
+                    "walletBalance"
+                ) || 0
+            );
+
+        const level =
+    Number(
+        currentUser.get(
+            "accountTier"
+        ) || 1
+    );
+
+        const limits = {
+    1: 500000,
+    2: 1000000
+};
+
+const maxBalance =
+    limits[level] || Infinity;
+    
+    const warningEl =
+document.getElementById("limitWarning");
+
+if (warningEl) {
+    warningEl.style.display = "none";
+    warningEl.innerHTML = "";
+}
+
+        // SHOW WARNING
+        if(
+            maxBalance !== Infinity &&
+            balance >= maxBalance
+        ){
+
+            const warningEl =
+document.getElementById(
+"limitWarning"
+);
+
+if(warningEl){
+
+warningEl.style.display =
+"block";
+
+warningEl.innerHTML =
+`⚠️ You have reached your Level ${level} earning limit of ₦${maxBalance.toLocaleString()}.<a href="withdraw.html"> Withdraw </a> or <a href="upgradeModal.html">upgrade</a> your account to continue earning.`;
+
+}
+
+        }
+
+    }
+
+    catch(err) {
+
+        console.log(
+            "TASK STATUS ERROR:",
+            err
+        );
+
+    }
+
+}
+
+async function handleTask(type) {
+
+    try {
+
+        const res =
+            await Parse.Cloud.run(
+                "getTaskStatus"
+            );
+
+        const task =
+            res.currentTask;
+
+        // CLAIM IF READY
+        if (
+            task.progress >= task.target &&
+            !task.completed
+        ) {
+
+            const result =
+                await Parse.Cloud.run(
+                    "requestTaskClaim",
+                    { type }
+                );
+
+            // LIMIT REACHED
+            if(result.limitReached){
+
+                showToast(
+                    result.message
+                );
+
+                return;
+
+            }
+
+            // SUCCESS
+            if(result.success){
+
+                showToast(
+`₦${result.reward.toLocaleString()} claimed`
+                );
+
+                await loadTaskStatus();
+
+            }
+
+            return;
+
+        }
+
+        // =====================================
+        // WATCH AD
+        // =====================================
+
+        if(type === "watch_ad"){
+
+            await openRewardAd();
+
+            return;
+
+        }
+
+        // =====================================
+        // WHATSAPP
+        // =====================================
+
+        if(type === "whatsapp"){
+
+            await shareWhatsApp();
+
+            return;
+
+        }
+
+        // =====================================
+        // TELEGRAM
+        // =====================================
+
+        if(type === "telegram"){
+
+            await joinTelegram();
+
+            return;
+
+        }
+
+        // =====================================
+        // FACEBOOK
+        // =====================================
+
+        if(type === "facebook"){
+
+            const code =
+                user.get(
+                    "myReferralCode"
+                );
+
+            const signupLink =
+`https://easymine-platform.onrender.com/?ref=${code}`;
+
+            localStorage.setItem(
+                "pendingTask",
+                JSON.stringify({
+                    type:"facebook",
+                    time:Date.now()
+                })
+            );
+
+            window.open(
+`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(signupLink)}`,
+                "_blank"
+            );
+
+            return;
+
+        }
+
+        // =====================================
+        // DAILY BONUS
+        // =====================================
+
+        if(type === "daily_bonus"){
+
+            const result =
+                await Parse.Cloud.run(
+                    "requestTaskClaim",
+                    { type }
+                );
+
+            if(result.success){
+
+                showToast(
+                    "Bonus claimed"
+                );
+
+                await loadTaskStatus();
+
+            }
+
+        }
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+        showToast(
+            err.message ||
+            "Task failed"
+        );
+
+    }
+
+}
+
+// =====================================
+// OPEN REWARD ADS
+// =====================================
+
+let currentAdIndex = 0;
+
+async function openRewardAd() {
+
+    try {
+
+        const query =
+            new Parse.Query(
+                "AppConfig"
+            );
+
+        query.descending("createdAt");
+
+const config =
+    await query.first();
+
+        if (!config) {
+
+            showToast(
+                "Ad config missing"
+            );
+
+            return;
+
+        }
+
+        const ad1 =
+            config.get(
+                "adVideo1"
+            );
+
+        const ad2 =
+            config.get(
+                "adVideo2"
+            );
+        const poster1 =
+    config.get(
+        "adPoster1"
+    );
+
+const poster2 =
+    config.get(
+        "adPoster2"
+    );
+
+        if (!ad1 || !ad2) {
+
+            showToast(
+                "Ad videos missing"
+            );
+
+            return;
+
+        }
+
+        const ads = [
+
+{
+video: ad1.url(),
+poster: poster1?.url() || ""
+},
+
+{
+video: ad2.url(),
+poster: poster2?.url() || ""
+}
+
+];
+
+        const modal =
+            document.getElementById(
+                "adModal"
+            );
+
+        const video =
+            document.getElementById(
+                "rewardVideo"
+            );
+
+        const claimBtn =
+            document.getElementById(
+                "claimAdRewardBtn"
+            );
+
+        claimBtn.style.display =
+            "none";
+
+        modal.style.display =
+            "flex";
+
+        currentAdIndex = 0;
+
+        // =====================================
+        // PLAY FUNCTION
+        // =====================================
+
+        async function playCurrentAd() {
+
+            video.src =
+    ads[currentAdIndex].video;
+
+video.poster =
+    ads[currentAdIndex].poster;
+
+            video.currentTime = 0;
+
+            try{
+
+await video.play();
+
+}catch(err){
+
+console.log(
+"Video autoplay blocked",
+err
+);
+
+showToast(
+"Press play to continue"
+);
+
+}
+        }
+
+        // START FIRST VIDEO
+        await playCurrentAd();
+
+        // =====================================
+        // WHEN VIDEO ENDS
+        // =====================================
+
+        video.onended = async () => {
+
+            try {
+
+                const res =
+                    await Parse.Cloud.run(
+                        "trackAdWatch"
+                    );
+
+                // PLAY NEXT VIDEO
+                if (
+                    currentAdIndex === 0
+                ) {
+
+                    currentAdIndex = 1;
+
+                    showToast(
+                        "First ad completed"
+                    );
+
+                    await playCurrentAd();
+
+                    return;
+
+                }
+
+                // BOTH ADS COMPLETE
+
+                await loadTaskStatus();
+
+               const progress = Number(res?.progress || 0);
+
+if (progress >= 2)  {
+
+                    claimBtn.style.display =
+                        "block";
+
+                    showToast(
+                        "All ads completed"
+                    );
+
+                }
+
+            }
+
+            catch(err) {
+
+                console.log(err);
+
+                showToast(
+                    "Failed tracking ad"
+                );
+
+            }
+
+        };
+
+    }
+
+    catch(err) {
+
+        console.log(err);
+
+        showToast(
+            "Failed loading ads"
+        );
+
+    }
+
+}
+
+// =====================================
+// CLAIM AD REWARD
+// =====================================
+
+document.getElementById(
+"claimAdRewardBtn"
+).onclick = async () => {
+
+    try {
+
+        await Parse.Cloud.run(
+            "requestTaskClaim",
+            {
+                type: "watch_ad"
+            }
+        );
+
+        showToast(
+            "Reward claimed"
+        );
+
+        document.getElementById(
+            "adModal"
+        ).style.display = "none";
+
+        document.getElementById(
+            "rewardVideo"
+        ).pause();
+
+        await loadTaskStatus();
+
+    }
+
+    catch(err) {
+
+        console.log(err);
+
+        showToast(
+            err.message
+        );
+
+    }
+
+};
+
+// CLOSE MODAL IF BACKGROUND CLICKED
+
+document.getElementById(
+"adModal"
+).addEventListener(
+"click",
+(e) => {
+
+if (
+e.target.id === "adModal"
+) {
+
+document.getElementById(
+"adModal"
+).style.display =
+"none";
+
+document.getElementById(
+"rewardVideo"
+).pause();
+
+}
+
+});
+// =====================================
+// UPDATE UI
+// =====================================
+
+function updateUI() {
+
+const completedEl =
+document.getElementById("completedCount");
+
+if(completedEl){
+
+completedEl.innerText =
+taskState.completedTasks ?? 0;
+
+}
+
+if (taskState.daily) lockBtn("dailyBtn");
+if (taskState.whatsapp) lockBtn("whatsappBtn");
+if (taskState.telegram) lockBtn("telegramBtn");
+
+document.getElementById("completedCount").innerText =
+    taskState.completedTasks ?? 0;
+
+}
+
+// =====================================
+// LOCK BUTTON
+// =====================================
+
+function lockBtn(id) {
+
+const btn = document.getElementById(id);
+
+if (!btn) return;
+
+btn.innerText = "Claimed";
+btn.disabled = true;
+btn.classList.add("done");
+
+}
+
+// =====================================
+// DAILY TASK (SAFE)
+// =====================================
+
+async function claimTask(type, amount) {
+
+    try {
+
+       
+
+       const res = await Parse.Cloud.run("requestTaskClaim", {
+    type,
+    amount: Number(amount)
+});
+
+if (!res?.success) {
+    showToast("Task failed");
+    return;
+}
+
+await loadTaskStatus();
+
+showToast("Reward added successfully");
+
+// sync with backend (source of truth)
+
+    } catch (err) {
+    console.log("FULL ERROR:", err);
+    showToast(err.message || "Task error");
+}
+}
+// =====================================
+// WHATSAPP TASK (REAL TRACKING)
+// =====================================
+
+async function shareWhatsApp() {
+
+    try {
+
+        // prevent double click
+        if (taskState.whatsapp) {
+            showToast("Already claimed");
+            return;
+        }
+
+        const code =
+            user.get("myReferralCode");
+
+        const websiteLink =
+`https://easymine-platform.onrender.com`
+
+const signupLink =
+`${websiteLink}?ref=${code}`;
+
+const message =
+
+`Easymine is a modern rewards platform that enables users to earn daily through mining, completing simple tasks, and inviting others to join the community. Our platform is built to deliver a secure, user-friendly, and rewarding experience for everyone looking to maximize their earning potential.
+
+Referral Code: ${code}
+
+Sign up here:
+${signupLink}`;
+
+        // SAVE PENDING TASK ONLY
+        localStorage.setItem(
+    "pendingTask",
+    JSON.stringify({
+        type: "whatsapp",
+        time: Date.now()
+    })
+);
+
+        // OPEN WHATSAPP
+        window.open(
+            `https://wa.me/?text=${encodeURIComponent(message)}`,
+            "_blank"
+        );
+        
+        
+
+    } catch (err) {
+
+        console.log(err);
+
+        showToast(
+            "WhatsApp task failed"
+        );
+
+    }
+
+}
+
+// =====================================
+// TELEGRAM TASK
+// =====================================
+
+// =====================================
+// TELEGRAM TASK
+// =====================================
+async function joinTelegram() {
+
+    try {
+
+        const code =
+            user.get("myReferralCode");
+
+        const websiteLink =
+`https://easymine-platform.onrender.com`;
+
+        const signupLink =
+`${websiteLink}?ref=${code}`;
+
+        const message =
+
+`Easymine is a modern rewards platform that enables users to earn daily through mining, completing simple tasks, and inviting others to join the community. Our platform is built to deliver a secure, user-friendly, and rewarding experience for everyone looking to maximize their earning potential.
+
+Referral Code: ${code}
+
+Sign up here:
+${signupLink}`;
+
+        // SAVE PENDING TASK
+        localStorage.setItem(
+            "pendingTask",
+            JSON.stringify({
+                type: "telegram",
+                time: Date.now()
+            })
+        );
+
+        // OPEN TELEGRAM
+        window.open(
+`https://t.me/share/url?url=${encodeURIComponent(signupLink)}&text=${encodeURIComponent(message)}`,
+            "_blank"
+        );
+
+    }
+
+    catch(err) {
+
+        console.log(err);
+
+        showToast(
+            "Telegram task failed"
+        );
+
+    }
+
+}
+
+// =====================================
+// VERIFY TASK WHEN USER RETURNS
+// =====================================
+
+document.addEventListener(
+    "visibilitychange",
+    async () => {
+
+        if (
+            document.visibilityState === "visible"
+        ) {
+
+            await verifyPendingTask();
+
+        }
+
+    }
+);
+
+// =====================================
+// VERIFY PENDING TASK
+// =====================================
+
+async function verifyPendingTask() {
+
+    try {
+
+        const saved =
+            localStorage.getItem("pendingTask");
+
+        if (!saved) return;
+
+        if (taskProcessing) return;
+
+        taskProcessing = true;
+
+        const data = JSON.parse(saved);
+
+        const pendingTask = data.type;
+
+        const startTime = data.time;
+
+        // require user to stay away
+        // for at least 8 seconds
+        const secondsAway =
+            (Date.now() - startTime) / 1000;
+
+        if (secondsAway < 8) {
+
+            taskProcessing = false;
+
+            return;
+
+        }
+
+        
+
+        await Parse.Cloud.run(
+    "trackTaskShare",
+    {
+        type: pendingTask
+    }
+);
+
+await loadTaskStatus();
+
+localStorage.removeItem(
+    "pendingTask"
+);
+
+showToast(
+    "Share counted"
+);
+
+taskProcessing = false;
+
+return;
+
+       
+
+      
+    } catch (err) {
+
+        console.log(
+            "VERIFY ERROR:",
+            err
+        );
+
+        localStorage.removeItem(
+            "pendingTask"
+        );
+
+        taskProcessing = false;
+
+    }
+
+}
+
+//================================
+// SAVE CLAIM (TRACKING ONLY)
+// =====================================
+
+async function saveClaim(type, amount) {
+
+const Claim = Parse.Object.extend("TaskClaims");
+const claim = new Claim();
+
+claim.set("userId", user.id);
+claim.set("taskType", type);
+claim.set("amount", amount);
+claim.set("claimDate", new Date().toDateString());
+
+await claim.save();
+
+}
+
+// =====================================
+// ADD MONEY (REAL WALLET UPDATE)
+// =====================================
+
+/*async function addMoney(amount, type) {
+
+    try {
+
+        user.increment("walletBalance", Number(amount));
+        user.increment("totalEarnings", Number(amount));
+
+        await user.save(null, { useMasterKey: true });
+
+        const Tx = Parse.Object.extend("Transactions");
+        const tx = new Tx();
+
+        tx.set("userId", user.id);
+        tx.set("type", type);
+        tx.set("amount", Number(amount));
+        tx.set("status", "success");
+        tx.set("description", type);
+
+        await tx.save();
+
+    } catch (err) {
+        console.log("addMoney error:", err);
+        throw err;
+    }
+}*/
+
+// =====================================
+// REFRESH STATUS (IMPORTANT)
+// =====================================
+
+async function refreshStatus() {
+await loadTaskStatus();
+
+}
+
+// =====================================
+// REFERRAL CODE
+// =====================================
+
+function renderReferralCode() {
+
+const refEl =
+document.getElementById(
+"refCode"
+);
+
+if(refEl){
+
+refEl.innerText =
+user.get(
+"myReferralCode"
+) || "------";
+
+}
+
+}
+
+// =====================================
+// COPY
+// =====================================
+
+async function copyReferral() {
+
+    try {
+
+        const code = user.get("myReferralCode");
+
+        await navigator.clipboard.writeText(code);
+
+        showToast("Referral copied");
+
+    } catch (err) {
+
+        console.log(err);
+        showToast("Copy failed");
+    }
+    finally {
+
+        taskProcessing = false;
+        
+    }
+}
+
+
+// =====================================
+// BACK
+// =====================================
+
+console.log("CURRENT USER:", Parse.User.current());
+console.log("SESSION TOKEN:", Parse.User.current()?.getSessionToken());
+</script>
+<script>
+    function renderTask(task) {
+
+    const container =
+        document.getElementById(
+            "taskContainer"
+        );
+
+    let btnText = "Start";
+
+   if (
+    task.completed
+) {
+
+    btnText = "Claimed";
+
+}
+
+else if (
+    task.progress >= task.target &&
+    !task.completed
+) {
+
+    btnText = "Claim";
+
+}
+
+    container.innerHTML = `
+
+    <div class="task">
+
+        <div class="task-left">
+
+            <div class="icon">✨</div>
+
+            <div class="task-text">
+
+                <h3>${task.title}</h3>
+
+                <p>
+                    Progress:
+                    ${task.progress}/${task.target}
+                </p>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="amount">
+                ₦${task.reward.toLocaleString()}
+            </div>
+
+            <button
+    class="btn"
+    onclick="handleTask('${task.type}')"
+    ${task.completed ? "disabled" : ""}
+>
+    ${btnText}
+</button>
+
+        </div>
+
+    </div>
+
+    `;
+}
+</script>
+</body>
+</html>

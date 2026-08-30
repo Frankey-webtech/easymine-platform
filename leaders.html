@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Leaderboard</title>
+<style>
+  *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:white;
+  position:relative;
+}
+
+/* =========================
+PREMIUM BACKGROUND
+========================= */
+
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,215,0,.10),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,180,0,.08),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #000000,
+    #070707,
+    #0d0d0d,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+
+}
+
+/* =========================
+GOLD PARTICLES
+========================= */
+
+.background::before,
+.background::after{
+
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background-image:
+
+  radial-gradient(
+    circle,
+    rgba(255,255,255,.12) 2px,
+    transparent 2px
+  ),
+
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.18) 4px,
+    transparent 4px
+  );
+
+  background-size:120px 120px;
+
+  animation:floatParticles 22s linear infinite;
+}
+
+.background::after{
+  animation-duration:32s;
+  opacity:.5;
+}
+
+@keyframes floatParticles{
+
+  from{
+    transform:translateY(0);
+  }
+
+  to{
+    transform:translateY(-120px);
+  }
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+  width:100%;
+  max-width:430px;
+
+  margin:auto;
+
+  padding:26px 14px 34px;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  margin-bottom:28px;
+}
+
+.back-btn{
+  width:42px;
+  height:42px;
+
+  border:none;
+  outline:none;
+
+  border-radius:14px;
+
+  background:
+  rgba(255,255,255,.04);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:#FFD700;
+
+  font-size:15px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  backdrop-filter:blur(12px);
+}
+
+.back-btn:hover{
+
+  background:
+  rgba(255,215,0,.08);
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 0 20px rgba(255,215,0,.18);
+}
+
+.title-wrapper{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.icon-box{
+  width:54px;
+  height:54px;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,215,0,.18),
+    rgba(255,184,0,.08)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.10);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#FFD700;
+
+  font-size:20px;
+
+  box-shadow:
+  0 0 25px rgba(255,215,0,.10);
+}
+
+.title-wrapper h1{
+
+  font-size:32px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================
+TOGGLE CONTAINER
+========================= */
+
+.toggle-container{
+
+  width:100%;
+
+  display:flex;
+  gap:8px;
+
+  padding:6px;
+
+  margin-bottom:24px;
+
+  border-radius:20px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  backdrop-filter:blur(18px);
+}
+
+.toggle-btn{
+
+  flex:1;
+
+  height:52px;
+
+  border:none;
+  outline:none;
+
+  border-radius:15px;
+
+  background:transparent;
+
+  color:rgba(255,255,255,.45);
+
+  font-size:14px;
+  font-weight:700;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.toggle-btn.active{
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  box-shadow:
+  0 0 22px rgba(255,215,0,.22);
+}
+
+/* =========================
+LEADERBOARD LIST
+========================= */
+
+.leaderboard-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* =========================
+CARD
+========================= */
+
+.card{
+
+  width:100%;
+
+  padding:18px 18px;
+
+  border-radius:24px;
+
+  background:
+  rgba(12,12,12,.88);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 30px rgba(255,215,0,.05),
+  inset 0 0 18px rgba(255,255,255,.02);
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  transition:.3s ease;
+}
+
+.card:hover{
+
+  transform:
+  translateY(-2px);
+
+  border-color:
+  rgba(255,215,0,.18);
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.10);
+}
+
+.card-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* =========================
+RANK ICONS
+========================= */
+
+.rank-icon{
+  font-size:22px;
+}
+
+.gold{
+  color:#FFD700;
+
+  text-shadow:
+  0 0 12px rgba(255,215,0,.45);
+}
+
+.silver{
+  color:#d6d6d6;
+
+  text-shadow:
+  0 0 10px rgba(255,255,255,.25);
+}
+
+.bronze{
+  color:#cd7f32;
+
+  text-shadow:
+  0 0 10px rgba(205,127,50,.25);
+}
+
+/* =========================
+TEXT
+========================= */
+
+.username{
+  font-size:17px;
+  font-weight:700;
+
+  color:white;
+}
+
+.score{
+
+  font-size:16px;
+  font-weight:800;
+
+  color:#FFD700;
+
+  text-shadow:
+  0 0 12px rgba(255,215,0,.18);
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  .container{
+    padding:20px 10px 28px;
+  }
+
+  .title-wrapper h1{
+    font-size:28px;
+  }
+
+  .icon-box{
+    width:48px;
+    height:48px;
+    font-size:18px;
+  }
+
+  .toggle-btn{
+    font-size:12px;
+    gap:6px;
+  }
+
+  .card{
+    padding:16px 14px;
+    border-radius:22px;
+  }
+
+  .username{
+    font-size:15px;
+  }
+
+  .score{
+    font-size:14px;
+  }
+
+}
+</style>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <!-- Parse SDK -->
+  <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Animated Background -->
+  <div class="background"></div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+      <button class="back-btn" onclick="goBack()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <div class="title-wrapper">
+
+        <div class="icon-box">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+
+        <h1>Leaderboard</h1>
+
+      </div>
+
+    </div>
+
+    <!-- Toggle Buttons -->
+    <div class="toggle-container">
+
+      <button id="minersBtn" class="toggle-btn active">
+        <i class="fa-solid fa-hammer"></i>
+        Top Miners
+      </button>
+
+      <button id="referrersBtn" class="toggle-btn">
+        <i class="fa-solid fa-user-group"></i>
+        Top Referrers
+      </button>
+
+    </div>
+
+    <!-- Leaderboard List -->
+    <div id="leaderboardList" class="leaderboard-list"></div>
+
+  </div>
+
+  <script>
+    // ==========================
+// BACK4APP CONFIG
+// ==========================
+
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+
+
+// ==========================
+// ELEMENTS
+// ==========================
+
+const leaderboardList =
+document.getElementById("leaderboardList");
+
+const minersBtn =
+document.getElementById("minersBtn");
+
+const referrersBtn =
+document.getElementById("referrersBtn");
+
+
+// ==========================
+// MASK USERNAME
+// ==========================
+
+function goBack(){
+window.history.back();
+}
+
+function maskUsername(username){
+
+  if(!username){
+    return "Anonymous";
+  }
+
+  if(username.length <= 2){
+    return username;
+  }
+
+  return (
+    username.substring(0,2)
+    +
+    "*".repeat(username.length - 2)
+  );
+}
+
+
+// ==========================
+// RANK ICONS
+// ==========================
+
+function getRankIcon(index){
+
+  if(index === 0){
+    return `
+      <i class="fa-solid fa-crown rank-icon gold"></i>
+    `;
+  }
+
+  if(index === 1){
+    return `
+      <i class="fa-solid fa-medal rank-icon silver"></i>
+    `;
+  }
+
+  if(index === 2){
+    return `
+      <i class="fa-solid fa-award rank-icon bronze"></i>
+    `;
+  }
+
+  return `
+    <span class="rank-icon">
+      ${index + 1}
+    </span>
+  `;
+}
+
+
+// ==========================
+// RENDER LEADERBOARD
+// ==========================
+
+function renderLeaderboard(users, type){
+
+  leaderboardList.innerHTML = "";
+
+  users.forEach((user, index)=>{
+
+    const username =
+    user.username || "Anonymous";
+
+    const totalMined =
+    user.totalMined || 0;
+
+    const referrals =
+    user.referralCount || 0;
+
+    const card =
+    document.createElement("div");
+
+    card.classList.add("card");
+
+    card.innerHTML = `
+    
+      <div class="card-left">
+
+        ${getRankIcon(index)}
+
+        <div class="username">
+          ${maskUsername(username)}
+        </div>
+
+      </div>
+
+      <div class="score">
+
+        ${
+          type === "miners"
+          ?
+          `₦${totalMined.toLocaleString()}`
+          :
+          `${referrals} referrals`
+        }
+
+      </div>
+
+    `;
+
+    leaderboardList.appendChild(card);
+
+  });
+
+}
+
+// ==========================
+// FETCH TOP MINERS
+// ==========================
+
+async function fetchTopMiners(){
+
+  leaderboardList.innerHTML =
+  "<p>Loading...</p>";
+
+  try{
+
+    const results =
+    await Parse.Cloud.run(
+      "getTopMiners"
+    );
+
+    renderLeaderboard(
+      results,
+      "miners"
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    leaderboardList.innerHTML =
+    "<p>Error loading miners</p>";
+  }
+
+}
+
+// ==========================
+// FETCH TOP REFERRERS
+// ==========================
+
+async function fetchTopReferrers(){
+
+  leaderboardList.innerHTML =
+  "<p>Loading...</p>";
+
+  try{
+
+    const results =
+    await Parse.Cloud.run(
+      "getTopReferrers"
+    );
+
+    renderLeaderboard(
+      results,
+      "referrers"
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    leaderboardList.innerHTML =
+    "<p>Error loading referrers</p>";
+  }
+
+}
+
+
+// ==========================
+// TOGGLE BUTTONS
+// ==========================
+
+minersBtn.addEventListener(
+  "click",
+  ()=>{
+
+    minersBtn.classList.add("active");
+
+    referrersBtn.classList.remove("active");
+
+    fetchTopMiners();
+
+  }
+);
+
+
+referrersBtn.addEventListener(
+  "click",
+  ()=>{
+
+    referrersBtn.classList.add("active");
+
+    minersBtn.classList.remove("active");
+
+    fetchTopReferrers();
+
+  }
+);
+
+
+// ==========================
+// DEFAULT PAGE
+// ==========================
+
+fetchTopMiners();
+  </script>
+
+</body>
+</html>

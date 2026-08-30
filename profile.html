@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<title>Profile</title>
+<style>
+    *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding:24px 14px;
+  position:relative;
+}
+
+/* =========================
+BACKGROUND
+========================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,215,0,.10),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,180,0,.08),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #000,
+    #050505,
+    #0c0c0c,
+    #050505
+  );
+
+  background-size:200% 200%;
+
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+
+}
+
+/* =========================
+CARD
+========================= */
+
+.card{
+  width:100%;
+  max-width:430px;
+
+  margin:0 auto 22px auto;
+
+  padding:28px 22px;
+
+  border-radius:28px;
+
+  background:
+  rgba(12,12,12,.92);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  box-shadow:
+  0 0 40px rgba(255,215,0,.06),
+  inset 0 0 20px rgba(255,255,255,.02);
+}
+
+/* =========================
+HEADINGS
+========================= */
+
+h2{
+  font-size:28px;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+h3{
+  font-size:22px;
+  font-weight:700;
+
+  margin-bottom:20px;
+
+  color:#FFD700;
+}
+
+/* =========================
+INPUT GROUP
+========================= */
+
+.input-group{
+  margin-bottom:22px;
+}
+
+.input-group label{
+  display:block;
+
+  margin-bottom:10px;
+
+  font-size:13px;
+  font-weight:600;
+
+  color:rgba(255,255,255,.75);
+}
+
+/* =========================
+INPUT
+========================= */
+
+.input{
+  width:100%;
+  height:56px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  padding:0 18px;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,215,0,.08);
+
+  color:white;
+
+  font-size:15px;
+
+  transition:.3s ease;
+}
+
+.input:focus{
+
+  border-color:#FFD700;
+
+  box-shadow:
+  0 0 0 4px rgba(255,215,0,.10);
+}
+
+.input::placeholder{
+  color:rgba(255,255,255,.30);
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.btn{
+  width:100%;
+  height:56px;
+
+  border:none;
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:16px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+
+  box-shadow:
+  0 0 25px rgba(255,215,0,.20);
+}
+
+.btn:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.30);
+}
+
+/* =========================
+ROWS
+========================= */
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:16px 0;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.06);
+}
+
+.row:last-child{
+  border-bottom:none;
+}
+
+.row span:first-child{
+  color:rgba(255,255,255,.65);
+  font-size:14px;
+}
+
+.row span:last-child{
+  font-weight:600;
+  font-size:14px;
+}
+
+/* =========================
+COUPON
+========================= */
+
+.coupon{
+  margin:18px 0;
+}
+
+/* =========================
+BADGES
+========================= */
+
+.badge-green,
+.badge-red{
+  padding:8px 14px;
+
+  border-radius:999px;
+
+  font-size:12px;
+  font-weight:700;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.badge-green{
+
+  background:
+  rgba(0,255,120,.12);
+
+  color:#57ff9d;
+
+  border:
+  1px solid rgba(87,255,157,.20);
+}
+
+.badge-red{
+
+  background:
+  rgba(255,80,80,.10);
+
+  color:#ff6b6b;
+
+  border:
+  1px solid rgba(255,107,107,.18);
+}
+
+/* =========================
+COUPON TEXT
+========================= */
+
+#couponCodeText{
+  color:rgba(255,255,255,.55)!important;
+  font-size:13px!important;
+}
+
+/* =========================
+ADMIN PANEL
+========================= */
+
+.adminPanelCard{
+  width:100%;
+  max-width:430px;
+
+  margin:0 auto;
+
+  padding:24px;
+
+  border-radius:28px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,215,0,.08),
+    rgba(255,180,0,.03)
+  );
+
+  border:
+  1px solid rgba(255,215,0,.12);
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.08);
+}
+
+.adminPanelBtn{
+  width:100%;
+  height:58px;
+
+  border:none;
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #FFD700,
+    #FFB800
+  );
+
+  color:#111;
+
+  font-size:17px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.adminPanelBtn:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 0 35px rgba(255,215,0,.30);
+}
+
+.adminPanelText{
+  max-width:430px;
+
+  margin:12px auto 0 auto;
+
+  text-align:center;
+
+  color:rgba(255,255,255,.45);
+
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  body{
+    padding:18px 10px;
+  }
+
+  .card,
+  .adminPanelCard{
+    padding:24px 18px;
+    border-radius:24px;
+  }
+
+  h2{
+    font-size:24px;
+  }
+
+  h3{
+    font-size:20px;
+  }
+
+  .btn,
+  .adminPanelBtn,
+  .input{
+    height:54px;
+  }
+
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+<div class="input-group">
+<label>Full Name</label>
+<h2 id="fullName"></h2>
+
+</div>
+
+<div class="input-group">
+<label>Phone Number</label>
+<input id="phone" class="input">
+</div>
+
+<button class="btn" onclick="saveProfile()">Save Changes</button>
+
+</div>
+
+<!-- ACCOUNT INFO -->
+<div class="card">
+
+<h3>Account Info</h3>
+
+<div class="row">
+<span>Email</span>
+<span id="email"></span>
+</div>
+
+<div class="row">
+<span>Country</span>
+<span>Nigeria</span>
+</div>
+
+</div>
+
+<!-- REFERRAL 
+<div class="card" id="bankCard">
+
+<div class="row">
+<span>Coupon Status</span>
+
+
+
+</div>
+
+<div class="coupon">
+<span
+  class="badge-red"
+  id="couponStatus">
+  Checking...
+</span>
+</div>
+<div class="row">
+  <span>Coupon</span>
+  <span
+    id="couponCodeText"
+    class="badge-red">
+    Coupon - None
+  </span>
+</div>
+
+<div class="row">
+  <span>Referral Link</span>
+  <span class="badge-green">
+    ✔ Active
+  </span>
+</div>
+
+</div>
+
+-->
+
+</div>
+
+
+<!-- =========================================
+ADMIN PANEL CARD
+========================================= -->
+
+<div class="adminPanelCard" id="adminCard">
+
+<button
+class="adminPanelBtn"
+id="adminPanelBtn"
+onclick="openAdminPanel()">
+
+🛡 Admin Panel
+
+</button>
+
+</div>
+    <p class="adminPanelText">
+        Restricted access — admin credentials required
+    </p>
+
+</div>
+
+
+
+<script>
+
+// ======================================
+// PARSE INIT
+// ======================================
+Parse.initialize(
+'MTLDbgDiz5KBGgnGUxe8bT0VLY0AsLtaneLWXgBl',
+'YZQ1G7SQynyxlpTHiQqWrJHucigFFKhFwPSkgRaI'
+);
+
+Parse.serverURL =
+'https://parseapi.back4app.com/';
+
+
+
+async function checkAdmin(){
+
+   const currentUser =
+      Parse.User.current();
+
+   if(!currentUser) return;
+
+   await currentUser.fetch();
+
+   if(currentUser.get("isAdmin")){
+
+      document
+      .getElementById("adminCard")
+      .style.display = "block";
+
+   }
+
+}
+
+function openAdminPanel(){
+
+   window.location =
+   "admin.html";
+
+}
+
+checkAdmin();
+
+
+console.log(Parse.User.current());
+// ======================================
+// LOAD USER DATA
+// ======================================
+
+async function loadUser(){
+
+const user = Parse.User.current();
+
+if(!user){
+alert("Not logged in");
+return;
+}
+
+
+
+document.getElementById("fullName").innerText =
+(user.get("firstName") || "") + " " +
+(user.get("lastName") || "");
+
+document.getElementById("phone").value =
+   user.get("phone") || "Not set";
+
+document.getElementById("email").innerText =
+user.get("email") || "";
+
+}
+
+
+loadUser();
+loadCouponStatus();
+async function loadCouponStatus() {
+
+    try {
+
+        const currentUser =
+            Parse.User.current();
+
+        if (!currentUser) return;
+
+        const Receipt =
+            Parse.Object.extend("Receipt");
+
+        const query =
+            new Parse.Query(Receipt);
+
+        query.equalTo(
+            "userId",
+            currentUser.id
+        );
+
+        query.descending("createdAt");
+
+        const receipt =
+            await query.first();
+
+        const statusEl =
+            document.getElementById(
+                "couponStatus"
+            );
+
+        const codeEl =
+            document.getElementById(
+                "couponCodeText"
+            );
+
+        // NO RECEIPT
+        if (!receipt) {
+
+            statusEl.innerText =
+                "Not Activated";
+
+            statusEl.className =
+                "badge-red";
+
+            codeEl.innerText =
+                "Coupon - None";
+
+            return;
+        }
+
+        const status =
+            receipt.get("status");
+
+        const couponCode =
+            receipt.get("couponCode");
+
+        // APPROVED
+        if (status === "approved") {
+
+            statusEl.innerText =
+                "Activated";
+
+            statusEl.className =
+                "badge-green";
+
+            codeEl.innerText =
+                "Coupon - " +
+                (couponCode || "N/A");
+
+        }
+
+        // PENDING
+        else if (status === "pending") {
+
+            statusEl.innerText =
+                "Pending";
+
+            statusEl.className =
+                "badge-red";
+
+            codeEl.innerText =
+                "Coupon - Processing";
+
+        }
+
+        // DECLINED
+        else if (status === "declined") {
+
+            statusEl.innerText =
+                "Declined";
+
+            statusEl.className =
+                "badge-red";
+
+            codeEl.innerText =
+                "Coupon - Rejected";
+
+        }
+
+    } catch (err) {
+
+        console.log(
+            "Coupon status error:",
+            err
+        );
+
+    }
+}
+// ======================================
+// SAVE PROFILE
+// ======================================
+
+async function saveProfile() {
+
+    try {
+
+        const user = Parse.User.current();
+
+        if (!user) {
+            alert("Not logged in");
+            return;
+        }
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        user.set("phone", phone);
+
+        await user.save();
+
+        await Parse.Cloud.run("updateProfile", {
+            phone
+        });
+
+        alert("Profile Updated");
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message || "Failed to update profile");
+    }
+}
+
+
+
+// ======================================
+// SAVE BANK
+// ======================================
+
+
+
+
+function goBack(){
+window.history.back();
+}
+
+
+
+/* =========================================
+ADMIN PANEL ACCESS
+========================================= */
+
+
+
+const adminPanelBtn =
+document.getElementById("adminPanelBtn");
+
+if (adminPanelBtn) {
+
+    adminPanelBtn.onclick = async () => {
+
+        try {
+
+            const currentUser =
+                Parse.User.current();
+
+            if (!currentUser) {
+
+                alert("Unauthorised");
+
+                window.location.href =
+                    "profile.html";
+
+                return;
+
+            }
+
+            await currentUser.fetch();
+
+            const email =
+                currentUser.get("email");
+
+            // CHECK ADMIN EMAIL
+            if (
+                email === "admin@gmail.com"
+            ) {
+
+                window.location.href =
+                    "admin.html";
+
+            }
+
+            else {
+
+                alert("Unauthorised");
+
+                window.location.href =
+                    "profile.html";
+
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+            alert("Unauthorised");
+
+            window.location.href =
+                "profile.html";
+
+        }
+
+    };
+
+}
+
+
+
+</script>
+
+</body>
+</html>
