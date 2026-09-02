@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+
+
+<title>InvoicePro | Dashboard</title
+<link rel="stylesheet" href="#">
+<link rel="stylesheet" href="dashboard.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<script src="api.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+
+</head>
+
+<body>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+<link rel="stylesheet" href="profile.css">
+<link rel="stylesheet" href="navbar.css">
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-logo">
+
+        <div class="logo-icon">
+
+            <img src="logo.png" alt="">
+
+        </div>
+
+        <div class="logo-text">
+
+            <h2>InvoicePro</h2>
+
+            <span>Business Suite</span>
+
+        </div>
+
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <a href="index.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-home-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Home
+            </span>
+
+        </a>
+
+        <a href="dashboard.html" class="nav-item active">
+
+            <span class="nav-icon">
+                <i class="ri-dashboard-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Dashboard
+            </span>
+
+        </a>
+
+        <a href="invoice.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-file-list-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Invoices
+            </span>
+
+        </a>
+
+        <a href="estimates.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-draft-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Estimates
+            </span>
+
+        </a>
+
+        <a href="clients.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-group-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Clients
+            </span>
+
+        </a>
+
+        <a href="upcoming-payments.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-calendar-check-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Upcoming Payments
+            </span>
+
+        </a>
+
+        <a href="paid-invoices.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-money-dollar-circle-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Paid Invoices
+            </span>
+
+        </a>
+
+        <a href="recurring-invoices.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-repeat-2-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Recurring Invoices
+            </span>
+
+        </a>
+        
+         <a href="expenses.html" class="nav-item">
+
+            <span class="nav-icon">
+               <i class="ri-wallet-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Expenses
+            </span>
+
+        </a>
+
+        <a href="reports.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-bar-chart-box-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Reports
+            </span>
+
+        </a>
+
+        <a href="subscription.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-vip-crown-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Subscription
+            </span>
+
+        </a>
+
+        <a href="subscription-history.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-history-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Subscription History
+            </span>
+
+        </a>
+
+        <div
+            class="nav-dropdown"
+            id="settingsDropdown">
+
+            <button
+                class="nav-dropdown-btn"
+                id="settingsToggle">
+
+                <div class="nav-dropdown-left">
+
+                    <span class="nav-icon">
+                        <i class="ri-layout-4-line"></i>
+                    </span>
+
+                    <span>
+                        Templates
+                    </span>
+
+                </div>
+
+                <i
+                    id="settingsArrow"
+                    class="ri-arrow-down-s-line dropdown-arrow"></i>
+
+            </button>
+
+            <div
+                class="dropdown-menu"
+                id="settingsMenu">
+
+                <a
+                    href="invoices-design.html"
+                    class="dropdown-item">
+
+                    <span class="nav-icon">
+                        <i class="ri-file-text-line"></i>
+                    </span>
+
+                    Invoice Template
+
+                </a>
+
+                <a
+                    href="estimates-design.html"
+                    class="dropdown-item">
+
+                    <span class="nav-icon">
+                        <i class="ri-draft-line"></i>
+                    </span>
+
+                    Estimate Template
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <a href="settings.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-settings-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+        <a href="profile.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-user-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Profile
+            </span>
+
+        </a>
+
+        <a href="business-profile.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-building-2-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Business Profile
+            </span>
+
+        </a>
+
+        <a href="live-chat.html" class="nav-item">
+
+            <span class="nav-icon">
+                <i class="ri-chat-3-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Live Chat
+            </span>
+
+        </a>
+
+        <a
+            href="account-mgt.html"
+            class="nav-item logout-item"
+            id="logoutBtn">
+
+            <span class="nav-icon">
+                <i class="ri-logout-box-r-line"></i>
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+    </nav>
+
+</aside>
+<div class="page-wrapper">
+<header class="page-header">
+
+        <div class="header-left">
+
+            <button
+                class="menu-toggle"
+                id="menuToggle">
+
+               <i class="ri-menu-line"></i>
+
+            </button>
+
+            <div class="page-title">
+
+              
+
+                <h1>
+
+                    Dashboard
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="header-right">
+
+            <button
+                class="notification-btn"
+                id="notificationBtn" style="display: none;">
+
+                <i class="ri-notification-3-line"></i>
+
+                <span
+                    class="notification-badge"
+                    id="notificationBadge">
+
+                    3
+
+                </span>
+
+            </button>
+
+            <button
+                class="header-avatar"
+                id="profileMenuBtn">
+
+                <img
+                    src="
+                    profile.png"
+                    alt="Profile"
+                    id="headerProfileImage">
+
+            </button>
+
+        </div>
+
+    </header>
+    
+<header class="page-header" style="display: none;">
+<div class="header-left">
+<button
+                class="menu-toggle"
+                id="menuToggle">
+
+               <i class="ri-menu-line"></i>
+
+            </button>
+<div class="page-title">
+<h1>
+
+Dashboard
+
+</h1>
+</div>
+<div id="headerCenter">
+<div id="searchContainer">
+
+<i
+id="searchIcon"
+class="ri-search-line"></i>
+<input
+id="searchInput"
+type="text"
+placeholder="Search invoices, clients...">
+
+</div>
+</div>
+<div id="headerRight">
+
+<button id="notificationButton" style="display: none;">
+
+<i class="ri-notification-3-line"></i>
+
+<span id="notificationBadge">
+
+</span>
+
+</button>
+
+
+<button id="helpButton">
+
+<i class="ri-question-line"></i>
+
+</button>
+
+<div id="profileSection">
+
+<img
+id="profileImage"
+src="profile.png"
+alt="Profile">
+
+
+<div id="profileInfo">
+
+<h4 id="profileName">
+
+Loading...
+
+</h4>
+
+<p id="businessName">
+
+</p>
+
+</div>
+
+
+<button id="profileMenuButton">
+
+<i class="ri-arrow-down-s-line"></i>
+</button>
+
+
+<div id="profileDropdown">
+
+    <a href="profile.html">
+        My Profile
+    </a>
+
+    <a href="settings.html">
+        Settings
+    </a>
+
+    <a href="subscription.html">
+        Subscription
+    </a>
+
+    <a href="account-mgt.html">
+        Logout
+    </a>
+
+</div>
+</div>
+
+</div>
+</header>
+
+
+<div id="dashboardError"><div class="dashboardErrorCard">
+
+    <div class="dashboardErrorIcon">
+        <i class="ri-wifi-off-line"></i>
+    </div>
+
+    <h2 id="dashboardErrorTitle">
+        Unable to Load Dashboard
+    </h2>
+
+    <p id="dashboardErrorMessage">
+        We couldn't load your dashboard right now.
+        Please check your internet connection and try again.
+    </p>
+
+    <button id="retryDashboardButton">
+        <i class="ri-refresh-line"></i>
+        <span>Try Again</span>
+    </button>
+
+</div>
+
+</div><main id="dashboardContent">
+
+<main id="dashboardContent">
+
+<section id="welcomeSection">
+
+<div id="welcomeText">
+
+<h2 id="welcomeHeading">
+
+Loading...
+
+</h2>
+
+<p id="welcomeDescription">
+
+Here's what's happening with your business today.
+
+</p>
+
+</div>
+
+</section>
+
+<section id="statisticsSection">
+
+<div id="revenueCard" class="statCard">
+
+<div class="statTop">
+
+<div class="statIcon">
+<i class="ri-line-chart-line"></i>
+
+</div>
+
+<span class="statLabel">
+
+Total Revenue
+
+</span>
+
+</div>
+
+<h2 id="totalRevenueValue">
+
+Loading...
+
+</h2>
+
+<p id="totalRevenueGrowth" class="positiveGrowth">
+
+Loading...
+</p>
+
+</div>
+
+
+
+<div id="paidInvoicesCard" class="statCard">
+
+<div class="statTop">
+
+<div class="statIcon">
+
+<i class="ri-checkbox-circle-line"></i>
+
+</div>
+
+<span class="statLabel">
+
+Paid Invoices
+
+</span>
+
+</div>
+
+<h2 id="paidInvoicesValue">
+
+Loading...
+
+</h2>
+
+<p id="paidInvoicesGrowth" class="positiveGrowth">
+
+Loading...
+
+</p>
+
+</div>
+
+
+
+<div id="pendingInvoicesCard" class="statCard">
+
+<div class="statTop">
+
+<div class="statIcon">
+
+<i class="ri-time-line"></i>
+
+</div>
+
+<span class="statLabel">
+
+Loading
+
+</span>
+
+</div>
+
+<h2 id="pendingInvoicesValue">
+
+Loading...
+
+</h2>
+
+<p id="pendingInvoicesGrowth" class="warningGrowth">
+
+Loading...
+
+</p>
+
+</div>
+
+
+
+<div id="clientsCard" class="statCard">
+
+<div class="statTop">
+
+<div class="statIcon">
+
+<i class="ri-group-line"></i>
+
+</div>
+
+<span class="statLabel">
+
+Clients
+
+</span>
+
+</div>
+
+<h2 id="clientsValue">
+
+Loading...
+
+</h2>
+
+<p id="clientsGrowth" class="positiveGrowth">
+
+Loading...
+
+</p>
+
+</div>
+
+</section>
+
+<section id="analyticsSection">
+
+    <div id="revenueOverviewCard">
+
+        <div id="revenueHeader">
+
+            <div>
+
+                <h2 id="revenueTitle">
+                    Revenue Overview
+                </h2>
+
+                <p id="revenueSubtitle">
+                    Monthly revenue performance
+                </p>
+
+            </div>
+
+            <select id="revenueFilter">
+
+                <option value="6months">
+                    Last 6 Months
+                </option>
+
+                <option value="12months">
+                    Last 12 Months
+                </option>
+
+                <option value="30days">
+                    Last 30 Days
+                </option>
+
+            </select>
+
+        </div>
+
+        <div id="revenueChartContainer">
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div id="invoiceStatusCard">
+
+        <div id="invoiceStatusHeader">
+
+            <h2 id="invoiceStatusTitle">
+
+                Invoice Status
+
+            </h2>
+
+        </div>
+
+        <div id="invoiceStatusChartContainer">
+
+            <canvas id="invoiceStatusChart"></canvas>
+
+        </div>
+<div id="invoiceStatusEmpty" style="display:none;">
+    <p>No invoice status yet.</p>
+</div>
+        <div id="invoiceStatusLegend">
+
+            <div class="legendItem">
+
+                <span class="legendColor paidColor"></span>
+
+                <span id="paidLegend">
+
+                    Paid
+
+                </span>
+
+                <strong id="paidPercentage">
+
+                    Loading...
+
+                </strong>
+
+            </div>
+
+            <div class="legendItem">
+
+                <span class="legendColor pendingColor"></span>
+
+                <span id="pendingLegend">
+
+                    Pending 
+
+                </span>
+
+                <strong id="pendingPercentage">
+
+                    Loading...
+
+                </strong>
+
+            </div>
+
+            <div class="legendItem">
+
+                <span class="legendColor overdueColor"></span>
+
+                <span id="overdueLegend">
+
+                    Overdue
+
+                </span>
+
+                <strong id="overduePercentage">
+
+                    Loading...
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="invoiceTableSection">
+
+    <div id="recentInvoicesCard">
+
+        <div id="recentInvoicesHeader">
+
+            <div>
+
+                <h2 id="recentInvoicesTitle">
+
+                    Recent Invoices
+
+                </h2>
+
+                <p id="recentInvoicesSubtitle">
+
+                    Latest invoices created
+
+                </p>
+
+            </div>
+            <div class="hide">
+                
+
+<button id="createInvoiceButton">
+<i class="ri-add-line"></i>
+<span>
+Create Invoice
+</span>
+</button>
+            </div>
+            <button id="viewAllInvoicesButton">
+
+                View All
+
+            </button>
+
+        </div>
+
+        <div id="tableContainer">
+
+            <table id="recentInvoicesTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Invoice ID</th>
+
+                        <th>Client</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                        <th>Date</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="recentInvoicesBody">
+
+                    <tr>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>
+                            <span class="statusBadge paidStatus">
+                                Loading...
+                            </span>
+                        </td>
+
+                        <td>Loading...</td>
+
+                        <td>
+
+                            <button class="tableActionButton">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>
+
+                            <span class="statusBadge pendingStatus">
+
+                                Loading...
+
+                            </span>
+
+                        </td>
+
+                        <td>Loading...</td>
+
+                        <td>
+
+                            <button class="tableActionButton">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>Loading...</td>
+
+                        <td>
+
+                            <span class="statusBadge overdueStatus">
+
+                                Loading...
+
+                            </span>
+
+                        </td>
+
+                        <td>Loading...</td>
+
+                        <td>
+
+                            <button class="tableActionButton">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    
+    <div id="recentEstimatesCard">
+
+    <div id="recentEstimatesHeader">
+
+        <div>
+
+            <h2 id="recentEstimatesTitle">
+                Recent Estimates
+            </h2>
+
+            <p id="recentEstimatesSubtitle">
+                Latest estimates created
+            </p>
+
+        </div>
+
+        <button id="viewAllEstimatesButton">
+            View All
+        </button>
+
+    </div>
+
+
+    <div id="estimateTableContainer">
+
+        <table id="recentEstimatesTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Estimate ID</th>
+
+                    <th>Client</th>
+
+                    <th>Amount</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="recentEstimatesBody">
+
+                <tr>
+
+                    <td>Loading...</td>
+
+                    <td>Loading...</td>
+
+                    <td>Loading...</td>
+
+                    <td>
+
+                        <span class="statusBadge pendingStatus">
+                            Loading...
+                        </span>
+
+                    </td>
+
+                    <td>Loading...</td>
+
+                    <td>
+
+                        <button class="tableActionButton">
+                            View
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+    <div id="remindersCard">
+
+    <div id="remindersHeader">
+
+        <h2 id="remindersTitle">
+            Upcoming Payment Reminders
+        </h2>
+
+    </div>
+
+    <div id="remindersList">
+
+        <div class="reminderItem">
+
+            <div class="reminderDot"></div>
+
+            <div>
+
+                <h4>
+                    Loading...
+                </h4>
+
+                <p>
+                    Loading upcoming payments...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<section id="quickActionsSection" style="display: none;">
+
+    <div id="quickActionsCard">
+
+        <h2 id="quickActionsTitle">
+            Quick Actions
+        </h2>
+
+        <a href="invoice.html" class="quickActionItem">
+
+            <div class="quickLeft">
+
+                <i class="ri-file-list-3-line"></i>
+
+                <span id="quickCreateInvoice">Create New Invoice</span>
+
+            </div>
+
+            <i class="ri-arrow-right-s-line quickArrow"></i>
+
+        </a>
+
+        <a href="clients.html" class="quickActionItem">
+
+            <div class="quickLeft">
+
+<i class="ri-user-add-line"></i>
+
+                <span id="quickAddClient">Add New Client</span>
+
+            </div>
+
+            <i class="ri-arrow-right-s-line quickArrow"></i>
+
+        </a>
+
+        <a href="estimates.html" class="quickActionItem">
+
+            <div class="quickLeft">
+
+                <i class="ri-draft-line"></i>
+
+                <span id="quickCreateEstimate">Create Estimate</span>
+
+            </div>
+
+           <i class="ri-arrow-right-s-line quickArrow"></i>
+
+        </a>
+
+        <a href="payments.html" class="quickActionItem">
+
+            <div class="quickLeft">
+
+                <i class="ri-user-add-line"></i>
+
+                <span id="quickRecordPayment">Record Payment</span>
+
+            </div>
+
+            <i class="ri-arrow-right-s-line quickArrow"></i>
+
+        </a>
+
+        <a href="expenses.html" class="quickActionItem">
+
+            <div class="quickLeft">
+
+               <i class="ri-wallet-3-line"></i>
+
+                <span>Add Expense</span>
+
+            </div>
+
+            <i class="ri-arrow-right-s-line quickArrow"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+<footer id="dashboardFooter">
+
+    <p id="footerCopyright">
+
+        © 2026 InvoicePro. All rights reserved.
+
+    </p>
+
+</footer>
+
+</main>
+
+</div>
+<div id="deleteModalOverlay">
+
+    <div id="deleteModal">
+
+        <div id="deleteModalIcon">
+
+            <i class="ri-error-warning-line"></i>
+
+        </div>
+
+        <h2 id="deleteModalTitle">
+
+            Delete Invoice?
+
+        </h2>
+
+        <p id="deleteModalMessage">
+
+            This action cannot be undone.
+
+        </p>
+
+        <div id="deleteModalActions">
+
+            <button id="cancelDeleteButton">
+
+                Cancel
+
+            </button>
+
+            <button id="confirmDeleteButton">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toastContainer"></div>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+<script src="dashboard.js"></script>
+
+</body>
+
+</html>

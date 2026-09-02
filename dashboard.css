@@ -1,0 +1,1842 @@
+* {
+margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+scroll-behavior:smooth;
+}
+
+body {
+font-family:"Inter",sans-serif;
+    background:#F3F7FB;
+    color:#162338;
+    overflow-x:hidden;
+}
+
+.hide {
+display: none;
+}
+
+:root {
+--primary:#12345F;
+    --primaryDark:#0A1F3D;
+
+    --background:#F3F7FB;
+
+    --white:#FFFFFF;
+
+    --text:#162338;
+
+    --textLight:#5D6B7A;
+
+    --border:#DBE5F0;
+
+    --success:#22C55E;
+
+    --warning:#F59E0B;
+
+    --danger:#EF4444;
+
+    --cardShadow:
+    0 10px 30px rgba(0,0,0,.05);
+
+    --radius:18px;
+
+    --transition:.3s ease;
+}
+
+a {
+text-decoration:none;
+    color:inherit;
+}
+
+button {
+border:none;
+
+    outline:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-family:inherit;
+}
+
+img {
+display:block;
+
+    max-width:100%;
+}
+
+input,
+select {
+outline:none;
+
+    border:none;
+
+    font-family:inherit;
+}
+
+ul {
+list-style:none;
+}
+
+#dashboardContent {
+padding:28px;
+}
+
+.card {
+background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:var(--cardShadow);
+}
+
+::-webkit-scrollbar {
+width:8px;
+}
+
+::-webkit-scrollbar-thumb {
+background:#D1D5DB;
+
+    border-radius:50px;
+}
+
+::-webkit-scrollbar-track {
+background:transparent;
+}
+
+table {
+width:100%;
+
+    border-collapse:collapse;
+}
+
+@media (max-width:992px) {
+#mainWrapper{
+
+margin-left:240px;
+
+}
+}
+
+@media (max-width:992px) {
+#dashboardContent{
+
+padding:18px;
+
+}
+}
+
+@media (max-width:768px) {
+#dashboardContent{
+
+padding:16px;
+
+}
+}
+
+@media (max-width:576px) {
+#header{
+
+height:72px;
+
+}
+
+#dashboardContent{
+
+padding:14px;
+
+}
+}
+
+#header {
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:20px;
+}
+
+#headerLeft {
+display:flex;
+
+align-items:center;
+
+gap:18px;
+}
+
+#pageTitle {
+font-size:30px;
+
+font-weight:800;
+
+color:var(--text);
+}
+
+#headerCenter {
+flex:1;
+
+display:flex;
+
+justify-content:center;
+}
+
+#searchContainer {
+width:100%;
+
+max-width:520px;
+
+height:52px;
+
+background:#fff;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+display:flex;
+
+align-items:center;
+
+padding:0 18px;
+
+gap:12px;
+}
+
+#searchIcon {
+width:18px;
+
+height:18px;
+}
+
+#searchInput {
+flex:1;
+
+font-size:15px;
+
+background:transparent;
+}
+
+#searchInput::placeholder {
+color:#9CA3AF;
+}
+
+#headerRight {
+display:flex;
+
+align-items:center;
+
+gap:14px;
+}
+
+#notificationButton,
+
+#helpButton {
+position:relative;
+
+width:48px;
+
+height:48px;
+
+background:#fff;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+transition:.3s;
+}
+
+#notificationButton:hover,
+
+#helpButton:hover {
+transform:translateY(-2px);
+
+box-shadow:var(--cardShadow);
+}
+
+#notificationButton img,
+
+#helpButton img {
+width:22px;
+
+height:22px;
+}
+
+#notificationBadge {
+position:absolute;
+
+top:8px;
+
+right:8px;
+
+width:18px;
+
+height:18px;
+
+background:#EF4444;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:10px;
+
+font-weight:700;
+
+color:#fff;
+}
+
+#createInvoiceButton {
+padding:10px 18px;
+
+background:var(--primary);
+
+color:#fff;
+
+border-radius:12px;
+
+font-weight:600;
+
+transition:.3s;
+}
+
+#createInvoiceButton:hover {
+background:var(--primaryDark);
+}
+
+#createInvoiceButton i {
+width:18px;
+
+height:18px;
+
+filter:brightness(0) invert(1);
+}
+
+#profileSection {
+position: relative;
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding-left:10px;
+}
+
+#profileImage {
+width:46px;
+
+height:46px;
+
+border-radius:50%;
+
+object-fit:cover;
+}
+
+#profileInfo h4 {
+font-size:15px;
+
+font-weight:700;
+}
+
+#profileInfo p {
+font-size:13px;
+
+color:var(--textLight);
+
+margin-top:3px;
+}
+
+#profileMenuButton {
+width:36px;
+
+height:36px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+}
+
+@media (max-width:992px) {
+#createInvoiceButton span{
+
+display:flex;
+
+}
+
+#createInvoiceButton{
+
+width:48px;
+
+padding:0;
+
+justify-content:center;
+
+}
+
+#searchContainer{
+
+max-width:100%;
+
+}
+}
+
+@media (max-width:768px) {
+#profileInfo{
+
+display:none;
+
+}
+
+#pageTitle{
+
+font-size:24px;
+
+}
+
+#header{
+
+gap:12px;
+
+}
+
+#headerCenter{
+
+display:none;
+
+}
+}
+
+#welcomeSection {
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:30px;
+
+gap:20px;
+}
+
+#welcomeHeading {
+font-size:32px;
+
+font-weight:800;
+
+margin-bottom:8px;
+
+color:var(--text);
+}
+
+#welcomeDescription {
+font-size:15px;
+
+color:var(--textLight);
+
+line-height:24px;
+}
+
+#exportReportButton {
+height:48px;
+
+padding:0 22px;
+
+background:#fff;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-weight:600;
+
+font-size:15px;
+
+transition:var(--transition);
+}
+
+#exportReportButton:hover {
+box-shadow:var(--cardShadow);
+
+transform:translateY(-2px);
+}
+
+#exportReportButton img {
+width:18px;
+
+height:18px;
+}
+
+#statisticsSection {
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:22px;
+
+margin-bottom:30px;
+}
+
+.statCard {
+background:#fff;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--cardShadow);
+
+transition:var(--transition);
+}
+
+.statCard:hover {
+transform:translateY(-5px);
+}
+
+.statTop {
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:20px;
+}
+
+.statIcon {
+width:54px;
+
+height:54px;
+
+border-radius:16px;
+
+background:#E8F0F8;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+}
+
+.statIcon img {
+width:24px;
+
+height:24px;
+}
+
+.statLabel {
+font-size:14px;
+
+font-weight:600;
+
+color:var(--textLight);
+}
+
+.statCard h2 {
+font-size:34px;
+
+font-weight:800;
+
+margin-bottom:10px;
+
+color:var(--text);
+}
+
+.positiveGrowth {
+font-size:14px;
+
+font-weight:600;
+
+color:var(--success);
+}
+
+.warningGrowth {
+font-size:14px;
+
+font-weight:600;
+
+color:var(--warning);
+}
+
+@media (max-width:1200px) {
+#statisticsSection{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+}
+
+@media (max-width:768px) {
+#welcomeSection{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+#statisticsSection{
+
+grid-template-columns:1fr;
+
+}
+
+#welcomeHeading{
+
+font-size:28px;
+
+}
+}
+
+@media (max-width:576px) {
+.statCard{
+
+padding:20px;
+
+}
+
+.statCard h2{
+
+font-size:28px;
+
+}
+}
+
+#analyticsSection {
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:24px;
+
+margin-bottom:30px;
+}
+
+#revenueOverviewCard {
+background:#fff;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--cardShadow);
+}
+
+#revenueHeader {
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+}
+
+#revenueTitle {
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:6px;
+}
+
+#revenueSubtitle {
+font-size:14px;
+
+color:var(--textLight);
+}
+
+#revenueFilter {
+height:42px;
+
+padding:0 16px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+background:#fff;
+
+font-size:14px;
+
+cursor:pointer;
+}
+
+#revenueChartContainer {
+width:100%;
+
+height:350px;
+}
+
+#revenueChart {
+width:100%;
+
+height:100%;
+}
+
+#invoiceStatusCard {
+background:#fff;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--cardShadow);
+
+display:flex;
+
+flex-direction:column;
+}
+
+#invoiceStatusHeader {
+margin-bottom:20px;
+}
+
+#invoiceStatusTitle {
+font-size:22px;
+
+font-weight:700;
+}
+
+#invoiceStatusChartContainer {
+height:240px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+}
+
+#invoiceStatusChart {
+width:100%;
+
+height:100%;
+}
+
+#invoiceStatusLegend {
+margin-top:20px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+}
+
+.legendItem {
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:15px;
+}
+
+.legendItem strong {
+margin-left:auto;
+
+font-size:15px;
+}
+
+.legendColor {
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+display:block;
+}
+
+.paidColor {
+background:#22C55E;
+}
+
+.pendingColor {
+background:#F59E0B;
+}
+
+.overdueColor {
+background:#EF4444;
+}
+
+@media (max-width:1100px) {
+#analyticsSection{
+
+grid-template-columns:1fr;
+
+}
+}
+
+@media (max-width:768px) {
+#revenueHeader{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:15px;
+
+}
+
+#revenueChartContainer{
+
+height:280px;
+
+}
+
+#invoiceStatusChartContainer{
+
+height:220px;
+
+}
+}
+
+#invoiceTableSection {
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:24px;
+
+margin-bottom:30px;
+}
+
+#recentInvoicesCard,
+#remindersCard {
+background:#fff;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--cardShadow);
+}
+
+#recentInvoicesHeader {
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+}
+
+#recentInvoicesTitle {
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:5px;
+}
+
+#recentInvoicesSubtitle {
+font-size:14px;
+
+color:var(--textLight);
+}
+
+#viewAllInvoicesButton {
+padding:10px 18px;
+
+background:var(--primary);
+
+color:#fff;
+
+border-radius:12px;
+
+font-weight:600;
+
+transition:.3s;
+}
+
+#viewAllInvoicesButton:hover {
+background:var(--primaryDark);
+}
+
+#tableContainer {
+overflow-x:auto;
+}
+
+#recentInvoicesTable {
+min-width:700px;
+}
+
+#recentInvoicesTable th {
+text-align:left;
+
+padding:16px;
+
+font-size:14px;
+
+font-weight:700;
+
+color:var(--textLight);
+
+border-bottom:1px solid var(--border);
+}
+
+#recentInvoicesTable td {
+padding:18px 16px;
+
+border-bottom:1px solid #F1F5F9;
+
+font-size:14px;
+}
+
+.statusBadge {
+padding:7px 14px;
+
+border-radius:30px;
+
+font-size:13px;
+
+font-weight:600;
+
+display:inline-block;
+}
+
+.paidStatus {
+background:#DCFCE7;
+
+color:#15803D;
+}
+
+.pendingStatus {
+background:#FEF3C7;
+
+color:#B45309;
+}
+
+.overdueStatus {
+background:#FEE2E2;
+
+color:#B91C1C;
+}
+
+.tableActionButton {
+padding:8px 16px;
+
+border-radius:10px;
+
+background:#E8F0F8;
+
+color:var(--primary);
+
+font-weight:600;
+
+transition:.3s;
+}
+
+#remindersTitle {
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:24px;
+}
+
+#remindersList {
+display:flex;
+
+flex-direction:column;
+
+gap:22px;
+}
+
+.reminderItem {
+display:flex;
+
+gap:14px;
+
+align-items:flex-start;
+}
+
+.reminderDot {
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+background:var(--primary);
+
+margin-top:7px;
+
+flex-shrink:0;
+}
+
+.reminderItem h4 {
+font-size:15px;
+
+margin-bottom:5px;
+}
+
+.reminderItem p {
+font-size:14px;
+
+color:var(--textLight);
+}
+
+@media (max-width:1100px) {
+#invoiceTableSection{
+
+grid-template-columns:1fr;
+
+}
+}
+
+#dashboardFooter {
+padding:30px 0;
+
+text-align:center;
+
+border-top:1px solid var(--border);
+}
+
+#footerCopyright {
+font-size:14px;
+
+color:var(--textLight);
+}
+
+@media (max-width:1200px) {
+#quickActionsGrid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+}
+
+@media (max-width:768px) {
+#quickActionsGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.quickActionCard{
+
+padding:22px;
+
+}
+}
+
+#profileDropdown {
+position: absolute;
+
+    top: calc(100% + 12px);
+
+    right: 0;
+
+    width: 220px;
+
+    background: #ffffff;
+
+    border: 1px solid #DBE5F0;
+
+    border-radius: 14px;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.12);
+
+    overflow: hidden;
+
+    display: none;
+
+    z-index: 9999;
+}
+
+#profileDropdown.show {
+display: block;
+}
+
+#profileDropdown a {
+display: block;
+
+    padding: 14px 18px;
+
+    color: #1F2937;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: background .25s;
+}
+
+#profileDropdown a:hover {
+background: #F3F4F6;
+}
+
+#dashboardError.show {
+display: block;
+}
+
+#dashboardError h3 {
+margin-bottom: 12px;
+
+    color: #162338;
+}
+
+#dashboardError p {
+color: #5D6B7A;
+
+    margin-bottom: 20px;
+}
+
+#retryDashboardButton {
+background: #17457D;
+
+    color: #FFFFFF;
+
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+#dashboardError {
+display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f6f8fc;
+
+    z-index: 9999;
+}
+
+.dashboardErrorCard {
+width: 90%;
+    max-width: 420px;
+
+    background: white;
+
+    padding: 40px 30px;
+
+    border-radius: 16px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.dashboardErrorCard h2 {
+margin-bottom: 12px;
+
+    color: #162338;
+}
+
+.dashboardErrorCard p {
+color: #5D6B7A;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+.dashboardErrorCard button {
+background: #12345F;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 28px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+#invoiceStatusEmpty {
+display:none;
+    align-items:center;
+    justify-content:center;
+    min-height:260px;
+    text-align:center;
+    color:#5D6B7A;
+    font-size:15px;
+    font-weight:500;
+}
+
+#quickActionsHeader {
+    margin-bottom: 12px;
+}
+
+#quickActionsSubtitle {
+    font-size: 14px;
+    color: var(--textLight);
+    display: none;
+}
+
+#quickActionsGrid {
+    display: flex;
+    grid-template-columns: repeat(4,1fr);
+    gap: 22px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.quickActionCard {
+    background: transparent;
+    padding: 0 4px;
+    border-radius: 18px;
+    box-shadow: var(--cardShadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    transition: 0.2s ease;
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-bottom: 1px solid #edf0f5;
+    cursor: pointer;
+    position: relative;
+}
+
+.quickActionCard:last-child {
+border-bottom: none;
+}
+
+.quickActionCard img {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 18px;
+    margin-right: 14px;
+    object-fit: contain;
+}
+
+.quickActionCard h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #182033;
+    margin: 0;
+    flex: 1;
+}
+
+.quickActionCard p {
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--textLight);
+    display: none;
+}
+
+.quickActionCard::after {
+content: ">";
+
+    font-size: 22px;
+
+    font-weight: 400;
+
+    color: #8b93a7;
+
+    margin-left: auto;
+}
+
+.quickActionCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0,0,0,.08);
+    background: #f8f9ff;
+}
+
+@media (max-width:600px) {
+#quickActionsSection{
+
+    border-radius:12px;
+
+    padding:15px;
+
+}
+
+.quickActionCard{
+
+    height:54px;
+
+}
+
+.quickActionCard img{
+
+    width:20px;
+    height:20px;
+
+}
+
+.quickActionCard h3{
+
+    font-size:13px;
+
+}
+}
+
+#quickActionsSection {
+    margin-bottom: 40px;
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 14px;
+    padding: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 24px;
+}
+
+#quickActionsCard {
+background:#fff;
+    border:1px solid #E8F0F8;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(16,24,40,.06);
+}
+
+#quickActionsTitle {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #162338;
+    margin: 0;
+    padding: 22px 24px;
+    border-bottom: 1px solid #E8F0F8;
+}
+
+.quickActionItem {
+display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 24px;
+    text-decoration:none;
+    color:#162338;
+    border-bottom:1px solid #E8F0F8;
+    transition:.25s;
+}
+
+.quickActionItem:last-child {
+border-bottom:none;
+}
+
+.quickActionItem:hover {
+background:#fafaff;
+}
+
+.quickLeft {
+display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.quickLeft img {
+width:22px;
+    height:22px;
+    opacity:.8;
+}
+
+.quickLeft span {
+font-size:15px;
+    font-weight:500;
+}
+
+.quickArrow {
+width:18px;
+    height:18px;
+    opacity:.45;
+    transition:.25s;
+}
+
+.quickActionItem:hover .quickArrow {
+transform:translateX(4px);
+    opacity:.9;
+}
+
+@media (max-width:768px) {
+#quickActionsCard{
+    border-radius:16px;
+}
+
+.quickActionItem{
+    padding:18px;
+}
+
+.quickLeft span{
+    font-size:14px;
+}
+}
+
+#deleteModalOverlay {
+position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(15,23,42,.55);
+
+    backdrop-filter:blur(4px);
+
+    z-index:9999;
+}
+
+#deleteModalOverlay.show {
+display:flex;
+}
+
+#deleteModal {
+width:min(420px,90%);
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:32px;
+
+    text-align:center;
+
+    box-shadow:0 24px 60px rgba(0,0,0,.18);
+}
+
+#deleteModalIcon {
+width:72px;
+
+    height:72px;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    background:#FEF2F2;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+#deleteModalIcon img {
+width:34px;
+
+    height:34px;
+}
+
+#deleteModalTitle {
+margin:0;
+
+    font-size:24px;
+
+    font-weight:700;
+}
+
+#deleteModalMessage {
+margin:16px 0 28px;
+
+    color:#64748B;
+
+    line-height:1.6;
+}
+
+#deleteModalActions {
+display:flex;
+
+    gap:16px;
+}
+
+#cancelDeleteButton,
+
+#confirmDeleteButton {
+flex:1;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+#cancelDeleteButton {
+background:#F1F5F9;
+
+    color:#334155;
+}
+
+#confirmDeleteButton {
+background:#17457D;
+
+    color:#fff;
+}
+
+#confirmDeleteButton:hover {
+background:#B91C1C;
+}
+
+#recentEstimatesCard {
+width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    margin-top: 24px;
+
+    overflow: hidden;
+}
+
+#recentEstimatesHeader {
+display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 24px;
+}
+
+#recentEstimatesTitle {
+margin: 0;
+}
+
+#recentEstimatesSubtitle {
+margin: 6px 0 0;
+}
+
+#viewAllEstimatesButton {
+padding:10px 18px;
+
+background:var(--primary);
+
+color:#fff;
+
+border-radius:12px;
+
+font-weight:600;
+
+transition:.3s;
+}
+
+#viewAllEstimatesButton:hover {
+background:var(--primaryDark);
+}
+
+#estimateTableContainer {
+width: 100%;
+
+    overflow-x: auto;
+}
+
+#recentEstimatesTable {
+width: 100%;
+
+    border-collapse: collapse;
+}
+
+#recentEstimatesTable th,
+#recentEstimatesTable td {
+padding: 14px 18px;
+
+    text-align: left;
+}
+
+#recentEstimatesTable th {
+white-space: nowrap;
+}
+
+.estimateActions {
+white-space: nowrap;
+}
+
+#viewAllInvoicesButton:hover,
+#viewAllEstimatesButton:hover {
+background:#12345F;
+}
+
+.tableActionButton:hover {
+    background: #12345F;
+    color: #FFFFFF;
+}
+
+#viewAllInvoicesButton,
+#viewAllEstimatesButton,
+.tableActionButton {
+background:#0A1F3D;
+    color:#FFFFFF;
+}
+
+#viewAllInvoicesButton:hover,
+#viewAllEstimatesButton:hover,
+.dashboardView:hover,
+.dashboardEdit:hover,
+.dashboardDuplicate:hover,
+.dashboardDelete:hover,
+.dashboardEstimateView:hover,
+.dashboardEstimateEdit:hover,
+.dashboardEstimateDuplicate:hover,
+.dashboardEstimateDelete:hover,
+.dashboardEstimateConvert:hover {
+background:#12345F;
+    color:#FFFFFF;
+}
+
+#viewAllInvoicesButton,
+#viewAllEstimatesButton,
+.dashboardView,
+.dashboardEdit,
+.dashboardDuplicate,
+.dashboardDelete,
+.dashboardEstimateView,
+.dashboardEstimateEdit,
+.dashboardEstimateDuplicate,
+.dashboardEstimateDelete,
+.dashboardEstimateConvert {
+background: rgba(37, 99, 235, 0.15);
+color: #12345F;
+}
+@media (max-width: 480px) {
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    *,
+    *::before,
+    *::after {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    body,
+    main,
+    section,
+    article,
+    aside,
+    header,
+    footer,
+    div,
+    form,
+    fieldset {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    img,
+    svg,
+    video,
+    canvas,
+    iframe {
+        max-width: 100%;
+        height: auto;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    input,
+    select,
+    textarea {
+        min-width: 0;
+    }
+
+    table {
+        width: 100%;
+        max-width: 100%;
+        table-layout: fixed;
+    }
+
+    th,
+    td {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    pre,
+    code {
+        max-width: 100%;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    label,
+    span {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .container,
+    .page-container,
+    .page-content,
+    .main-content,
+    .content,
+    .main,
+    .app,
+    .wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+
+    [class*="grid"] {
+        min-width: 0;
+    }
+
+    [class*="grid"]:not([class*="icon-grid"]) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    [class*="row"],
+    [class*="actions"],
+    [class*="header"],
+    [class*="toolbar"] {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+
+    [class*="card"],
+    [class*="panel"],
+    [class*="modal"],
+    [class*="section"] {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    [class*="modal"] {
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+    }
+
+    .table-responsive,
+    [class*="table-wrap"],
+    [class*="table-container"] {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-responsive table,
+    [class*="table-wrap"] table,
+    [class*="table-container"] table {
+        min-width: 0;
+    }
+
+    button,
+    .btn,
+    [class*="button"] {
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .page-title,
+    .page-header,
+    .section-header,
+    .modal-header {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .page-header > *,
+    .section-header > *,
+    .modal-header > * {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: clamp(20px, 7vw, 28px);
+    }
+
+    h2 {
+        font-size: clamp(18px, 6vw, 24px);
+    }
+
+    h3 {
+        font-size: clamp(16px, 5vw, 20px);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 14px;
+    }
+}
